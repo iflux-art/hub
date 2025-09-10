@@ -11,7 +11,6 @@ export {
   DataTable,
   LinkCard,
   LinksPageContainer,
-  ProfilePageContainer,
   getTableColumns,
   getTableActions,
   getPageActions,

@@ -16,6 +16,7 @@ export interface VerificationConfig {
 export interface JsonLdConfig {
   type: string;
   name?: string;
+
   description?: string;
   url?: string;
   image?: string;
@@ -37,7 +38,7 @@ export interface GenerateMetadataOptions {
   description?: string;
   keywords?: string[];
   image?: string;
-  type?: "website" | "article" | "profile";
+  type?: "website" | "article";
   author?: string;
   date?: string;
   modified?: string;
@@ -71,7 +72,7 @@ export interface SEOPageOptions {
   title: string;
   description?: string;
   keywords?: string[];
-  type?: "website" | "article" | "profile";
+  type?: "website" | "article";
   publishedTime?: string;
   modifiedTime?: string;
   authors?: string[];

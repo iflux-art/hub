@@ -2,6 +2,22 @@
  * 搜索相关类型定义
  */
 
+/**
+ * 搜索过滤组件 Props
+ */
+export interface SearchFilterProps<T> {
+  /** 当前搜索词 */
+  searchTerm: string;
+  /** 搜索词变化回调 */
+  onSearchChange: (value: string) => void;
+  /** 当前选中的分类 */
+  selectedCategory: string;
+  /** 分类变化回调 */
+  onCategoryChange: (value: string) => void;
+  /** 可选的分类列表 */
+  categories: T[];
+}
+
 export interface SearchResult {
   type: "link" | "tool" | "command" | "navigation" | "history";
   title: string;

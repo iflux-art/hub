@@ -4,9 +4,6 @@
  */
 
 export type CategoryId =
-  // 根目录文件
-  | "profile"
-  | "friends"
   // AI 分类
   | "ai"
   | "ai/api"

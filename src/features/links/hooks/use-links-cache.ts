@@ -4,7 +4,11 @@
  */
 
 import { useCallback } from "react";
-import { clearCategoryCache, preloadCriticalCategories } from "@/features/links/lib";
+import {
+  clearCategoryCache,
+  preloadCriticalCategories,
+  clearAllCaches,
+} from "@/features/links/lib";
 import type { CategoryId } from "@/features/links/types";
 
 /**
@@ -16,6 +20,11 @@ interface UseLinksCacheReturn {
    * @param categoryId 分类ID，如果不提供则清除所有缓存
    */
   clearCache: (categoryId?: CategoryId) => void;
+
+  /**
+   * 清除所有缓存
+   */
+  clearAllCaches: () => void;
 
   /**
    * 预加载关键分类数据
@@ -42,6 +51,13 @@ export function useLinksCache(): UseLinksCacheReturn {
   }, []);
 
   /**
+   * 清除所有缓存
+   */
+  const clearAllCachesCallback = useCallback(() => {
+    clearAllCaches();
+  }, []);
+
+  /**
    * 预加载关键分类
    */
   const preloadCritical = useCallback(async () => {
@@ -61,6 +77,7 @@ export function useLinksCache(): UseLinksCacheReturn {
 
   return {
     clearCache,
+    clearAllCaches: clearAllCachesCallback,
     preloadCritical,
     refreshCategory,
   };

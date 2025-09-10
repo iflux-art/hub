@@ -5,7 +5,7 @@ import { cn } from "@/utils";
 import { ChevronRight, Folder } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import type { SidebarItem, SidebarProps } from "@/types";
+import type { SidebarItem, SidebarProps } from "../types";
 
 // 检查是否在客户端环境
 const isBrowser = typeof window !== "undefined";

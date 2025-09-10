@@ -13,11 +13,6 @@ import {
 import type { DeleteDialogProps } from "@/features/admin/types";
 import { useState } from "react";
 
-interface DeleteDialogItem {
-  id: string;
-  title: string;
-}
-
 export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteDialogProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +20,7 @@ export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteD
     if (!item) return;
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/links?id=${(item as DeleteDialogItem).id}`, {
+      const response = await fetch(`/api/links?id=${item.id}`, {
         method: "DELETE",
       });
 
@@ -36,7 +31,7 @@ export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteD
         throw new Error(errorData.error ?? "Failed to delete item");
       }
 
-      onSuccess((item as DeleteDialogItem).id);
+      onSuccess();
       onOpenChange(false);
     } catch (error) {
       if (error instanceof Error) {
@@ -55,7 +50,7 @@ export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteD
         <AlertDialogHeader>
           <AlertDialogTitle>确认删除</AlertDialogTitle>
           <AlertDialogDescription>
-            确定要删除网址 &quot;{(item as DeleteDialogItem)?.title}&quot; 吗？此操作无法撤销。
+            确定要删除网址 &quot;{item?.title}&quot; 吗？此操作无法撤销。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

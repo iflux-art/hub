@@ -6,9 +6,12 @@
 // 布局组件
 export {
   PageContainer,
-  ProgressBarLoading,
-  NotFound,
+  // ProgressBarLoading 组件已合并到全局loading页面，不再导出
+  // NotFound 组件已合并到全局404页面，不再导出
 } from "./layout";
+
+// 底栏组件
+export { Footer } from "./footer";
 
 // 按钮组件
 export { GitHubButton } from "./button";

@@ -21,17 +21,19 @@ export {
 } from "./admin";
 
 export type {
+  LinksFormData as AdminLinksFormData,
   AddDialogProps,
   EditDialogProps,
   DeleteDialogProps,
   AdminAction,
+  DataTableColumn,
+  DataTableAction,
+  DataTablePagination,
+  DataTableProps,
 } from "./admin";
 
-// Admin 模块的 LinksItem 和 LinksFormData 使用别名导出
-export type {
-  LinksItem as AdminLinksItem,
-  LinksFormData as AdminLinksFormData,
-} from "./admin";
+// Admin 模块的 LinksItem 使用别名导出
+export type { LinksItem as AdminLinksItem } from "./links/types";
 
 // Auth 功能模块
 export { AuthButtons } from "./auth";
@@ -59,7 +61,6 @@ export {
   DataTable,
   LinkCard,
   LinksPageContainer,
-  ProfilePageContainer,
   getTableColumns,
   getTableActions,
   getPageActions,

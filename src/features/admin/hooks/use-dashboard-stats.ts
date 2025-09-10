@@ -14,7 +14,7 @@ import { useMemo } from "react";
 export interface DashboardStats {
   // 内容统计
   linkCount: number;
-  friendCount: number;
+  // friendCount: number;  // 删除友链统计
   // 新增内容
   newLinkCount: number;
   // 用户统计
@@ -38,13 +38,8 @@ export function useDashboardStats(): DashboardStats {
 
   // 计算统计数据
   const stats = useMemo(() => {
-    // 导航链接数量 - 排除友链和个人主页分类
-    const linkCount =
-      linkItems?.filter(item => item.category !== "friends" && item.category !== "profile")
-        .length ?? 0;
-
-    // 友链数量
-    const friendCount = linkItems?.filter(item => item.category === "friends").length ?? 0;
+    // 导航链接数量
+    const linkCount = linkItems?.length ?? 0;
 
     // 本月新增网址数 (示例计算 - 实际需要根据创建日期计算)
     const currentDate = new Date();
@@ -69,7 +64,7 @@ export function useDashboardStats(): DashboardStats {
 
     return {
       linkCount,
-      friendCount,
+      // friendCount,  // 删除友链统计
       newLinkCount,
       userCount,
       visitCount,

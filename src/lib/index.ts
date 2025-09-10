@@ -8,7 +8,6 @@ export {
   generateViewport,
   generateMetadata,
   generateArticleMetadata,
-  generateProfileMetadata,
 } from "./metadata/metadata";
 export { generateSEOMetadata } from "./metadata/seo-utils"; // 基础元数据生成函数和SEO工具函数
 

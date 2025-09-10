@@ -1,7 +1,13 @@
 "use client";
 
-import type { Heading } from "@/types";
 import { useEffect, useState, useRef } from "react";
+
+/** 文档标题结构 */
+interface Heading {
+  level: number;
+  text: string;
+  id: string;
+}
 
 export function useHeadingObserver(
   headings: Heading[],

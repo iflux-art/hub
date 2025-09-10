@@ -1,9 +1,10 @@
 "use client";
 
-import { NAV_ITEMS, NAV_PATHS } from "@/components/layout/navbar/nav-config";
-import { PrefetchLink } from "@/components/prefetch-link";
+import { NAV_ITEMS, NAV_PATHS } from "@/features/navbar/types/nav-config";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils";
+import type { NavConfigItem } from "@/features/navbar/types/nav-config";
 
 interface NavListMenuProps {
   className?: string;
@@ -24,16 +25,14 @@ export const NavListMenu = ({ className = "" }: NavListMenuProps) => {
 
   return (
     <nav className={cn("flex items-center gap-6", className)} aria-label="主导航">
-      {NAV_ITEMS.map(item => {
+      {NAV_ITEMS.map((item: NavConfigItem) => {
         const href = NAV_PATHS[item.key] || `/${item.key}`;
         const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
 
         return (
-          <PrefetchLink
+          <Link
             key={item.key}
             href={href}
-            prefetchStrategy="hover"
-            prefetchDelay={100}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary",
               isActive ? "text-primary" : "text-muted-foreground"
@@ -41,7 +40,7 @@ export const NavListMenu = ({ className = "" }: NavListMenuProps) => {
             aria-current={isActive ? "page" : undefined}
           >
             {item.label}
-          </PrefetchLink>
+          </Link>
         );
       })}
     </nav>

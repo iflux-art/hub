@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { useLinksDataStore } from "@/stores";
+// import { useLinksDataStore } from "@/stores"; // 已删除
+import { useLinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store实现
 import { useCategories } from "@/features/links/hooks/use-categories";
 import { loadAllLinksData } from "@/features/links/lib";
 import { useFilterState } from "@/features/links/hooks/use-filter-state";
-import type { LinksItem } from "@/features/links/types";
-import type { LinksDataStore } from "@/stores/links-data-store.standard";
+// import type { LinksItem } from "@/features/links/types";  // 移除未使用的导入
+// import type { LinksDataStore } from "@/stores/links-data-store.standard"; // 已删除
+import type { LinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store类型
 
 // 定义selector函数，避免每次创建新对象
 const useLinksDataStateSelector = (state: LinksDataStore) => state;
@@ -43,12 +45,8 @@ export function useLinksDataState() {
     void fetchData();
   }, [items.length, error, setItems, setLoading, setError]);
 
-  // 过滤掉友链和个人主页分类的数据 - 性能优化使用 useMemo
-  const filteredItems = useMemo(
-    () =>
-      items.filter((item: LinksItem) => item.category !== "friends" && item.category !== "profile"),
-    [items]
-  );
+  // 过滤掉友链分类的数据 - 性能优化使用 useMemo
+  const filteredItems = useMemo(() => items, [items]);
 
   // 使用共享的分类过滤函数
   const filteredCategories = useMemo(() => getFilteredCategories(), [getFilteredCategories]);

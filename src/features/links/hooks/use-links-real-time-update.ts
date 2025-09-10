@@ -7,7 +7,8 @@ import {
   LinkDataMessageType,
   type LinkDataMessage,
 } from "../lib/link-data-socket";
-import { useLinksDataStore } from "@/stores";
+// import { useLinksDataStore } from "@/stores"; // 已删除
+import { useLinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store实现
 import type { LinksItem } from "@/features/links/types";
 
 // 定义消息负载接口

@@ -157,5 +157,6 @@ export const getPageActions = (onAdd: () => void) => [
     label: "添加网址",
     onClick: onAdd,
     icon: Plus,
+    key: "add-link",
   },
 ];

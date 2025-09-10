@@ -1,8 +1,7 @@
 import "./globals.css";
 import { Footer } from "@/components/layout";
-import { InitClient } from "@/components/layout/init-client";
-import { MainNavbar } from "@/components/layout/navbar/main-navbar";
-import { ThemeProvider } from "@/components/theme/theme-provider";
+import { MainNavbar } from "@/features/navbar/components/main-navbar";
+import { ThemeProvider } from "@/features/theme";
 import { ClerkProvider } from "@clerk/nextjs";
 import React from "react";
 
@@ -36,8 +35,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
           {/* 页面主体布局容器 */}
           <div className="flex flex-col">
             <MainNavbar className="flex-shrink-0" />
-            {/* 客户端初始化组件 */}
-            <InitClient />
             {/* 主内容区域 */}
             <main>{children}</main>
             <Footer />

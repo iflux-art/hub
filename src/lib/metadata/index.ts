@@ -3,9 +3,8 @@
  */
 
 export {
-  generateViewport,
   generateMetadata,
   generateArticleMetadata,
-  generateProfileMetadata,
+  generateViewport,
 } from "./metadata";
 export { generateSEOMetadata } from "./seo-utils";

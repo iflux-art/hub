@@ -46,13 +46,11 @@ function readCategories(): Category[] {
 }
 
 const availableCategories = [
-  "friends",
   "ai",
   "ai-chat",
   "development",
   "design",
   "productivity",
-  "profile",
   "operation",
   "office",
   "audio",

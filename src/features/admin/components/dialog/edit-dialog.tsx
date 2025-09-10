@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import type { EditDialogProps, LinksItem } from "@/features/admin/types";
+import type { EditDialogProps } from "@/features/admin/types";
 import { LinksForm } from "@/features/links/components";
 import type { LinksFormData } from "@/features/links/types";
 import { useState } from "react";
@@ -26,8 +26,9 @@ export const EditDialog = ({ item, onOpenChange, onSuccess, onError }: EditDialo
         throw new Error(errorData.error ?? "Failed to update item");
       }
 
-      const updatedItem: LinksItem = (await response.json()) as LinksItem;
-      onSuccess(updatedItem);
+      // 我们不需要使用 updatedItem 变量，只需要调用 onSuccess 回调
+      await response.json();
+      onSuccess();
       onOpenChange(false);
     } catch (error) {
       if (error instanceof Error) {

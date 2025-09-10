@@ -20,11 +20,6 @@ const nextConfig = {
 				permanent: true,
 			},
 			{
-				source: "/friends/:path*",
-				destination: "/",
-				permanent: true,
-			},
-			{
 				source: "/about/:path*",
 				destination: "/",
 				permanent: true,

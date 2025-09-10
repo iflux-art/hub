@@ -1,8 +1,9 @@
 "use client";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import type { AddDialogProps, LinksFormData } from "@/features/admin/types";
+import type { AddDialogProps } from "@/features/admin/types";
 import { LinksForm } from "@/features/links/components";
+import type { LinksFormData, LinksItem } from "@/features/links/types";
 import { useState } from "react";
 
 export const AddDialog = ({ open, onOpenChange, onSuccess, onError }: AddDialogProps) => {
@@ -24,7 +25,7 @@ export const AddDialog = ({ open, onOpenChange, onSuccess, onError }: AddDialogP
         throw new Error(errorData.error ?? "Failed to add item");
       }
 
-      const newItem: LinksFormData = (await response.json()) as LinksFormData;
+      const newItem: LinksItem = (await response.json()) as LinksItem;
       onSuccess(newItem);
       onOpenChange(false);
     } catch (error) {

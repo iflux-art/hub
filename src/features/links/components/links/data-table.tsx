@@ -5,7 +5,7 @@ import type {
   DataTableAction,
   DataTablePagination,
   DataTableProps,
-} from "@/types/props-types"; // 导入通用类型
+} from "@/features/admin/types"; // 导入通用类型
 
 // 获取对齐类名函数
 function getAlignClass(align?: "left" | "center" | "right"): string {

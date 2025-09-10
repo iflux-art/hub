@@ -20,22 +20,8 @@ export const LINKS_PAGE_METADATA: Metadata = {
 };
 
 /**
- * 个人资料页面元数据配置
- */
-export const PROFILE_PAGE_METADATA: Metadata = {
-  title: "个人资料",
-  description: "用户个人资料和账户信息",
-  openGraph: {
-    title: "个人资料",
-    description: "用户个人资料和账户信息",
-    type: "profile",
-  },
-};
-
-/**
  * 页面元数据配置映射
  */
 export const PAGE_METADATA_MAP = {
   links: LINKS_PAGE_METADATA,
-  profile: PROFILE_PAGE_METADATA,
 };

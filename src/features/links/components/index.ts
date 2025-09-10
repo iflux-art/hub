@@ -12,7 +12,6 @@ export { LinkCard } from "./link-card";
 
 // 页面组件
 export { LinksPageContainer } from "./links-page";
-export { ProfilePageContainer } from "./profile-page-container";
 
 // 表格配置
 export {

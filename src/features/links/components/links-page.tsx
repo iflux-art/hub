@@ -41,6 +41,18 @@ export const LinksPageContainer = () => {
     console.log("Error state:", error);
     console.log("Load attempts:", loadAttempts);
 
+    // 检查是否有重复的ID
+    if (allItems && allItems.length > 0) {
+      const ids = allItems.map(item => item.id);
+      const uniqueIds = new Set(ids);
+      if (ids.length !== uniqueIds.size) {
+        console.warn(
+          "发现重复的ID:",
+          ids.filter((id, index) => ids.indexOf(id) !== index)
+        );
+      }
+    }
+
     // 尝试直接加载数据以验证功能
     async function testDirectLoad() {
       try {
@@ -53,6 +65,16 @@ export const LinksPageContainer = () => {
           console.warn("警告: 直接加载返回了空数组!");
         } else {
           console.log("前5个数据项:", data.slice(0, 5));
+        }
+
+        // 检查直接加载的数据是否有重复ID
+        const ids = data.map(item => item.id);
+        const uniqueIds = new Set(ids);
+        if (ids.length !== uniqueIds.size) {
+          console.warn(
+            "直接加载发现重复的ID:",
+            ids.filter((id, index) => ids.indexOf(id) !== index)
+          );
         }
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : "Unknown error";
@@ -75,7 +97,7 @@ export const LinksPageContainer = () => {
     loadAttempts,
     categories?.length,
     refreshData,
-    allItems?.length,
+    allItems, // 修复：添加完整依赖而不是allItems?.length
     error,
   ]); // 简化依赖数组，只包含必要的依赖
 

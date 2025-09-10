@@ -19,7 +19,7 @@ export { useMounted } from "./use-mounted";
 
 // ==================== 标题观察 Hooks ====================
 export { useHeadingObserver } from "./use-heading-observer";
-export type { Heading } from "@/types";
+// Heading 类型已内联到 use-heading-observer.ts 中
 
 // ==================== 错误追踪 Hooks ====================
 export { useErrorTracking, useErrorBoundaryTracking } from "./use-error-tracking";

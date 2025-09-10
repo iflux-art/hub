@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { SidebarConfig } from "@/types";
 import type { PageLayoutType } from "@/types";
 import { cn } from "@/utils";
-import { SidebarWrapper } from "@/components/layout/sidebar";
+import { SidebarWrapper } from "@/features/sidebar/components";
 import { getMainContentClasses, getSidebarClasses } from "@/lib/layout/layout-utils";
 import { useLayoutStore } from "@/stores";
 

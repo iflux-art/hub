@@ -21,10 +21,6 @@ export interface LinkCategory {
  * 分类显示名称配置
  */
 const CATEGORY_DISPLAY_NAMES: { [key: string]: string } = {
-  // 根级分类
-  profile: "个人主页",
-  friends: "友情链接",
-
   // 主分类
   ai: "AI 工具",
   audio: "音频处理",
@@ -87,52 +83,65 @@ const CATEGORY_DISPLAY_NAMES: { [key: string]: string } = {
 /**
  * 获取分类显示名称
  */
-function getCategoryDisplayName(categoryId: string): string {
+export function getCategoryDisplayName(categoryId: string): string {
   return CATEGORY_DISPLAY_NAMES[categoryId] || categoryId;
 }
 
 /**
- * 处理根目录下的JSON文件
+ * 处理根目录下的 JSON 文件
  */
 async function processRootFiles(linksDir: string, categories: LinkCategory[]): Promise<void> {
-  const rootFiles = await fs.readdir(linksDir);
-  for (const file of rootFiles) {
-    if (file.endsWith(".json") && file !== "index.js") {
-      const categoryId = file.replace(".json", "");
-      const filePath = path.join(linksDir, file);
-      const data = await fs.readFile(filePath, "utf8");
-      const items: unknown[] = JSON.parse(data) as unknown[];
+  try {
+    const entries = await fs.readdir(linksDir, { withFileTypes: true });
+    const jsonFiles = entries.filter(
+      entry => entry.isFile() && entry.name.endsWith(".json") && entry.name !== "friends.json"
+    );
 
-      categories.push({
-        id: categoryId,
-        name: getCategoryDisplayName(categoryId),
-        count: items.length,
-        children: [],
-      });
+    for (const file of jsonFiles) {
+      try {
+        const filePath = path.join(linksDir, file.name);
+        const fileContent = await fs.readFile(filePath, "utf-8");
+        const items: LinksItem[] = JSON.parse(fileContent);
+        const categoryId = path.basename(file.name, ".json");
+
+        categories.push({
+          id: categoryId,
+          name: getCategoryDisplayName(categoryId),
+          count: items.length,
+        });
+      } catch (error) {
+        console.error(`Error processing file ${file.name}:`, error);
+      }
     }
+  } catch (error) {
+    console.error("Error reading root directory:", error);
   }
 }
 
 /**
- * 处理单个子目录
+ * 处理子文件夹
  */
 async function processSubdirectory(dir: Dirent, linksDir: string): Promise<LinkCategory | null> {
-  const dirPath = path.join(linksDir, dir.name);
-  const files = await fs.readdir(dirPath);
+  const subDirPath = path.join(linksDir, dir.name);
+  const subEntries = await fs.readdir(subDirPath, { withFileTypes: true });
+  const jsonFiles = subEntries.filter(entry => entry.isFile() && entry.name.endsWith(".json"));
+
   const children: LinkCategory[] = [];
 
-  for (const file of files) {
-    if (file.endsWith(".json")) {
-      const subcategoryId = file.replace(".json", "");
-      const filePath = path.join(dirPath, file);
-      const data = await fs.readFile(filePath, "utf8");
-      const items = JSON.parse(data) as LinksItem[];
+  for (const file of jsonFiles) {
+    try {
+      const filePath = path.join(subDirPath, file.name);
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      const items: LinksItem[] = JSON.parse(fileContent);
+      const categoryId = `${dir.name}/${path.basename(file.name, ".json")}`;
 
       children.push({
-        id: `${dir.name}/${subcategoryId}`,
-        name: getCategoryDisplayName(subcategoryId),
+        id: categoryId,
+        name: getCategoryDisplayName(path.basename(file.name, ".json")),
         count: items.length,
       });
+    } catch (error) {
+      console.error(`Error processing file ${file.name}:`, error);
     }
   }
 
@@ -172,7 +181,7 @@ export async function generateCategoriesFromFiles(): Promise<LinkCategory[]> {
   const categories: LinkCategory[] = [];
 
   try {
-    // 读取根目录下的 JSON 文件（如 profile.json, friends.json）
+    // 读取根目录下的 JSON 文件（如 friends.json）
     await processRootFiles(linksDir, categories);
 
     // 读取子文件夹中的分类
@@ -188,55 +197,9 @@ export async function generateCategoriesFromFiles(): Promise<LinkCategory[]> {
 /**
  * 检查URL是否已存在
  */
-export function checkUrlExists(url: string, excludeId?: string): boolean {
-  try {
-    const allLinks = loadAllLinks();
-    return allLinks.some(link => link.url === url && link.id !== excludeId);
-  } catch (error) {
-    if (process.env.NODE_ENV === "development") {
-      console.error("Error checking URL existence:", error);
-    }
-    return false;
-  }
-}
-
-/**
- * 获取所有链接
- */
-function loadAllLinks(): LinksItem[] {
-  // 这里应该实现实际的链接加载逻辑
-  // 为简化示例，返回空数组
-  return [];
-}
-
-/**
- * 向指定分类添加项目
- */
-export function addItemToCategory(categoryId: string, item: LinksItem): void {
-  // 这里应该实现添加项目的逻辑
-  if (process.env.NODE_ENV === "development") {
-    console.log(`Adding item to category ${categoryId}:`, item);
-  }
-}
-
-/**
- * 更新指定项目
- */
-export function updateItem(id: string, item: Partial<LinksItem>): LinksItem | null {
-  // 这里应该实现更新项目的逻辑
-  if (process.env.NODE_ENV === "development") {
-    console.log(`Updating item ${id}:`, item);
-  }
-  return null;
-}
-
-/**
- * 删除指定项目
- */
-export function deleteItem(id: string): boolean {
-  // 这里应该实现删除项目的逻辑
-  if (process.env.NODE_ENV === "development") {
-    console.log(`Deleting item ${id}`);
-  }
-  return true;
+export function checkUrlExists(_url: string, _excludeId?: string): boolean {
+  // 这个函数需要访问所有链接数据来检查URL是否已存在
+  // 在实际实现中，可能需要从状态管理或API获取数据
+  console.warn("checkUrlExists is not fully implemented");
+  return false;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useThemeStore } from "@/stores";
+import { useThemeStore } from "./theme-store.standard";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
 import { useEffect, useMemo } from "react";
 

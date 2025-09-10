@@ -19,6 +19,5 @@ export {
 // 页面元数据配置
 export {
   LINKS_PAGE_METADATA,
-  PROFILE_PAGE_METADATA,
   PAGE_METADATA_MAP,
 } from "./page-metadata";

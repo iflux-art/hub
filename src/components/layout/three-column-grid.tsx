@@ -1,7 +1,7 @@
 import type { ThreeColumnGridProps } from "@/types";
 import { cn } from "@/utils";
 export type { ThreeColumnGridProps } from "@/types";
-import { SidebarWrapper } from "@/components/layout/sidebar";
+import { SidebarWrapper } from "@/features/sidebar/components";
 import { getMainContentClasses, getSidebarClasses } from "@/lib/layout/layout-utils";
 import { useLayoutStore } from "@/stores";
 

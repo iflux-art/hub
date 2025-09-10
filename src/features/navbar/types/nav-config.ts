@@ -1,9 +1,31 @@
-import type { BaseNavItem } from "@/types";
-import { Home, type LucideIcon } from "lucide-react";
+import { Home, FileText, BookOpen, Link, type LucideIcon } from "lucide-react";
+import type { ComponentType, ReactNode } from "react";
 
-/**
- * 导航配置项接口
- */
+/** 基础导航项 */
+export interface BaseNavItem {
+  /** 导航项标识 */
+  key: string;
+  /** 显示标签 */
+  label: string;
+  /** 链接地址 */
+  href?: string;
+  /** 图标 */
+  icon?: ComponentType<{ className?: string }> | ReactNode;
+  /** 是否为外部链接 */
+  external?: boolean;
+  /** 是否禁用 */
+  disabled?: boolean;
+}
+
+/** 嵌套导航项 */
+export interface NestedNavItem extends BaseNavItem {
+  /** 子导航项 */
+  children?: NestedNavItem[];
+  /** 是否默认展开 */
+  defaultOpen?: boolean;
+}
+
+/** 导航配置项接口 */
 export interface NavConfigItem extends BaseNavItem {
   /** 描述文本 */
   description: string;
@@ -17,10 +39,34 @@ export interface NavConfigItem extends BaseNavItem {
 
 export const NAV_ITEMS: readonly NavConfigItem[] = [
   {
+    key: "blog",
+    label: "博客",
+    href: "https://blog.iflux.art/",
+    description: "访问我们的技术博客",
+    icon: FileText,
+    external: true,
+  },
+  {
+    key: "docs",
+    label: "文档",
+    href: "https://docs.iflux.art/",
+    description: "查看详细技术文档",
+    icon: BookOpen,
+    external: true,
+  },
+  {
     key: "home",
-    label: "首页",
-    description: "网站主页",
+    label: "导航",
+    description: "网站导航",
     icon: Home,
+  },
+  {
+    key: "friends",
+    label: "友链",
+    href: "https://blog.iflux.art/friends/",
+    description: "查看我们的友情链接",
+    icon: Link,
+    external: true,
   },
 ] as const;
 

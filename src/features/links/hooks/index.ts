@@ -1,11 +1,13 @@
 "use client";
 
-import { loadAllLinksData } from "@/features/links/lib";
+import { loadAllLinksData, clearAllCaches } from "@/features/links/lib";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useCategories } from "./use-categories";
 import { useFilterState } from "./use-filter-state";
-import { useLinksDataStore } from "@/stores/links-data-store.standard";
-import type { LinksDataStore } from "@/stores/links-data-store.standard";
+// import { useLinksDataStore } from "@/stores/links-data-store.standard"; // 已删除
+// import type { LinksDataStore } from "@/stores/links-data-store.standard"; // 已删除
+import { useLinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store实现
+import type { LinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store类型
 import type { LinksItem } from "@/features/links/types";
 
 // 导入新的缓存管理Hook
@@ -24,10 +26,18 @@ export function useLinksData() {
   const [isDirectLoading, setIsDirectLoading] = useState(false);
 
   // 使用新的缓存管理Hook
-  const { clearCache } = useLinksCache();
+  const { clearAllCaches: clearAllCachesHook } = useLinksCache();
 
   // 解构需要的状态和动作
-  const { items, loading, error, setItems, setLoading, setError, resetState } = store;
+  const {
+    items,
+    loading,
+    error,
+    setItems,
+    setLoading,
+    setError,
+    resetLinksDataState: resetState,
+  } = store;
 
   // 使用共享的分类数据 hook
   const { getFilteredCategories, getCategoryName: getCategoryNameFromHook } = useCategories();
@@ -161,17 +171,18 @@ export function useLinksData() {
   // 决定使用哪些数据进行过滤
   const dataToFilter = useMemo(() => {
     // 如果store中有数据，优先使用store中的数据
+    let sourceData: LinksItem[] = [];
+
     if (items && items.length > 0) {
-      return items;
+      sourceData = items;
+    } else if (directItems && directItems.length > 0) {
+      sourceData = directItems;
     }
 
-    // 如果store中没有数据但有直接加载的数据，使用直接加载的数据
-    if (directItems && directItems.length > 0) {
-      return directItems;
-    }
+    // 去重处理，确保每个项目只出现一次
+    const uniqueData = Array.from(new Map(sourceData.map(item => [item.id, item])).values());
 
-    // 都没有数据，返回空数组
-    return [];
+    return uniqueData;
   }, [items, directItems]); // 修复：使用完整依赖而不是长度
 
   // 使用useFilterState处理分类和标签过滤
@@ -200,25 +211,31 @@ export function useLinksData() {
   // 确保返回正确的过滤后数据
   const effectiveFilteredItems = useMemo(() => {
     // 如果有选中的分类，返回经过分类筛选的数据
+    let resultData: LinksItem[] = [];
+
     if (selectedCategory) {
-      return stateFilteredItems;
+      resultData = stateFilteredItems;
+    } else {
+      // 如果没有选中的分类，返回所有数据（不再排除friends分类）
+      resultData = items.length > 0 ? items : directItems;
     }
 
-    // 如果没有选中的分类，返回所有非特殊分类的数据
-    return (items.length > 0 ? items : directItems).filter(
-      item => item.category !== "friends" && item.category !== "profile"
-    );
+    // 去重处理
+    return Array.from(new Map(resultData.map(item => [item.id, item])).values());
   }, [stateFilteredItems, selectedCategory, items, directItems]); // 修复：使用完整依赖而不是长度
 
   // 计算派生状态 - 过滤后的项目
   const filteredItems = useMemo(() => {
-    return items.filter(item => item.category !== "friends" && item.category !== "profile");
+    // 返回所有项目，不再过滤，但需要去重
+    return Array.from(new Map(items.map(item => [item.id, item])).values());
   }, [items]); // 修复：使用完整依赖而不是items.length
 
   // 计算分类计数
   const categoriesCount = useMemo(() => {
     const count: Record<string, number> = {};
-    items.forEach(item => {
+    // 去重后再计算
+    const uniqueItems = Array.from(new Map(items.map(item => [item.id, item])).values());
+    uniqueItems.forEach(item => {
       if (item.category) {
         count[item.category] = (count[item.category] || 0) + 1;
       }
@@ -229,7 +246,9 @@ export function useLinksData() {
   // 计算标签计数
   const tagsCount = useMemo(() => {
     const count: Record<string, number> = {};
-    items.forEach(item => {
+    // 去重后再计算
+    const uniqueItems = Array.from(new Map(items.map(item => [item.id, item])).values());
+    uniqueItems.forEach(item => {
       item.tags?.forEach(tag => {
         count[tag] = (count[tag] || 0) + 1;
       });
@@ -239,7 +258,9 @@ export function useLinksData() {
 
   return {
     items: effectiveFilteredItems, // 返回过滤后的数据（用于链接导航页面）
-    allItems: items.length > 0 ? items : directItems, // 返回所有原始数据
+    allItems: Array.from(
+      new Map((items.length > 0 ? items : directItems).map(item => [item.id, item])).values()
+    ), // 返回所有原始数据，去重
     categories: filteredCategories, // 返回过滤后的分类
     selectedCategory,
     selectedTag,
@@ -258,7 +279,8 @@ export function useLinksData() {
     // 提供刷新数据的方法
     refreshData: () => {
       // 清除所有缓存并重新加载数据
-      clearCache();
+      clearAllCaches();
+      clearAllCachesHook();
       resetState(); // 重置状态使用正确的方法名
       setItems([]);
       setForceRefresh(true);

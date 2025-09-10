@@ -12,7 +12,6 @@ import {
 import { AddDialog, AdminActions, DeleteDialog, EditDialog } from "@/features/admin/components";
 import { useDebouncedValue } from "@/features/admin/hooks/use-debounced-value";
 import { fetchLinksData } from "@/features/admin/lib";
-import type { LinksItem as AdminLinksItem } from "@/features/admin/types";
 import {
   DataTable,
   getPageActions,
@@ -21,7 +20,7 @@ import {
 } from "@/features/links/components";
 import { useCategories } from "@/features/links/hooks/use-categories";
 import type { LinksCategory, LinksItem, LinksSubCategory } from "@/features/links/types";
-import type { SearchFilterProps } from "@/types/props-types";
+import type { SearchFilterProps } from "@/features/search/types";
 import { Search } from "lucide-react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useAdminStore } from "@/stores";
@@ -161,7 +160,7 @@ const useEventHandlers = (
   setDeletingItem: (item: LinksItem | null) => void
 ) => {
   const handleAddSuccess = useCallback(
-    (_item: import("@/features/admin/types").LinksFormData) => {
+    (_item: LinksItem) => {
       void loadData();
       setShowAddDialog(false);
     },
@@ -295,14 +294,14 @@ export const LinksAdminPage = () => {
 
       <EditDialog
         open={!!editingItem}
-        item={editingItem as AdminLinksItem}
+        item={editingItem}
         onOpenChange={(open: boolean) => !open && setEditingItem(null)}
         onSuccess={handleEditSuccess}
         onError={handleEditError}
       />
 
       <DeleteDialog
-        item={deletingItem as AdminLinksItem}
+        item={deletingItem}
         onOpenChange={(open: boolean) => !open && setDeletingItem(null)}
         onSuccess={handleDeleteSuccess}
         onError={handleDeleteError}

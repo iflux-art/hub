@@ -2,17 +2,6 @@ import type { CategoryId, LinksCategory, LinksItem } from "@/features/links/type
 
 // 定义分类结构，基于实际文件夹结构
 const categoryStructure = {
-  // 根目录文件
-  profile: {
-    name: "个人主页",
-    file: () => safeImport(() => import("@/content/links/profile.json")),
-  },
-  friends: {
-    name: "友情链接",
-    file: () => safeImport(() => import("@/content/links/friends.json")),
-  },
-
-  // category 文件夹下的分类
   ai: {
     name: "人工智能",
     children: {
@@ -49,40 +38,34 @@ const categoryStructure = {
         name: "工具",
         file: () => safeImport(() => import("@/content/links/category/ai/tools.json")),
       },
-      agents: {
-        name: "智能体",
-        file: () => safeImport(() => import("@/content/links/category/ai/agents.json")),
-      },
     },
   },
-
   audio: {
-    name: "音频",
+    name: "音频处理",
     children: {
       daw: {
-        name: "DAW",
+        name: "数字音频工作站",
         file: () => safeImport(() => import("@/content/links/category/audio/daw.json")),
       },
       distribution: {
-        name: "发行",
+        name: "音乐发行",
         file: () => safeImport(() => import("@/content/links/category/audio/distribution.json")),
       },
       processing: {
-        name: "处理",
+        name: "音频处理",
         file: () => safeImport(() => import("@/content/links/category/audio/processing.json")),
       },
     },
   },
-
   design: {
-    name: "设计",
+    name: "设计工具",
     children: {
       colors: {
-        name: "配色",
+        name: "配色工具",
         file: () => safeImport(() => import("@/content/links/category/design/colors.json")),
       },
       fonts: {
-        name: "字体",
+        name: "字体资源",
         file: () => safeImport(() => import("@/content/links/category/design/fonts.json")),
       },
       "image-processing": {
@@ -91,14 +74,13 @@ const categoryStructure = {
           safeImport(() => import("@/content/links/category/design/image-processing.json")),
       },
       tools: {
-        name: "工具",
+        name: "设计工具",
         file: () => safeImport(() => import("@/content/links/category/design/tools.json")),
       },
     },
   },
-
   development: {
-    name: "开发",
+    name: "开发工具",
     children: {
       apis: {
         name: "API",
@@ -109,7 +91,7 @@ const categoryStructure = {
         file: () => safeImport(() => import("@/content/links/category/development/cloud.json")),
       },
       containers: {
-        name: "容器",
+        name: "容器化",
         file: () =>
           safeImport(() => import("@/content/links/category/development/containers.json")),
       },
@@ -118,64 +100,70 @@ const categoryStructure = {
         file: () => safeImport(() => import("@/content/links/category/development/databases.json")),
       },
       frameworks: {
-        name: "框架",
+        name: "开发框架",
         file: () =>
           safeImport(() => import("@/content/links/category/development/frameworks.json")),
       },
       git: {
-        name: "Git",
+        name: "版本控制",
         file: () => safeImport(() => import("@/content/links/category/development/git.json")),
       },
       hosting: {
-        name: "托管",
+        name: "托管服务",
         file: () => safeImport(() => import("@/content/links/category/development/hosting.json")),
       },
       monitoring: {
-        name: "监控",
+        name: "监控工具",
         file: () =>
           safeImport(() => import("@/content/links/category/development/monitoring.json")),
       },
       security: {
-        name: "安全",
+        name: "安全工具",
         file: () => safeImport(() => import("@/content/links/category/development/security.json")),
       },
       tools: {
-        name: "工具",
+        name: "开发工具",
         file: () => safeImport(() => import("@/content/links/category/development/tools.json")),
       },
     },
   },
-
+  media: {
+    name: "媒体处理",
+    children: {
+      audio: {
+        name: "音频处理",
+        file: () => safeImport(() => import("@/content/links/category/media/audio.json")),
+      },
+    },
+  },
   office: {
-    name: "办公",
+    name: "办公软件",
     children: {
       documents: {
-        name: "文档",
+        name: "文档处理",
         file: () => safeImport(() => import("@/content/links/category/office/documents.json")),
       },
       pdf: {
-        name: "PDF",
+        name: "PDF 工具",
         file: () => safeImport(() => import("@/content/links/category/office/pdf.json")),
       },
     },
   },
-
   operation: {
-    name: "运营",
+    name: "运营工具",
     children: {
       ecommerce: {
-        name: "电商",
+        name: "电商工具",
         file: () => safeImport(() => import("@/content/links/category/operation/ecommerce.json")),
       },
       marketing: {
-        name: "营销",
+        name: "营销工具",
         file: () => safeImport(() => import("@/content/links/category/operation/marketing.json")),
       },
     },
   },
-
   productivity: {
-    name: "效率",
+    name: "效率工具",
     children: {
       browsers: {
         name: "浏览器",
@@ -186,12 +174,21 @@ const categoryStructure = {
         file: () =>
           safeImport(() => import("@/content/links/category/productivity/cloud-storage.json")),
       },
+      documents: {
+        name: "文档处理",
+        file: () =>
+          safeImport(() => import("@/content/links/category/productivity/documents.json")),
+      },
       email: {
-        name: "邮箱",
+        name: "邮箱服务",
         file: () => safeImport(() => import("@/content/links/category/productivity/email.json")),
       },
+      pdf: {
+        name: "PDF 工具",
+        file: () => safeImport(() => import("@/content/links/category/productivity/pdf.json")),
+      },
       search: {
-        name: "搜索",
+        name: "搜索引擎",
         file: () => safeImport(() => import("@/content/links/category/productivity/search.json")),
       },
       "system-tools": {
@@ -201,12 +198,11 @@ const categoryStructure = {
       },
     },
   },
-
   video: {
-    name: "视频",
+    name: "视频处理",
     children: {
       editing: {
-        name: "编辑",
+        name: "视频编辑",
         file: () => safeImport(() => import("@/content/links/category/video/editing.json")),
       },
     },
@@ -241,8 +237,15 @@ async function safeImport<T>(importFn: () => Promise<T>): Promise<T | null> {
  */
 async function loadRootCategoryItems(
   categoryId: string,
-  categoryInfo: { file: () => Promise<{ default: unknown[] } | null> }
+  categoryInfo:
+    | { file: () => Promise<{ default: unknown[] } | null> }
+    | { children: Record<string, { file: () => Promise<{ default: unknown[] } | null> }> }
 ): Promise<LinksItem[]> {
+  // 添加类型检查
+  if (!("file" in categoryInfo)) {
+    return [];
+  }
+
   try {
     const moduleData = await categoryInfo.file();
     if (!moduleData) {
@@ -403,11 +406,7 @@ function clearCategoryCache(categoryId?: string): void {
  * 预热关键分类的缓存
  */
 async function preloadCriticalCategories(): Promise<void> {
-  const criticalCategories: (keyof typeof categoryStructure)[] = [
-    "profile",
-    "friends",
-    "development",
-  ];
+  const criticalCategories: (keyof typeof categoryStructure)[] = ["development"];
 
   for (const categoryId of criticalCategories) {
     try {
@@ -447,7 +446,8 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
   const now = Date.now();
   if (cachedLinksData && now - cacheTimestamp < CACHE_DURATION) {
     console.log("使用内存缓存的数据，条目数:", cachedLinksData.length);
-    return cachedLinksData;
+    // 返回去重的数据
+    return Array.from(new Map(cachedLinksData.map(item => [item.id, item])).values());
   }
 
   // 尝试从localStorage获取缓存
@@ -456,7 +456,8 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
     console.log("使用localStorage缓存的数据，条目数:", storageCachedData.length);
     cachedLinksData = storageCachedData;
     cacheTimestamp = now;
-    return storageCachedData;
+    // 返回去重的数据
+    return Array.from(new Map(storageCachedData.map(item => [item.id, item])).values());
   }
 
   console.log("没有找到缓存数据，开始加载所有链接...");
@@ -525,14 +526,23 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
 
     // 更新全局缓存
     console.log("所有分类加载完成，总条目数:", allItems.length);
-    cachedLinksData = allItems;
-    cacheTimestamp = now;
-    setCachedDataToStorage(allItems);
 
-    return allItems;
+    // 去重处理
+    const uniqueItems = Array.from(new Map(allItems.map(item => [item.id, item])).values());
+    console.log("去重后条目数:", uniqueItems.length);
+
+    cachedLinksData = uniqueItems;
+    cacheTimestamp = now;
+    setCachedDataToStorage(uniqueItems);
+
+    return uniqueItems;
   } catch (error) {
     console.error("Error loading links data:", error);
-    return cachedLinksData || []; // 如果有缓存数据，返回缓存数据
+    // 即使有错误也返回去重的缓存数据（如果有的话）
+    const uniqueCachedData = cachedLinksData
+      ? Array.from(new Map(cachedLinksData.map(item => [item.id, item])).values())
+      : [];
+    return uniqueCachedData;
   }
 }
 
@@ -569,10 +579,40 @@ function generateCategoriesData(): LinksCategory[] {
   return categories;
 }
 
+// 添加一个函数来清除所有缓存
+function clearAllCaches(): void {
+  try {
+    if (typeof window === "undefined") return;
+
+    // 清除localStorage中的所有缓存
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith("links-")) {
+        localStorage.removeItem(key);
+      }
+    });
+
+    // 清除内存缓存
+    cachedLinksData = null;
+    cacheTimestamp = 0;
+
+    // 清除分类缓存
+    Object.keys(categoryCache).forEach(key => {
+      delete categoryCache[key];
+    });
+
+    console.log("所有缓存已清除");
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("清除缓存时出错:", error);
+    }
+  }
+}
+
 export {
   loadAllLinksData,
   generateCategoriesData,
   categoryStructure,
   clearCategoryCache,
   preloadCriticalCategories,
+  clearAllCaches, // 导出新函数
 };

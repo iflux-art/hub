@@ -19,7 +19,7 @@ export interface LinksDataState {
   // 最后更新时间
   lastUpdated: number;
 
-  // 派生状态：过滤后的链接（排除friends和profile分类）
+  // 派生状态：过滤后的链接（排除friends分类）
   filteredItems: LinksItem[];
   // 派生状态：分类统计
   categoriesCount: Record<string, number>;
@@ -46,7 +46,7 @@ export interface LinksDataStore extends LinksDataState, LinksDataActions {}
 
 // 计算派生状态的辅助函数
 const computeFilteredItems = (items: LinksItem[]): LinksItem[] => {
-  return items.filter(item => item.category !== "friends" && item.category !== "profile");
+  return items;
 };
 
 const computeCategoriesCount = (items: LinksItem[]): Record<string, number> => {
@@ -94,60 +94,62 @@ export const useLinksDataStore = create<LinksDataStore>()(
           filteredItems,
           categoriesCount,
           tagsCount,
+          loading: false,
+          error: null,
+          version: get().version,
           lastUpdated: Date.now(),
         });
       },
 
       setLoading: loading => set({ loading }),
-
-      setError: error => set({ error }),
+      setError: error => set({ error, loading: false }),
 
       updateItem: updatedItem => {
-        const currentItems = [...get().items];
-        const index = currentItems.findIndex(item => item.id === updatedItem.id);
+        const currentItems = get().items;
+        const updatedItems = currentItems.map(item =>
+          item.id === updatedItem.id ? updatedItem : item
+        );
 
-        if (index !== -1) {
-          // 更新现有项
-          currentItems[index] = { ...currentItems[index], ...updatedItem };
-          get().setItems(currentItems);
-        } else {
-          // 添加新项
-          get().setItems([...currentItems, updatedItem]);
-        }
+        // 重新计算派生状态
+        const filteredItems = computeFilteredItems(updatedItems);
+        const categoriesCount = computeCategoriesCount(updatedItems);
+        const tagsCount = computeTagsCount(updatedItems);
+
+        set({
+          items: updatedItems,
+          filteredItems,
+          categoriesCount,
+          tagsCount,
+          version: get().version,
+          lastUpdated: Date.now(),
+        });
       },
 
       updateItems: updatedItems => {
-        if (!updatedItems.length) return;
+        const currentItems = get().items;
+        const newItems = updatedItems.filter(
+          updatedItem => !currentItems.some(item => item.id === updatedItem.id)
+        );
+        const mergedItems = [...currentItems, ...newItems];
 
-        const currentItems = [...get().items];
-        let hasChanges = false;
+        // 重新计算派生状态
+        const filteredItems = computeFilteredItems(mergedItems);
+        const categoriesCount = computeCategoriesCount(mergedItems);
+        const tagsCount = computeTagsCount(mergedItems);
 
-        // 更新或添加项
-        updatedItems.forEach(updatedItem => {
-          const index = currentItems.findIndex(item => item.id === updatedItem.id);
-
-          if (index !== -1) {
-            // 更新现有项
-            currentItems[index] = { ...currentItems[index], ...updatedItem };
-            hasChanges = true;
-          } else {
-            // 添加新项
-            currentItems.push(updatedItem);
-            hasChanges = true;
-          }
+        set({
+          items: mergedItems,
+          filteredItems,
+          categoriesCount,
+          tagsCount,
+          version: get().version,
+          lastUpdated: Date.now(),
         });
-
-        // 只有在有变更时才更新状态
-        if (hasChanges) {
-          get().setItems(currentItems);
-        }
       },
 
-      updateVersion: version => {
-        set({ version, lastUpdated: Date.now() });
-      },
+      updateVersion: version => set({ version }),
 
-      resetLinksDataState: () =>
+      resetLinksDataState: () => {
         set({
           items: [],
           loading: true,
@@ -157,9 +159,10 @@ export const useLinksDataStore = create<LinksDataStore>()(
           filteredItems: [],
           categoriesCount: {},
           tagsCount: {},
-        }),
+        });
+      },
 
-      // 选择性更新方法，避免不必要的重渲染
+      // 选择性更新方法
       updateCategoriesCount: categoriesCount => set({ categoriesCount }),
       updateTagsCount: tagsCount => set({ tagsCount }),
       updateFilteredItems: filteredItems => set({ filteredItems }),

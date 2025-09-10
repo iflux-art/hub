@@ -49,12 +49,12 @@ function checkStoreUsage() {
     'useFriendsStore',
     'useLayoutStore',
     'useLinkFilterStore',
-    'useLinksDataStore',
+    // 'useLinksDataStore', // 已删除，使用 features/links/stores/links-data-store.ts 中的实现
     'useNavbarStore',
     'useSearchStore',
     'useThemeStore',
     'useAdminStore'
-  ];
+  ].filter(storeName => storeName); // 过滤掉被注释的项
   
   let usageCount = 0;
   let filesWithUsage = new Set();

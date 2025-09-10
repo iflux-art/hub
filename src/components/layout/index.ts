@@ -21,12 +21,12 @@ export { MultiLayout, ThreeColumnLayout as MultiColumnLayout } from "./multi-lay
 export { ResponsiveGrid, ThreeColumnGrid as FlexibleGrid } from "./responsive-grid";
 
 // 状态和错误处理
-export { ProgressBarLoading } from "./progress-bar-loading";
-export { NotFound } from "./not-found";
+// ProgressBarLoading 组件已合并到全局loading页面，不再导出
+// NotFound 组件已合并到全局404页面，不再导出
 
 // 导航相关组件
-export { Footer } from "./footer";
-export { Sidebar, SidebarWrapper } from "./sidebar";
+export { Footer } from "@/components/footer";
+export { Sidebar, SidebarWrapper } from "@/features/sidebar/components";
 
 // 配置信息
 export {
@@ -34,7 +34,7 @@ export {
   NAV_PATHS,
   NAV_DESCRIPTIONS,
   ADMIN_MENU_ITEMS,
-} from "./navbar/nav-config";
+} from "@/features/navbar/types/nav-config";
 
-// 客户端初始化组件
-export { InitClient } from "./init-client";
+// // 客户端初始化组件  // 删除这行
+// export { InitClient } from "./init-client";  // 删除这行

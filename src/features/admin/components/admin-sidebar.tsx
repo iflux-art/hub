@@ -2,11 +2,12 @@
 
 import { cn } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { ADMIN_MENU_ITEMS } from "@/components/layout/navbar/nav-config";
+import { ADMIN_MENU_ITEMS } from "@/features/navbar/types/nav-config";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import type { NavConfigItem } from "@/features/navbar/types/nav-config";
 
 interface AdminSidebarProps {
   className?: string;
@@ -34,7 +35,7 @@ export const AdminSidebar = ({ className }: AdminSidebarProps) => {
         <div className="space-y-1">
           <h3 className="mb-2 px-4 text-sm font-medium text-muted-foreground">管理菜单</h3>
           <nav className="space-y-1">
-            {ADMIN_MENU_ITEMS.map(item => (
+            {ADMIN_MENU_ITEMS.map((item: NavConfigItem) => (
               <Button
                 key={item.key}
                 variant={isActive(`/${item.key}`) ? "secondary" : "ghost"}

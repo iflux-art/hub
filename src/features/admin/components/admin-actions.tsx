@@ -4,21 +4,23 @@ import { Button } from "@/components/ui/button";
 import type { AdminAction } from "@/features/admin/types";
 import React from "react";
 
-export const AdminActions = ({
-  actions,
-  className = "",
-}: {
+export interface AdminActionsProps {
   actions: (Omit<AdminAction, "icon"> & {
     icon?: React.ComponentType<{ className?: string }>;
+    key?: string;
   })[];
   className?: string;
-}) => (
+}
+
+export const AdminActions = ({ actions, className = "" }: AdminActionsProps) => (
   <div className={`flex flex-wrap gap-2 ${className}`}>
-    {actions.map(action => {
+    {actions.map((action, index) => {
       const IconComponent = action.icon;
+      // 使用 action.key 或 index 作为 key，如果都没有则生成唯一 key
+      const key = action.key || `${action.label}-${index}`;
       return (
         <Button
-          key={action.label}
+          key={key}
           variant={action.variant ?? "default"}
           onClick={action.onClick}
           disabled={action.disabled ?? action.loading}

@@ -229,13 +229,10 @@ export const LinksSidebarCard = ({
 
   // 处理分类数据
   const processedCategories = useMemo(() => {
-    // 过滤掉友链和个人主页分类
-    const filteredCategories = categories.filter(
-      cat => cat.id !== "friends" && cat.id !== "profile"
-    );
+    // 过滤掉友链分类
 
     // 按 order 排序分类
-    return filteredCategories.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    return categories.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   }, [categories]);
 
   const currentSelectedCategory = selectedCategory || "";

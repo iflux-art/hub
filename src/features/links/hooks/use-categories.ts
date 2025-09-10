@@ -57,11 +57,11 @@ export function useCategories() {
   };
 
   /**
-   * 获取过滤后的分类（排除友链和个人主页）
+   * 获取过滤后的分类（排除友链）
    * 使用useMemo缓存结果，避免每次返回新数组
    */
   const getFilteredCategories = useMemo(
-    () => () => categories.filter(cat => cat.id !== "friends" && cat.id !== "profile"),
+    () => () => categories, // 直接返回所有分类，不再过滤
     [categories] // 修复：使用完整依赖而不是categories.length
   );
 

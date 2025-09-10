@@ -14,8 +14,6 @@ const validCategories = [
   "office",
   "productivity",
   "operation",
-  "profile",
-  "friends",
 ] as const;
 
 /**

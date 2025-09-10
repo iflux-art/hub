@@ -5,12 +5,12 @@ import {
   NAV_DESCRIPTIONS,
   NAV_ITEMS,
   NAV_PATHS,
-} from "@/components/layout/navbar/nav-config";
-import { useActiveSection } from "@/hooks/navbar/use-active-section";
+} from "@/features/navbar/types/nav-config";
+import { useActiveSection } from "@/features/navbar/hooks/use-active-section";
 import { cn } from "@/utils";
 import { useUser } from "@clerk/nextjs";
-import type { LucideIcon } from "lucide-react";
-import { PrefetchLink } from "@/components/prefetch-link";
+import Link from "next/link";
+import type { NavConfigItem } from "@/features/navbar/types/nav-config";
 
 interface NavProps {
   /**
@@ -26,9 +26,7 @@ interface NavProps {
 
 const NavCards = ({ onClose, className }: NavProps) => {
   // Always call hooks at the top level, even if we might not use the result
-  const isActiveSection = useActiveSection(
-    NAV_ITEMS.map((item: (typeof NAV_ITEMS)[number]) => item.key)
-  );
+  const isActiveSection = useActiveSection(NAV_ITEMS.map((item: NavConfigItem) => item.key));
 
   // 如果没有导航项，则不渲染导航卡片
   if (NAV_ITEMS.length === 0) {
@@ -38,16 +36,13 @@ const NavCards = ({ onClose, className }: NavProps) => {
   return (
     <div className={cn("space-y-6", className)}>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {NAV_ITEMS.map((item: (typeof NAV_ITEMS)[number]) => {
-          const Icon: LucideIcon = item.icon!;
-          // 修复：添加空值检查并提供默认值
+        {NAV_ITEMS.map((item: NavConfigItem) => {
+          const Icon = item.icon;
           const href = NAV_PATHS[item.key] ?? "/";
           return (
-            <PrefetchLink
+            <Link
               key={item.key}
               href={href}
-              prefetchStrategy="hover"
-              prefetchDelay={150}
               onClick={onClose}
               className={cn(
                 "group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground",
@@ -58,12 +53,12 @@ const NavCards = ({ onClose, className }: NavProps) => {
             >
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Icon className="h-5 w-5" />
+                  {Icon && <Icon className="h-5 w-5" />} {/* 添加条件渲染 */}
                   <h3 className="text-base font-medium">{item.label}</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">{NAV_DESCRIPTIONS[item.key]}</p>
               </div>
-            </PrefetchLink>
+            </Link>
           );
         })}
       </div>
@@ -72,9 +67,7 @@ const NavCards = ({ onClose, className }: NavProps) => {
 };
 
 const AdminMenu = ({ onClose }: NavProps) => {
-  const isActiveSection = useActiveSection(
-    ADMIN_MENU_ITEMS.map((item: (typeof ADMIN_MENU_ITEMS)[number]) => item.key)
-  );
+  const isActiveSection = useActiveSection(ADMIN_MENU_ITEMS.map((item: NavConfigItem) => item.key));
 
   return (
     <div className="space-y-6">
@@ -82,14 +75,12 @@ const AdminMenu = ({ onClose }: NavProps) => {
         <h3 className="text-sm font-medium text-muted-foreground">管理后台</h3>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {ADMIN_MENU_ITEMS.map((item: (typeof ADMIN_MENU_ITEMS)[number]) => {
-          const Icon: LucideIcon = item.icon;
+        {ADMIN_MENU_ITEMS.map((item: NavConfigItem) => {
+          const Icon = item.icon; // 移除类型注解，让TypeScript自动推断
           return (
-            <PrefetchLink
+            <Link
               key={item.key}
               href={`/${item.key}`}
-              prefetchStrategy="hover"
-              prefetchDelay={150}
               onClick={onClose}
               className={cn(
                 "group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground",
@@ -100,12 +91,12 @@ const AdminMenu = ({ onClose }: NavProps) => {
             >
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Icon className="h-5 w-5" />
+                  {Icon && <Icon className="h-5 w-5" />} {/* 添加条件渲染 */}
                   <h3 className="text-base font-medium">{item.label}</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">{item.description}</p>
               </div>
-            </PrefetchLink>
+            </Link>
           );
         })}
       </div>
