@@ -55,7 +55,7 @@ export const NAV_ITEMS: readonly NavConfigItem[] = [
     external: true,
   },
   {
-    key: "home",
+    key: "hub",
     label: "导航",
     description: "网站导航",
     icon: Home,
@@ -97,7 +97,7 @@ const flattenNavItems = (items: readonly NavConfigItem[]): NavConfigItem[] => {
 const FLAT_NAV_ITEMS: NavConfigItem[] = flattenNavItems(NAV_ITEMS);
 
 export const NAV_PATHS: Record<string, string> = {
-  home: "/",
+  hub: "/",
 } as const;
 
 /**
