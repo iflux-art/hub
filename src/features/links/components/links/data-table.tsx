@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type {
-  DataTableColumn,
   DataTableAction,
+  DataTableColumn,
   DataTablePagination,
   DataTableProps,
 } from "@/features/admin/types"; // 导入通用类型
@@ -20,7 +20,10 @@ interface TableHeaderProps<T> {
   hasActions: boolean;
 }
 
-const TableHeader = <T extends object>({ columns, hasActions }: TableHeaderProps<T>) => (
+const TableHeader = <T extends object>({
+  columns,
+  hasActions,
+}: TableHeaderProps<T>) => (
   <thead>
     <tr className="border-b bg-muted/50">
       {columns.map((column, _index) => (
@@ -32,7 +35,9 @@ const TableHeader = <T extends object>({ columns, hasActions }: TableHeaderProps
           {column.title}
         </th>
       ))}
-      {hasActions && <th className="px-4 py-3 text-center text-sm font-medium">操作</th>}
+      {hasActions && (
+        <th className="px-4 py-3 text-center text-sm font-medium">操作</th>
+      )}
     </tr>
   </thead>
 );
@@ -44,7 +49,11 @@ interface TableCellProps<T> {
   recordIndex: number;
 }
 
-const TableCell = <T extends object>({ column, record, recordIndex }: TableCellProps<T>) => (
+const TableCell = <T extends object>({
+  column,
+  record,
+  recordIndex,
+}: TableCellProps<T>) => (
   <td className={`px-4 py-3 text-sm ${getAlignClass(column.align)}`}>
     {column.render
       ? column.render(record[column.key], record, recordIndex)
@@ -102,7 +111,9 @@ const TableRow = <T extends object>({
   actions,
 }: TableRowProps<T>) => {
   const recordKey =
-    "id" in record && typeof record.id === "string" ? record.id : `record-${recordIndex}`;
+    "id" in record && typeof record.id === "string"
+      ? record.id
+      : `record-${recordIndex}`;
 
   return (
     <tr key={recordKey} className="border-b hover:bg-muted/50">
@@ -115,7 +126,11 @@ const TableRow = <T extends object>({
         />
       ))}
       {actions && actions.length > 0 && (
-        <ActionsColumn actions={actions} record={record} recordIndex={recordIndex} />
+        <ActionsColumn
+          actions={actions}
+          record={record}
+          recordIndex={recordIndex}
+        />
       )}
     </tr>
   );
@@ -135,7 +150,9 @@ const Pagination = ({ pagination }: PaginationProps) => {
 
   return (
     <div className="flex items-center justify-between border-t px-4 py-3">
-      <div className="text-sm text-muted-foreground">共 {pagination.total} 条记录</div>
+      <div className="text-sm text-muted-foreground">
+        共 {pagination.total} 条记录
+      </div>
       <div className="flex items-center gap-2">
         <Button
           variant="outline"

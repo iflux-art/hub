@@ -1,14 +1,14 @@
 "use client";
 
-import { loadAllLinksData, clearAllCaches } from "@/features/links/lib";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useCategories } from "./use-categories";
-import { useFilterState } from "./use-filter-state";
+import { clearAllCaches, loadAllLinksData } from "@/features/links/lib";
+import type { LinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store类型
 // import { useLinksDataStore } from "@/stores/links-data-store.standard"; // 已删除
 // import type { LinksDataStore } from "@/stores/links-data-store.standard"; // 已删除
 import { useLinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store实现
-import type { LinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store类型
 import type { LinksItem } from "@/features/links/types";
+import { useCategories } from "./use-categories";
+import { useFilterState } from "./use-filter-state";
 
 // 导入新的缓存管理Hook
 import { useLinksCache } from "./use-links-cache";
@@ -40,7 +40,8 @@ export function useLinksData() {
   } = store;
 
   // 使用共享的分类数据 hook
-  const { getFilteredCategories, getCategoryName: getCategoryNameFromHook } = useCategories();
+  const { getFilteredCategories, getCategoryName: getCategoryNameFromHook } =
+    useCategories();
 
   // 使用useRef来存储请求状态，避免重复请求
   const isFetchingRef = useRef(false);
@@ -77,7 +78,11 @@ export function useLinksData() {
   useEffect(() => {
     async function fetchData() {
       // 检查是否已经尝试过初始加载
-      if (initialLoadAttemptedRef.current && items.length > 0 && !forceRefresh) {
+      if (
+        initialLoadAttemptedRef.current &&
+        items.length > 0 &&
+        !forceRefresh
+      ) {
         return;
       }
 
@@ -120,7 +125,7 @@ export function useLinksData() {
             () => {
               fetchPromiseCache.delete(requestKey);
             },
-            5 * 60 * 1000
+            5 * 60 * 1000,
           ); // 5分钟过期
         }
 
@@ -166,7 +171,10 @@ export function useLinksData() {
   }, [items, setItems, setLoading, setError, forceRefresh, directItems]); // 修复：使用完整依赖而不是长度
 
   // 使用共享的分类过滤函数
-  const filteredCategories = useMemo(() => getFilteredCategories(), [getFilteredCategories]);
+  const filteredCategories = useMemo(
+    () => getFilteredCategories(),
+    [getFilteredCategories],
+  );
 
   // 决定使用哪些数据进行过滤
   const dataToFilter = useMemo(() => {
@@ -180,7 +188,9 @@ export function useLinksData() {
     }
 
     // 去重处理，确保每个项目只出现一次
-    const uniqueData = Array.from(new Map(sourceData.map(item => [item.id, item])).values());
+    const uniqueData = Array.from(
+      new Map(sourceData.map((item) => [item.id, item])).values(),
+    );
 
     return uniqueData;
   }, [items, directItems]); // 修复：使用完整依赖而不是长度
@@ -203,7 +213,10 @@ export function useLinksData() {
   const getCategoryName = getCategoryNameFromHook;
 
   // 计算总数 - 使用派生状态
-  const totalFilteredCount = useMemo(() => stateFilteredItems.length, [stateFilteredItems]);
+  const totalFilteredCount = useMemo(
+    () => stateFilteredItems.length,
+    [stateFilteredItems],
+  );
 
   // 结合状态
   const combinedLoading = loading || isDirectLoading;
@@ -221,21 +234,25 @@ export function useLinksData() {
     }
 
     // 去重处理
-    return Array.from(new Map(resultData.map(item => [item.id, item])).values());
+    return Array.from(
+      new Map(resultData.map((item) => [item.id, item])).values(),
+    );
   }, [stateFilteredItems, selectedCategory, items, directItems]); // 修复：使用完整依赖而不是长度
 
   // 计算派生状态 - 过滤后的项目
   const filteredItems = useMemo(() => {
     // 返回所有项目，不再过滤，但需要去重
-    return Array.from(new Map(items.map(item => [item.id, item])).values());
+    return Array.from(new Map(items.map((item) => [item.id, item])).values());
   }, [items]); // 修复：使用完整依赖而不是items.length
 
   // 计算分类计数
   const categoriesCount = useMemo(() => {
     const count: Record<string, number> = {};
     // 去重后再计算
-    const uniqueItems = Array.from(new Map(items.map(item => [item.id, item])).values());
-    uniqueItems.forEach(item => {
+    const uniqueItems = Array.from(
+      new Map(items.map((item) => [item.id, item])).values(),
+    );
+    uniqueItems.forEach((item) => {
       if (item.category) {
         count[item.category] = (count[item.category] || 0) + 1;
       }
@@ -247,9 +264,11 @@ export function useLinksData() {
   const tagsCount = useMemo(() => {
     const count: Record<string, number> = {};
     // 去重后再计算
-    const uniqueItems = Array.from(new Map(items.map(item => [item.id, item])).values());
-    uniqueItems.forEach(item => {
-      item.tags?.forEach(tag => {
+    const uniqueItems = Array.from(
+      new Map(items.map((item) => [item.id, item])).values(),
+    );
+    uniqueItems.forEach((item) => {
+      item.tags?.forEach((tag) => {
         count[tag] = (count[tag] || 0) + 1;
       });
     });
@@ -259,7 +278,9 @@ export function useLinksData() {
   return {
     items: effectiveFilteredItems, // 返回过滤后的数据（用于链接导航页面）
     allItems: Array.from(
-      new Map((items.length > 0 ? items : directItems).map(item => [item.id, item])).values()
+      new Map(
+        (items.length > 0 ? items : directItems).map((item) => [item.id, item]),
+      ).values(),
     ), // 返回所有原始数据，去重
     categories: filteredCategories, // 返回过滤后的分类
     selectedCategory,
@@ -303,14 +324,16 @@ const RETRY_DELAY = 1000;
  */
 async function loadWithRetry(
   loadFn: () => Promise<LinksItem[]>,
-  retries = 0
+  retries = 0,
 ): Promise<LinksItem[]> {
   try {
     return await loadFn();
   } catch (error) {
     if (retries < MAX_RETRIES) {
       // 等待一段时间后重试
-      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * 2 ** retries));
+      await new Promise((resolve) =>
+        setTimeout(resolve, RETRY_DELAY * 2 ** retries),
+      );
       return loadWithRetry(loadFn, retries + 1);
     }
     throw error;

@@ -47,13 +47,16 @@ export function normalizeUrl(url: string): string {
  */
 export function validateRequiredFields(
   data: Record<string, unknown>,
-  requiredFields: string[]
+  requiredFields: string[],
 ): string[] {
   const missingFields: string[] = [];
 
   for (const field of requiredFields) {
     // 检查字段是否存在且不为空
-    if (!data[field] || (typeof data[field] === "string" && !data[field]?.toString().trim())) {
+    if (
+      !data[field] ||
+      (typeof data[field] === "string" && !data[field]?.toString().trim())
+    ) {
       missingFields.push(field);
     }
   }
@@ -69,10 +72,13 @@ export function validateRequiredFields(
  */
 export function validatePageParams(
   params: Record<string, unknown>,
-  requiredFields: string[] = []
+  requiredFields: string[] = [],
 ): { isValid: boolean; missingFields: string[] } {
   const missingFields = requiredFields.filter(
-    field => params[field] === undefined || params[field] === null || params[field] === ""
+    (field) =>
+      params[field] === undefined ||
+      params[field] === null ||
+      params[field] === "",
   );
 
   return {
@@ -102,7 +108,11 @@ export function safeJsonParse<T>(jsonString: string, defaultValue: T): T {
  * @param max 最大长度
  * @returns 是否符合长度要求
  */
-export function validateStringLength(value: string, min: number, max: number): boolean {
+export function validateStringLength(
+  value: string,
+  min: number,
+  max: number,
+): boolean {
   return value.length >= min && value.length <= max;
 }
 
@@ -113,7 +123,11 @@ export function validateStringLength(value: string, min: number, max: number): b
  * @param max 最大长度
  * @returns 是否符合长度要求
  */
-export function validateArrayLength<T>(value: T[], min: number, max: number): boolean {
+export function validateArrayLength<T>(
+  value: T[],
+  min: number,
+  max: number,
+): boolean {
   return value.length >= min && value.length <= max;
 }
 
@@ -125,7 +139,7 @@ export function validateArrayLength<T>(value: T[], min: number, max: number): bo
  */
 export function isValidCategory<T extends readonly string[]>(
   category: string,
-  validCategories: T
+  validCategories: T,
 ): category is T[number] {
   return validCategories.includes(category as T[number]);
 }

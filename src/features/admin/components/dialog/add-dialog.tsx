@@ -1,12 +1,22 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import type { AddDialogProps } from "@/features/admin/types";
 import { LinksForm } from "@/features/links/components";
 import type { LinksFormData, LinksItem } from "@/features/links/types";
-import { useState } from "react";
 
-export const AddDialog = ({ open, onOpenChange, onSuccess, onError }: AddDialogProps) => {
+export const AddDialog = ({
+  open,
+  onOpenChange,
+  onSuccess,
+  onError,
+}: AddDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (formData: LinksFormData) => {
@@ -43,7 +53,9 @@ export const AddDialog = ({ open, onOpenChange, onSuccess, onError }: AddDialogP
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="hide-scrollbar max-h-[90vh] max-w-2xl space-y-6 overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">添加新网址</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">
+            添加新网址
+          </DialogTitle>
         </DialogHeader>
         <LinksForm
           submitAction={handleSubmit}

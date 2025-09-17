@@ -8,10 +8,10 @@
  * @since 2024
  */
 
-import { Badge } from "@/components/ui/badge";
-import type { LinksItem } from "@/features/links/types";
 import { Edit, ExternalLink, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import type { LinksItem } from "@/features/links/types";
 
 // 内联 TableColumn 类型定义
 export interface TableColumn<T> {
@@ -29,7 +29,7 @@ export interface TableColumn<T> {
  * @returns 表格列配置数组
  */
 export const getTableColumns = (
-  getCategoryName: (categoryId: string) => string
+  getCategoryName: (categoryId: string) => string,
 ): TableColumn<LinksItem>[] => [
   {
     key: "icon",
@@ -64,7 +64,9 @@ export const getTableColumns = (
     render: (value, record, _index) => (
       <div>
         <div className="font-medium">{String(value)}</div>
-        <div className="max-w-[300px] truncate text-sm text-muted-foreground">{record.url}</div>
+        <div className="max-w-[300px] truncate text-sm text-muted-foreground">
+          {record.url}
+        </div>
       </div>
     ),
   },
@@ -72,7 +74,8 @@ export const getTableColumns = (
     key: "category",
     title: "分类",
     width: "120px",
-    render: (value, _record, _index) => (value ? getCategoryName(value as string) : "-"),
+    render: (value, _record, _index) =>
+      value ? getCategoryName(value as string) : "-",
   },
   {
     key: "tags",
@@ -123,7 +126,7 @@ export const getTableColumns = (
  */
 export const getTableActions = (
   onEdit: (record: LinksItem) => void,
-  onDelete: (record: LinksItem) => void
+  onDelete: (record: LinksItem) => void,
 ) => [
   {
     label: "访问",

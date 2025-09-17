@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import type React from "react";
+import { cn } from "@/utils";
 
 interface NavLinkProps {
   href: string;
@@ -23,7 +23,11 @@ interface NavLinkProps {
 /**
  * 判断链接是否处于活动状态
  */
-function isLinkActive(pathname: string, href: string, currentDoc?: string): boolean {
+function isLinkActive(
+  pathname: string,
+  href: string,
+  currentDoc?: string,
+): boolean {
   // 完全匹配
   if (pathname === href) {
     return true;
@@ -107,7 +111,7 @@ export const NavLink = ({
       className={cn(
         "flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors",
         className,
-        isActive ? activeClassName : inactiveClassName
+        isActive ? activeClassName : inactiveClassName,
       )}
       onClick={onClick}
       onMouseEnter={onMouseEnter}

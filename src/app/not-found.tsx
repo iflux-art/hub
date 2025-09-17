@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { PageContainer } from "@/components/layout";
 import { AlertCircle, Home, Search } from "lucide-react";
 import type { Metadata } from "next";
-import type { NotFoundProps } from "@/types";
 import Link from "next/link";
 import { useId } from "react";
+import { PageContainer } from "@/components/layout";
+import { Button } from "@/components/ui/button";
+import type { NotFoundProps } from "@/types";
 
 export const metadata: Metadata = {
   title: "404 - 页面未找到",
@@ -37,16 +37,22 @@ const NotFoundPage = () => {
     showIcon: true,
   };
 
-  const { code, title, description, buttonText, backUrl, className, showIcon } = props;
+  const { code, title, description, buttonText, backUrl, className, showIcon } =
+    props;
 
   return (
     <PageContainer config={{ layout: "full-width" }}>
-      <main className={`flex min-h-[70vh] items-center justify-center text-center ${className}`}>
+      <main
+        className={`flex min-h-[70vh] items-center justify-center text-center ${className}`}
+      >
         <section aria-labelledby={errorTitleId} className="w-full max-w-4xl">
           <div className="flex flex-col items-center space-y-8">
             {showIcon && (
               <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-primary/10">
-                <AlertCircle className="h-12 w-12 text-primary" aria-hidden="true" />
+                <AlertCircle
+                  className="h-12 w-12 text-primary"
+                  aria-hidden="true"
+                />
               </div>
             )}
 
@@ -58,7 +64,9 @@ const NotFoundPage = () => {
 
             <h2 className="mb-4 text-3xl font-bold">{title}</h2>
 
-            <p className="mx-auto mb-8 max-w-md text-lg text-muted-foreground">{description}</p>
+            <p className="mx-auto mb-8 max-w-md text-lg text-muted-foreground">
+              {description}
+            </p>
 
             {/* 主要操作按钮 */}
             <div className="mb-8 flex flex-wrap justify-center gap-4">

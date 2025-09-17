@@ -1,11 +1,15 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import type { LinksCategory } from "@/features/links/types";
-import { cn } from "@/utils";
 import { ChevronRight, Folder } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import type { LinksCategory } from "@/features/links/types";
+import { cn } from "@/utils";
 
 // 检查是否在客户端环境
 const isBrowser = typeof window !== "undefined";
@@ -29,26 +33,31 @@ export interface LinksSidebarCardProps {
 
 // 折叠状态管理hook
 function useCollapsibleState(categories: LinksCategory[], storageKey: string) {
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
+    {},
+  );
   const isInitialized = useRef(false);
 
   // 处理折叠状态切换
   const handleOpenChange = useCallback(
     (categoryId: string, open: boolean) => {
-      setOpenCategories(prev => {
+      setOpenCategories((prev) => {
         const newState = { ...prev, [categoryId]: open };
         // 保存到 localStorage（仅在客户端）
         if (isBrowser) {
           try {
             localStorage.setItem(storageKey, JSON.stringify(newState));
           } catch (error) {
-            console.warn("Failed to save sidebar state to localStorage:", error);
+            console.warn(
+              "Failed to save sidebar state to localStorage:",
+              error,
+            );
           }
         }
         return newState;
       });
     },
-    [storageKey]
+    [storageKey],
   );
 
   // 初始化折叠状态
@@ -71,7 +80,7 @@ function useCollapsibleState(categories: LinksCategory[], storageKey: string) {
 
     // 如果没有保存的状态，初始化新状态 - 默认展开所有有子项的分类
     const initialState: Record<string, boolean> = {};
-    categories.forEach(category => {
+    categories.forEach((category) => {
       if (category.children && category.children.length > 0) {
         initialState[category.id] = true;
       }
@@ -110,7 +119,7 @@ const ChildCategoryItem = ({
         "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
         isChildSelected
           ? "bg-primary/90 font-medium text-primary-foreground"
-          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground active:bg-muted/80"
+          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground active:bg-muted/80",
       )}
     >
       <div className="h-2 w-2 rounded-full bg-current opacity-50" />
@@ -149,7 +158,7 @@ const CollapsibleCategory = ({
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
           isSelected
             ? "bg-primary font-medium text-primary-foreground"
-            : "text-muted-foreground hover:bg-muted/60 hover:text-foreground active:bg-muted/80"
+            : "text-muted-foreground hover:bg-muted/60 hover:text-foreground active:bg-muted/80",
         )}
         aria-expanded={isOpen}
       >
@@ -160,7 +169,7 @@ const CollapsibleCategory = ({
         <ChevronRight
           className={cn(
             "h-3.5 w-3.5 shrink-0 transition-transform duration-200",
-            isOpen && "rotate-90"
+            isOpen && "rotate-90",
           )}
           aria-hidden="true"
         />
@@ -188,7 +197,11 @@ interface SimpleCategoryProps {
   onCategoryClick: (categoryId: string) => void;
 }
 
-const SimpleCategory = ({ category, selectedCategory, onCategoryClick }: SimpleCategoryProps) => {
+const SimpleCategory = ({
+  category,
+  selectedCategory,
+  onCategoryClick,
+}: SimpleCategoryProps) => {
   const isSelected = selectedCategory === category.id;
 
   return (
@@ -203,7 +216,7 @@ const SimpleCategory = ({ category, selectedCategory, onCategoryClick }: SimpleC
         "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
         isSelected
           ? "bg-primary font-medium text-primary-foreground"
-          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground active:bg-muted/80"
+          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground active:bg-muted/80",
       )}
     >
       <Folder className="h-3.5 w-3.5" />
@@ -225,7 +238,10 @@ export const LinksSidebarCard = ({
   storageKey = "links-sidebar-open-categories",
   showHeader = true,
 }: LinksSidebarCardProps) => {
-  const { openCategories, handleOpenChange } = useCollapsibleState(categories, storageKey);
+  const { openCategories, handleOpenChange } = useCollapsibleState(
+    categories,
+    storageKey,
+  );
 
   // 处理分类数据
   const processedCategories = useMemo(() => {
@@ -272,7 +288,7 @@ export const LinksSidebarCard = ({
               "flex min-h-[44px] w-full touch-manipulation items-center gap-2 rounded-md px-2.5 py-2.5 text-left text-sm transition-colors sm:min-h-[36px] sm:px-3 sm:py-2",
               !currentSelectedCategory
                 ? "bg-primary font-medium text-primary-foreground"
-                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground active:bg-muted/80"
+                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground active:bg-muted/80",
             )}
           >
             <Folder className="h-3.5 w-3.5" />
@@ -280,8 +296,9 @@ export const LinksSidebarCard = ({
           </button>
 
           {/* 分类列表 */}
-          {processedCategories.map(category => {
-            const hasChildren = category.children && category.children.length > 0;
+          {processedCategories.map((category) => {
+            const hasChildren =
+              category.children && category.children.length > 0;
             // 修复：添加空值检查并提供默认值
             const isOpen = openCategories[category.id] ?? false;
 

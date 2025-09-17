@@ -2,14 +2,18 @@
  * 搜索引擎核心功能
  */
 
-import type { SearchOptions, SearchResponse, SearchResult } from "@/features/search/types";
+import type {
+  SearchOptions,
+  SearchResponse,
+  SearchResult,
+} from "@/features/search/types";
 
 /**
  * 执行搜索
  */
 export async function performSearch(
   query: string,
-  options: SearchOptions = {}
+  options: SearchOptions = {},
 ): Promise<SearchResponse> {
   const { type = "all", limit = 10 } = options;
 

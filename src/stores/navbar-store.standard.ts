@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { debounce } from "lodash";
+import { create } from "zustand";
 
 // 状态接口
 export interface NavbarState {
@@ -50,7 +50,7 @@ export const createNavbarStore = () => {
   return create<NavbarStore>()((set, _get) => {
     // 创建防抖的滚动处理函数
     const debouncedSetState = debounce((newState: Partial<NavbarState>) => {
-      set(state => ({ ...state, ...newState }));
+      set((state) => ({ ...state, ...newState }));
     }, NAVBAR_STATE_CONFIG.debounceTime);
 
     return {
@@ -63,9 +63,9 @@ export const createNavbarStore = () => {
       isInitialized: false,
 
       // Actions
-      setScrollPosition: position => {
+      setScrollPosition: (position) => {
         // 只有在滚动距离超过阈值时才更新方向
-        set(state => {
+        set((state) => {
           const distance = Math.abs(position - state.position);
           if (distance < NAVBAR_STATE_CONFIG.scrollThreshold) {
             return {};
@@ -78,7 +78,9 @@ export const createNavbarStore = () => {
           debouncedSetState({
             position,
             direction: newDirection,
-            lastDirectionChange: shouldUpdateDirection ? Date.now() : state.lastDirectionChange,
+            lastDirectionChange: shouldUpdateDirection
+              ? Date.now()
+              : state.lastDirectionChange,
           });
 
           return {
@@ -87,7 +89,7 @@ export const createNavbarStore = () => {
         });
       },
 
-      setPageTitle: pageTitle => set({ pageTitle }),
+      setPageTitle: (pageTitle) => set({ pageTitle }),
 
       scrollToTop: () => {
         window.scrollTo({ top: 0, behavior: "smooth" });

@@ -31,7 +31,11 @@ function validateBasicFields(formData: Record<string, unknown>): {
 
   const { category } = formData;
   // 验证分类ID
-  if (!category || typeof category !== "string" || !isValidCategory(category, validCategories)) {
+  if (
+    !category ||
+    typeof category !== "string" ||
+    !isValidCategory(category, validCategories)
+  ) {
     return { success: false, error: "无效的分类ID" };
   }
 
@@ -42,7 +46,8 @@ function validateBasicFields(formData: Record<string, unknown>): {
  * 构建表单数据对象
  */
 function buildFormData(formData: Record<string, unknown>): LinksFormData {
-  const { title, url, category, description, tags, featured, icon, iconType } = formData;
+  const { title, url, category, description, tags, featured, icon, iconType } =
+    formData;
 
   return {
     title: title as string,
@@ -87,10 +92,12 @@ export function validateLinksFormData(formData: unknown): {
 export function validateLinksUpdate(
   items: LinksItem[],
   id: string,
-  updates: Partial<LinksFormData>
+  updates: Partial<LinksFormData>,
 ): { success: boolean; error?: string } {
   if (updates.url) {
-    const exists = items.some(item => item.url === updates.url && item.id !== id);
+    const exists = items.some(
+      (item) => item.url === updates.url && item.id !== id,
+    );
     if (exists) {
       return { success: false, error: "URL already exists" };
     }

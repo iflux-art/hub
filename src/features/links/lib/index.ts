@@ -1,4 +1,8 @@
-import type { CategoryId, LinksCategory, LinksItem } from "@/features/links/types";
+import type {
+  CategoryId,
+  LinksCategory,
+  LinksItem,
+} from "@/features/links/types";
 
 // 定义分类结构，基于实际文件夹结构
 const categoryStructure = {
@@ -8,35 +12,47 @@ const categoryStructure = {
       // 修复文件路径，确保它们与实际文件夹结构匹配
       api: {
         name: "API",
-        file: () => safeImport(() => import("@/content/links/category/ai/api.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/ai/api.json")),
       },
       chat: {
         name: "聊天",
-        file: () => safeImport(() => import("@/content/links/category/ai/chat.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/ai/chat.json")),
       },
       creative: {
         name: "创意",
-        file: () => safeImport(() => import("@/content/links/category/ai/creative.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/ai/creative.json")),
       },
       models: {
         name: "模型",
-        file: () => safeImport(() => import("@/content/links/category/ai/models.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/ai/models.json")),
       },
       platforms: {
         name: "平台",
-        file: () => safeImport(() => import("@/content/links/category/ai/platforms.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/ai/platforms.json"),
+          ),
       },
       resources: {
         name: "资源",
-        file: () => safeImport(() => import("@/content/links/category/ai/resources.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/ai/resources.json"),
+          ),
       },
       services: {
         name: "服务",
-        file: () => safeImport(() => import("@/content/links/category/ai/services.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/ai/services.json")),
       },
       tools: {
         name: "工具",
-        file: () => safeImport(() => import("@/content/links/category/ai/tools.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/ai/tools.json")),
       },
     },
   },
@@ -45,15 +61,22 @@ const categoryStructure = {
     children: {
       daw: {
         name: "数字音频工作站",
-        file: () => safeImport(() => import("@/content/links/category/audio/daw.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/audio/daw.json")),
       },
       distribution: {
         name: "音乐发行",
-        file: () => safeImport(() => import("@/content/links/category/audio/distribution.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/audio/distribution.json"),
+          ),
       },
       processing: {
         name: "音频处理",
-        file: () => safeImport(() => import("@/content/links/category/audio/processing.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/audio/processing.json"),
+          ),
       },
     },
   },
@@ -62,20 +85,32 @@ const categoryStructure = {
     children: {
       colors: {
         name: "配色工具",
-        file: () => safeImport(() => import("@/content/links/category/design/colors.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/design/colors.json"),
+          ),
       },
       fonts: {
         name: "字体资源",
-        file: () => safeImport(() => import("@/content/links/category/design/fonts.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/design/fonts.json"),
+          ),
       },
       "image-processing": {
         name: "图像处理",
         file: () =>
-          safeImport(() => import("@/content/links/category/design/image-processing.json")),
+          safeImport(
+            () =>
+              import("@/content/links/category/design/image-processing.json"),
+          ),
       },
       tools: {
         name: "设计工具",
-        file: () => safeImport(() => import("@/content/links/category/design/tools.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/design/tools.json"),
+          ),
       },
     },
   },
@@ -84,46 +119,76 @@ const categoryStructure = {
     children: {
       apis: {
         name: "API",
-        file: () => safeImport(() => import("@/content/links/category/development/apis.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/development/apis.json"),
+          ),
       },
       cloud: {
         name: "云服务",
-        file: () => safeImport(() => import("@/content/links/category/development/cloud.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/development/cloud.json"),
+          ),
       },
       containers: {
         name: "容器化",
         file: () =>
-          safeImport(() => import("@/content/links/category/development/containers.json")),
+          safeImport(
+            () =>
+              import("@/content/links/category/development/containers.json"),
+          ),
       },
       databases: {
         name: "数据库",
-        file: () => safeImport(() => import("@/content/links/category/development/databases.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/development/databases.json"),
+          ),
       },
       frameworks: {
         name: "开发框架",
         file: () =>
-          safeImport(() => import("@/content/links/category/development/frameworks.json")),
+          safeImport(
+            () =>
+              import("@/content/links/category/development/frameworks.json"),
+          ),
       },
       git: {
         name: "版本控制",
-        file: () => safeImport(() => import("@/content/links/category/development/git.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/development/git.json"),
+          ),
       },
       hosting: {
         name: "托管服务",
-        file: () => safeImport(() => import("@/content/links/category/development/hosting.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/development/hosting.json"),
+          ),
       },
       monitoring: {
         name: "监控工具",
         file: () =>
-          safeImport(() => import("@/content/links/category/development/monitoring.json")),
+          safeImport(
+            () =>
+              import("@/content/links/category/development/monitoring.json"),
+          ),
       },
       security: {
         name: "安全工具",
-        file: () => safeImport(() => import("@/content/links/category/development/security.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/development/security.json"),
+          ),
       },
       tools: {
         name: "开发工具",
-        file: () => safeImport(() => import("@/content/links/category/development/tools.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/development/tools.json"),
+          ),
       },
     },
   },
@@ -132,7 +197,8 @@ const categoryStructure = {
     children: {
       audio: {
         name: "音频处理",
-        file: () => safeImport(() => import("@/content/links/category/media/audio.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/media/audio.json")),
       },
     },
   },
@@ -141,11 +207,15 @@ const categoryStructure = {
     children: {
       documents: {
         name: "文档处理",
-        file: () => safeImport(() => import("@/content/links/category/office/documents.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/office/documents.json"),
+          ),
       },
       pdf: {
         name: "PDF 工具",
-        file: () => safeImport(() => import("@/content/links/category/office/pdf.json")),
+        file: () =>
+          safeImport(() => import("@/content/links/category/office/pdf.json")),
       },
     },
   },
@@ -154,11 +224,17 @@ const categoryStructure = {
     children: {
       ecommerce: {
         name: "电商工具",
-        file: () => safeImport(() => import("@/content/links/category/operation/ecommerce.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/operation/ecommerce.json"),
+          ),
       },
       marketing: {
         name: "营销工具",
-        file: () => safeImport(() => import("@/content/links/category/operation/marketing.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/operation/marketing.json"),
+          ),
       },
     },
   },
@@ -167,34 +243,57 @@ const categoryStructure = {
     children: {
       browsers: {
         name: "浏览器",
-        file: () => safeImport(() => import("@/content/links/category/productivity/browsers.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/productivity/browsers.json"),
+          ),
       },
       "cloud-storage": {
         name: "云存储",
         file: () =>
-          safeImport(() => import("@/content/links/category/productivity/cloud-storage.json")),
+          safeImport(
+            () =>
+              import(
+                "@/content/links/category/productivity/cloud-storage.json"
+              ),
+          ),
       },
       documents: {
         name: "文档处理",
         file: () =>
-          safeImport(() => import("@/content/links/category/productivity/documents.json")),
+          safeImport(
+            () =>
+              import("@/content/links/category/productivity/documents.json"),
+          ),
       },
       email: {
         name: "邮箱服务",
-        file: () => safeImport(() => import("@/content/links/category/productivity/email.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/productivity/email.json"),
+          ),
       },
       pdf: {
         name: "PDF 工具",
-        file: () => safeImport(() => import("@/content/links/category/productivity/pdf.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/productivity/pdf.json"),
+          ),
       },
       search: {
         name: "搜索引擎",
-        file: () => safeImport(() => import("@/content/links/category/productivity/search.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/productivity/search.json"),
+          ),
       },
       "system-tools": {
         name: "系统工具",
         file: () =>
-          safeImport(() => import("@/content/links/category/productivity/system-tools.json")),
+          safeImport(
+            () =>
+              import("@/content/links/category/productivity/system-tools.json"),
+          ),
       },
     },
   },
@@ -203,7 +302,10 @@ const categoryStructure = {
     children: {
       editing: {
         name: "视频编辑",
-        file: () => safeImport(() => import("@/content/links/category/video/editing.json")),
+        file: () =>
+          safeImport(
+            () => import("@/content/links/category/video/editing.json"),
+          ),
       },
     },
   },
@@ -224,7 +326,10 @@ async function safeImport<T>(importFn: () => Promise<T>): Promise<T | null> {
     // 我们记录错误但不中断执行
     console.error("Failed to import module:", error);
     if (process.env.NODE_ENV === "development") {
-      console.warn("Failed to import module, this may be due to Turbopack HMR:", error);
+      console.warn(
+        "Failed to import module, this may be due to Turbopack HMR:",
+        error,
+      );
     } else {
       console.error("Failed to import module:", error);
     }
@@ -239,7 +344,12 @@ async function loadRootCategoryItems(
   categoryId: string,
   categoryInfo:
     | { file: () => Promise<{ default: unknown[] } | null> }
-    | { children: Record<string, { file: () => Promise<{ default: unknown[] } | null> }> }
+    | {
+        children: Record<
+          string,
+          { file: () => Promise<{ default: unknown[] } | null> }
+        >;
+      },
 ): Promise<LinksItem[]> {
   // 添加类型检查
   if (!("file" in categoryInfo)) {
@@ -274,7 +384,7 @@ async function loadRootCategoryItems(
 async function loadSubCategoryItems(
   categoryId: string,
   subCategoryId: string,
-  subCategoryInfo: { file: () => Promise<{ default: unknown[] } | null> }
+  subCategoryInfo: { file: () => Promise<{ default: unknown[] } | null> },
 ): Promise<LinksItem[]> {
   try {
     const moduleData = await subCategoryInfo.file();
@@ -304,13 +414,22 @@ async function loadSubCategoryItems(
 async function loadCategoryWithChildren(
   categoryId: string,
   categoryInfo: {
-    children: Record<string, { file: () => Promise<{ default: unknown[] } | null> }>;
-  }
+    children: Record<
+      string,
+      { file: () => Promise<{ default: unknown[] } | null> }
+    >;
+  },
 ): Promise<LinksItem[]> {
   const items: LinksItem[] = [];
 
-  for (const [subCategoryId, subCategoryInfo] of Object.entries(categoryInfo.children)) {
-    const subItems = await loadSubCategoryItems(categoryId, subCategoryId, subCategoryInfo);
+  for (const [subCategoryId, subCategoryInfo] of Object.entries(
+    categoryInfo.children,
+  )) {
+    const subItems = await loadSubCategoryItems(
+      categoryId,
+      subCategoryId,
+      subCategoryInfo,
+    );
     items.push(...subItems);
   }
 
@@ -323,7 +442,8 @@ let cacheTimestamp = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
 
 // 为每个分类添加单独的缓存
-const categoryCache: Record<string, { data: LinksItem[]; timestamp: number }> = {};
+const categoryCache: Record<string, { data: LinksItem[]; timestamp: number }> =
+  {};
 
 /**
  * 生成缓存键
@@ -406,7 +526,9 @@ function clearCategoryCache(categoryId?: string): void {
  * 预热关键分类的缓存
  */
 async function preloadCriticalCategories(): Promise<void> {
-  const criticalCategories: (keyof typeof categoryStructure)[] = ["development"];
+  const criticalCategories: (keyof typeof categoryStructure)[] = [
+    "development",
+  ];
 
   for (const categoryId of criticalCategories) {
     try {
@@ -447,17 +569,24 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
   if (cachedLinksData && now - cacheTimestamp < CACHE_DURATION) {
     console.log("使用内存缓存的数据，条目数:", cachedLinksData.length);
     // 返回去重的数据
-    return Array.from(new Map(cachedLinksData.map(item => [item.id, item])).values());
+    return Array.from(
+      new Map(cachedLinksData.map((item) => [item.id, item])).values(),
+    );
   }
 
   // 尝试从localStorage获取缓存
   const storageCachedData = getCachedDataFromStorage();
   if (storageCachedData && storageCachedData.length > 0) {
-    console.log("使用localStorage缓存的数据，条目数:", storageCachedData.length);
+    console.log(
+      "使用localStorage缓存的数据，条目数:",
+      storageCachedData.length,
+    );
     cachedLinksData = storageCachedData;
     cacheTimestamp = now;
     // 返回去重的数据
-    return Array.from(new Map(storageCachedData.map(item => [item.id, item])).values());
+    return Array.from(
+      new Map(storageCachedData.map((item) => [item.id, item])).values(),
+    );
   }
 
   console.log("没有找到缓存数据，开始加载所有链接...");
@@ -465,16 +594,24 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
 
   try {
     // 记录开始加载的分类总数
-    console.log("开始加载分类，总分类数:", Object.keys(categoryStructure).length);
+    console.log(
+      "开始加载分类，总分类数:",
+      Object.keys(categoryStructure).length,
+    );
 
     // 遍历所有分类
-    for (const [categoryId, categoryInfo] of Object.entries(categoryStructure)) {
+    for (const [categoryId, categoryInfo] of Object.entries(
+      categoryStructure,
+    )) {
       console.log(`处理分类: ${categoryId}`);
 
       // 检查是否有分类级别的缓存
       const categoryCached = categoryCache[categoryId];
       if (categoryCached && now - categoryCached.timestamp < CACHE_DURATION) {
-        console.log(`使用缓存的分类数据: ${categoryId}, 条目数:`, categoryCached.data.length);
+        console.log(
+          `使用缓存的分类数据: ${categoryId}, 条目数:`,
+          categoryCached.data.length,
+        );
         allItems.push(...categoryCached.data);
         continue;
       }
@@ -484,7 +621,7 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
       if (storageCategoryCached && storageCategoryCached.length > 0) {
         console.log(
           `使用localStorage缓存的分类数据: ${categoryId}, 条目数:`,
-          storageCategoryCached.length
+          storageCategoryCached.length,
         );
         categoryCache[categoryId] = {
           data: storageCategoryCached,
@@ -510,7 +647,7 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
         // 有子分类的目录
         console.log(
           `加载子分类目录: ${categoryId}, 子分类数:`,
-          Object.keys(categoryInfo.children).length
+          Object.keys(categoryInfo.children).length,
         );
         const items = await loadCategoryWithChildren(categoryId, categoryInfo);
         console.log(`子分类目录 ${categoryId} 加载完成，条目数:`, items.length);
@@ -528,7 +665,9 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
     console.log("所有分类加载完成，总条目数:", allItems.length);
 
     // 去重处理
-    const uniqueItems = Array.from(new Map(allItems.map(item => [item.id, item])).values());
+    const uniqueItems = Array.from(
+      new Map(allItems.map((item) => [item.id, item])).values(),
+    );
     console.log("去重后条目数:", uniqueItems.length);
 
     cachedLinksData = uniqueItems;
@@ -540,7 +679,9 @@ async function loadAllLinksData(_cacheKey = ""): Promise<LinksItem[]> {
     console.error("Error loading links data:", error);
     // 即使有错误也返回去重的缓存数据（如果有的话）
     const uniqueCachedData = cachedLinksData
-      ? Array.from(new Map(cachedLinksData.map(item => [item.id, item])).values())
+      ? Array.from(
+          new Map(cachedLinksData.map((item) => [item.id, item])).values(),
+        )
       : [];
     return uniqueCachedData;
   }
@@ -560,11 +701,13 @@ function generateCategoriesData(): LinksCategory[] {
       });
     } else if ("children" in categoryInfo) {
       // 有子分类的目录
-      const children = Object.entries(categoryInfo.children).map(([subId, subInfo], index) => ({
-        id: `${categoryId}/${subId}` as CategoryId,
-        name: subInfo.name,
-        order: index,
-      }));
+      const children = Object.entries(categoryInfo.children).map(
+        ([subId, subInfo], index) => ({
+          id: `${categoryId}/${subId}` as CategoryId,
+          name: subInfo.name,
+          order: index,
+        }),
+      );
 
       categories.push({
         id: categoryId as CategoryId,
@@ -585,7 +728,7 @@ function clearAllCaches(): void {
     if (typeof window === "undefined") return;
 
     // 清除localStorage中的所有缓存
-    Object.keys(localStorage).forEach(key => {
+    Object.keys(localStorage).forEach((key) => {
       if (key.startsWith("links-")) {
         localStorage.removeItem(key);
       }
@@ -596,7 +739,7 @@ function clearAllCaches(): void {
     cacheTimestamp = 0;
 
     // 清除分类缓存
-    Object.keys(categoryCache).forEach(key => {
+    Object.keys(categoryCache).forEach((key) => {
       delete categoryCache[key];
     });
 

@@ -4,13 +4,15 @@
  */
 
 import type { LinksItem } from "@/features/links/types";
-import { get, post, put, del } from "@/lib/api/api-client";
+import { del, get, post, put } from "@/lib/api/api-client";
 import { CONTENT_API_PATHS } from "@/lib/api/api-paths";
 
 // 链接数据服务接口
 export interface LinkDataService {
   fetchLinks: () => Promise<LinksItem[]>;
-  createLink: (data: Omit<LinksItem, "id" | "createdAt" | "updatedAt">) => Promise<LinksItem>;
+  createLink: (
+    data: Omit<LinksItem, "id" | "createdAt" | "updatedAt">,
+  ) => Promise<LinksItem>;
   updateLink: (id: string, data: Partial<LinksItem>) => Promise<LinksItem>;
   deleteLink: (id: string) => Promise<boolean>;
 }
@@ -35,8 +37,13 @@ class LinkDataServiceImpl implements LinkDataService {
   /**
    * 创建新链接
    */
-  async createLink(data: Omit<LinksItem, "id" | "createdAt" | "updatedAt">): Promise<LinksItem> {
-    const { data: newItem, error } = await post<LinksItem>(CONTENT_API_PATHS.Links, data);
+  async createLink(
+    data: Omit<LinksItem, "id" | "createdAt" | "updatedAt">,
+  ): Promise<LinksItem> {
+    const { data: newItem, error } = await post<LinksItem>(
+      CONTENT_API_PATHS.Links,
+      data,
+    );
 
     if (error) {
       throw new Error(error);
@@ -49,7 +56,10 @@ class LinkDataServiceImpl implements LinkDataService {
    * 更新链接
    */
   async updateLink(id: string, data: Partial<LinksItem>): Promise<LinksItem> {
-    const { data: updatedItem, error } = await put<LinksItem>(CONTENT_API_PATHS.Link(id), data);
+    const { data: updatedItem, error } = await put<LinksItem>(
+      CONTENT_API_PATHS.Link(id),
+      data,
+    );
 
     if (error) {
       throw new Error(error);
@@ -62,7 +72,9 @@ class LinkDataServiceImpl implements LinkDataService {
    * 删除链接
    */
   async deleteLink(id: string): Promise<boolean> {
-    const { data, error } = await del<{ success: boolean }>(CONTENT_API_PATHS.Link(id));
+    const { data, error } = await del<{ success: boolean }>(
+      CONTENT_API_PATHS.Link(id),
+    );
 
     if (error) {
       throw new Error(error);

@@ -1,5 +1,11 @@
-import type { SidebarConfig, ThreeColumnLayoutProps, PageLayoutType } from "@/types";
-export type { ThreeColumnLayoutProps, SidebarConfig } from "@/types";
+import type {
+  PageLayoutType,
+  SidebarConfig,
+  ThreeColumnLayoutProps,
+} from "@/types";
+
+export type { SidebarConfig, ThreeColumnLayoutProps } from "@/types";
+
 import { DEFAULT_SIDEBAR_CONFIG } from "@/lib/layout/layout-utils";
 import { PageContainer } from "./page-container";
 
@@ -32,7 +38,11 @@ export const ThreeColumnLayout = ({
   // 右侧边栏配置 - 不再支持
 
   return (
-    <PageContainer config={{ layout }} sidebars={sidebars} className={className}>
+    <PageContainer
+      config={{ layout }}
+      sidebars={sidebars}
+      className={className}
+    >
       {children}
     </PageContainer>
   );

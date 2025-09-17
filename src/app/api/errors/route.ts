@@ -19,7 +19,10 @@ export async function POST(request: Request) {
 
     // 验证数据
     if (!(data.message && data.timestamp)) {
-      return NextResponse.json({ error: "Invalid error report" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid error report" },
+        { status: 400 },
+      );
     }
 
     // 添加服务器时间戳
@@ -44,7 +47,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("[Error API] Error:", error);
-    return NextResponse.json({ error: "Failed to process error report" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to process error report" },
+      { status: 500 },
+    );
   }
 }
 
@@ -59,7 +65,7 @@ export function GET() {
     // 按错误类型分组统计
     const errorTypes: Record<string, number> = {};
 
-    errorReports.forEach(report => {
+    errorReports.forEach((report) => {
       // 简单的错误类型分类
       let errorType = "Unknown";
 
@@ -79,7 +85,7 @@ export function GET() {
     });
 
     // 获取最近的错误报告
-    const recentErrors = errorReports.slice(-10).map(report => ({
+    const recentErrors = errorReports.slice(-10).map((report) => ({
       message: report.message,
       url: report.url,
       timestamp: report.timestamp,
@@ -92,7 +98,10 @@ export function GET() {
     });
   } catch (error) {
     console.error("[Error API] Error:", error);
-    return NextResponse.json({ error: "Failed to retrieve error data" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to retrieve error data" },
+      { status: 500 },
+    );
   }
 }
 
@@ -110,6 +119,9 @@ export function DELETE() {
     });
   } catch (error) {
     console.error("[Error API] Error:", error);
-    return NextResponse.json({ error: "Failed to clear error reports" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to clear error reports" },
+      { status: 500 },
+    );
   }
 }

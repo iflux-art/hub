@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import { useLinkFilterStore } from "@/stores";
 import type { LinksItem } from "@/features/links/types";
+import { useLinkFilterStore } from "@/stores";
 
 // 保持兼容性，逐步迁移
 export function useFilterState(items: LinksItem[]) {
@@ -27,21 +27,22 @@ export function useFilterState(items: LinksItem[]) {
 
     // 按分类过滤
     if (selectedCategory) {
-      result = result.filter(item => {
+      result = result.filter((item) => {
         // 处理子分类的情况，例如 "development/security"
         if (selectedCategory.includes("/")) {
           return item.category === selectedCategory;
         }
         // 处理主分类的情况，需要匹配所有子分类
         return (
-          item.category === selectedCategory || item.category.startsWith(`${selectedCategory}/`)
+          item.category === selectedCategory ||
+          item.category.startsWith(`${selectedCategory}/`)
         );
       });
     }
 
     // 按标签过滤
     if (selectedTag) {
-      result = result.filter(item => item.tags?.includes(selectedTag));
+      result = result.filter((item) => item.tags?.includes(selectedTag));
     }
 
     return result;
@@ -54,7 +55,10 @@ export function useFilterState(items: LinksItem[]) {
       prevItemsRef.current.length !== items.length ||
       prevItemsRef.current.some((item, index) => item !== items[index]);
 
-    if (hasItemsChanged || filteredItems.length !== prevItemsRef.current.length) {
+    if (
+      hasItemsChanged ||
+      filteredItems.length !== prevItemsRef.current.length
+    ) {
       prevItemsRef.current = [...items]; // 更新ref
       setFilteredItems(filteredItems);
     }
@@ -70,8 +74,8 @@ export function useFilterState(items: LinksItem[]) {
     if (hasItemsChanged) {
       const tags = new Set<string>();
 
-      items.forEach(item => {
-        item.tags?.forEach(tag => {
+      items.forEach((item) => {
+        item.tags?.forEach((tag) => {
           tags.add(tag);
         });
       });

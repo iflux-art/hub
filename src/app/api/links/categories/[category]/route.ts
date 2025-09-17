@@ -26,7 +26,7 @@ async function categoryExists(category: string): Promise<boolean> {
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ category: string }> }
+  { params }: { params: Promise<{ category: string }> },
 ) {
   try {
     const { category } = await params;
@@ -38,7 +38,11 @@ export async function GET(
     }
 
     // 构建文件路径
-    const filePath = path.join(process.cwd(), "src/content/links", `${category}.json`);
+    const filePath = path.join(
+      process.cwd(),
+      "src/content/links",
+      `${category}.json`,
+    );
 
     // 读取并解析JSON文件
     const fileContent = await fs.readFile(filePath, "utf8");
@@ -52,7 +56,7 @@ export async function GET(
         error: "Failed to read category data",
         details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

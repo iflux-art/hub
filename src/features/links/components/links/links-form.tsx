@@ -1,5 +1,8 @@
 "use client";
 
+import { AlertCircle, CheckCircle, Loader2, Plus, X } from "lucide-react";
+import type React from "react";
+import { useEffect, useId, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,9 +21,6 @@ import { useCategories } from "@/features/links/hooks/use-categories";
 import type { LinksCategory, LinksFormData } from "@/features/links/types";
 import { useWebsiteParser } from "@/features/website-parser/hooks/use-website-parser";
 import { isValidUrl } from "@/utils/validation";
-import { AlertCircle, CheckCircle, Loader2, Plus, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { useId } from "react";
 
 // 表单状态管理hook
 function useLinksFormState(initialData?: Partial<LinksFormData>) {
@@ -42,7 +42,11 @@ function useLinksFormState(initialData?: Partial<LinksFormData>) {
 
   // URL验证effect
   useEffect(() => {
-    if (formData.url && typeof formData.url === "string" && !isValidUrl(formData.url)) {
+    if (
+      formData.url &&
+      typeof formData.url === "string" &&
+      !isValidUrl(formData.url)
+    ) {
       setUrlError("请输入有效的 URL 格式");
     } else {
       setUrlError("");
@@ -51,9 +55,9 @@ function useLinksFormState(initialData?: Partial<LinksFormData>) {
 
   const handleInputChange = (
     field: keyof LinksFormData,
-    value: LinksFormData[keyof LinksFormData]
+    value: LinksFormData[keyof LinksFormData],
   ) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
 
     // 清除解析状态
     if (field === "url") {
@@ -81,7 +85,10 @@ interface UrlInputSectionProps {
   parseSuccess: boolean;
   parseError: string | null;
   isParsing: boolean;
-  onInputChange: (field: keyof LinksFormData, value: LinksFormData[keyof LinksFormData]) => void;
+  onInputChange: (
+    field: keyof LinksFormData,
+    value: LinksFormData[keyof LinksFormData],
+  ) => void;
   onParseWebsite: () => void;
 }
 
@@ -105,7 +112,7 @@ const UrlInputSection = ({
           type="url"
           placeholder="https://example.com"
           value={formData.url}
-          onChange={e => onInputChange("url", e.target.value)}
+          onChange={(e) => onInputChange("url", e.target.value)}
           className={urlError ? "border-destructive" : ""}
           required
         />
@@ -143,10 +150,16 @@ const UrlInputSection = ({
 // 基本信息组件
 interface BasicInfoSectionProps {
   formData: LinksFormData;
-  onInputChange: (field: keyof LinksFormData, value: LinksFormData[keyof LinksFormData]) => void;
+  onInputChange: (
+    field: keyof LinksFormData,
+    value: LinksFormData[keyof LinksFormData],
+  ) => void;
 }
 
-const BasicInfoSection = ({ formData, onInputChange }: BasicInfoSectionProps) => {
+const BasicInfoSection = ({
+  formData,
+  onInputChange,
+}: BasicInfoSectionProps) => {
   const titleId = useId();
   const descriptionId = useId();
 
@@ -159,7 +172,7 @@ const BasicInfoSection = ({ formData, onInputChange }: BasicInfoSectionProps) =>
           id={titleId}
           placeholder="网站标题"
           value={formData.title}
-          onChange={e => onInputChange("title", e.target.value)}
+          onChange={(e) => onInputChange("title", e.target.value)}
           required
         />
       </div>
@@ -171,7 +184,7 @@ const BasicInfoSection = ({ formData, onInputChange }: BasicInfoSectionProps) =>
           id={descriptionId}
           placeholder="网站描述"
           value={formData.description}
-          onChange={e => onInputChange("description", e.target.value)}
+          onChange={(e) => onInputChange("description", e.target.value)}
           rows={3}
         />
       </div>
@@ -182,10 +195,16 @@ const BasicInfoSection = ({ formData, onInputChange }: BasicInfoSectionProps) =>
 // 图标输入组件
 interface IconInputSectionProps {
   formData: LinksFormData;
-  onInputChange: (field: keyof LinksFormData, value: LinksFormData[keyof LinksFormData]) => void;
+  onInputChange: (
+    field: keyof LinksFormData,
+    value: LinksFormData[keyof LinksFormData],
+  ) => void;
 }
 
-const IconInputSection = ({ formData, onInputChange }: IconInputSectionProps) => {
+const IconInputSection = ({
+  formData,
+  onInputChange,
+}: IconInputSectionProps) => {
   const iconId = useId();
 
   return (
@@ -194,7 +213,9 @@ const IconInputSection = ({ formData, onInputChange }: IconInputSectionProps) =>
       <div className="flex gap-2">
         <Select
           value={formData.iconType}
-          onValueChange={(value: "image" | "text") => onInputChange("iconType", value)}
+          onValueChange={(value: "image" | "text") =>
+            onInputChange("iconType", value)
+          }
         >
           <SelectTrigger className="w-32">
             <SelectValue />
@@ -206,9 +227,11 @@ const IconInputSection = ({ formData, onInputChange }: IconInputSectionProps) =>
         </Select>
         <Input
           id={iconId}
-          placeholder={formData.iconType === "image" ? "https://example.com/icon.png" : "A"}
+          placeholder={
+            formData.iconType === "image" ? "https://example.com/icon.png" : "A"
+          }
           value={formData.icon}
-          onChange={e => onInputChange("icon", e.target.value)}
+          onChange={(e) => onInputChange("icon", e.target.value)}
           className="flex-1"
         />
       </div>
@@ -221,7 +244,10 @@ interface CategorySectionProps {
   formData: LinksFormData;
   categories: LinksCategory[];
   categoriesLoading: boolean;
-  onInputChange: (field: keyof LinksFormData, value: LinksFormData[keyof LinksFormData]) => void;
+  onInputChange: (
+    field: keyof LinksFormData,
+    value: LinksFormData[keyof LinksFormData],
+  ) => void;
 }
 
 const CategorySection = ({
@@ -237,7 +263,7 @@ const CategorySection = ({
       <Label htmlFor={categoryId}>分类 *</Label>
       <Select
         value={formData.category}
-        onValueChange={value => onInputChange("category", value)}
+        onValueChange={(value) => onInputChange("category", value)}
         required
         disabled={categoriesLoading}
       >
@@ -254,7 +280,7 @@ const CategorySection = ({
               {/* 子分类 */}
               {category.children &&
                 Array.isArray(category.children) &&
-                category.children.map(subCategory => (
+                category.children.map((subCategory) => (
                   <SelectItem
                     key={subCategory.id}
                     value={subCategory.id}
@@ -276,10 +302,18 @@ interface TagsSectionProps {
   formData: LinksFormData;
   newTag: string;
   setNewTag: (tag: string) => void;
-  onInputChange: (field: keyof LinksFormData, value: LinksFormData[keyof LinksFormData]) => void;
+  onInputChange: (
+    field: keyof LinksFormData,
+    value: LinksFormData[keyof LinksFormData],
+  ) => void;
 }
 
-const TagsSection = ({ formData, newTag, setNewTag, onInputChange }: TagsSectionProps) => {
+const TagsSection = ({
+  formData,
+  newTag,
+  setNewTag,
+  onInputChange,
+}: TagsSectionProps) => {
   const handleAddTag = () => {
     if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
       onInputChange("tags", [...formData.tags, newTag.trim()]);
@@ -290,7 +324,7 @@ const TagsSection = ({ formData, newTag, setNewTag, onInputChange }: TagsSection
   const handleRemoveTag = (tagToRemove: string) => {
     onInputChange(
       "tags",
-      formData.tags.filter(tag => tag !== tagToRemove)
+      formData.tags.filter((tag) => tag !== tagToRemove),
     );
   };
 
@@ -301,8 +335,8 @@ const TagsSection = ({ formData, newTag, setNewTag, onInputChange }: TagsSection
         <Input
           placeholder="添加标签"
           value={newTag}
-          onChange={e => setNewTag(e.target.value)}
-          onKeyDown={e => {
+          onChange={(e) => setNewTag(e.target.value)}
+          onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
               handleAddTag();
@@ -315,7 +349,7 @@ const TagsSection = ({ formData, newTag, setNewTag, onInputChange }: TagsSection
       </div>
       {formData.tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {formData.tags.map(tag => (
+          {formData.tags.map((tag) => (
             <Badge
               key={tag}
               variant="secondary"
@@ -339,7 +373,12 @@ interface LinksFormProps {
   isLoading?: boolean;
 }
 
-export const LinksForm = ({ submitAction, onCancel, initialData, isLoading }: LinksFormProps) => {
+export const LinksForm = ({
+  submitAction,
+  onCancel,
+  initialData,
+  isLoading,
+}: LinksFormProps) => {
   const {
     formData,
     setFormData,
@@ -352,7 +391,11 @@ export const LinksForm = ({ submitAction, onCancel, initialData, isLoading }: Li
   } = useLinksFormState(initialData);
 
   const { categories, loading: categoriesLoading } = useCategories();
-  const { parseWebsite, isLoading: isParsing, error: parseError } = useWebsiteParser();
+  const {
+    parseWebsite,
+    isLoading: isParsing,
+    error: parseError,
+  } = useWebsiteParser();
 
   const handleParseWebsite = () => {
     if (!(formData.url && isValidUrl(formData.url))) {
@@ -361,9 +404,9 @@ export const LinksForm = ({ submitAction, onCancel, initialData, isLoading }: Li
 
     setParseSuccess(false);
 
-    void parseWebsite(formData.url).then(metadata => {
+    void parseWebsite(formData.url).then((metadata) => {
       if (metadata) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           title: metadata.title ?? prev.title,
           description: metadata.description ?? prev.description,
@@ -425,7 +468,9 @@ export const LinksForm = ({ submitAction, onCancel, initialData, isLoading }: Li
       {/* 操作按钮 */}
       <div className="flex gap-2 pt-4">
         <Button type="submit" disabled={isLoading ?? !!urlError}>
-          {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : undefined}
+          {isLoading ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : undefined}
           {initialData ? "更新" : "添加"}
         </Button>
         {onCancel && (
@@ -441,7 +486,10 @@ export const LinksForm = ({ submitAction, onCancel, initialData, isLoading }: Li
 // 精选开关组件
 interface FeaturedSectionProps {
   formData: LinksFormData;
-  onInputChange: (field: keyof LinksFormData, value: LinksFormData[keyof LinksFormData]) => void;
+  onInputChange: (
+    field: keyof LinksFormData,
+    value: LinksFormData[keyof LinksFormData],
+  ) => void;
 }
 
 const FeaturedSection = ({ formData, onInputChange }: FeaturedSectionProps) => {
@@ -452,7 +500,7 @@ const FeaturedSection = ({ formData, onInputChange }: FeaturedSectionProps) => {
       <Switch
         id={featuredId}
         checked={formData.featured}
-        onCheckedChange={checked => onInputChange("featured", checked)}
+        onCheckedChange={(checked) => onInputChange("featured", checked)}
       />
       <Label htmlFor={featuredId}>设为精选</Label>
     </div>

@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { SearchDialog } from "./search-dialog";
 
 /**
@@ -15,14 +15,14 @@ export const SearchButton = () => {
   // 在组件挂载时预加载搜索对话框组件
   useEffect(() => {
     // 使用动态导入预加载搜索对话框
-    import("./search-dialog").catch(error => {
+    import("./search-dialog").catch((error) => {
       console.warn("Failed to preload search dialog:", error);
     });
   }, []);
 
   // 在悬停时预加载搜索对话框
   const handleMouseEnter = () => {
-    import("./search-dialog").catch(error => {
+    import("./search-dialog").catch((error) => {
       console.warn("Failed to preload search dialog on hover:", error);
     });
   };

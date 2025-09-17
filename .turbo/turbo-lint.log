@@ -1,0 +1,6 @@
+ WARN  Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v23.10.0","pnpm":"9.11.0"})
+
+> hub@1.0.0 lint C:\project\ifa\apps\hub
+> biome lint .
+
+Checked 222 files in 182ms. No fixes applied.

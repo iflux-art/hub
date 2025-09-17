@@ -3,8 +3,8 @@
  * 提供链接分类的生成和管理能力
  */
 
+import { type Dirent, promises as fs } from "node:fs";
 import path from "node:path";
-import { promises as fs, type Dirent } from "node:fs";
 import type { LinksItem } from "@/features/links/types";
 
 /**
@@ -90,11 +90,17 @@ export function getCategoryDisplayName(categoryId: string): string {
 /**
  * 处理根目录下的 JSON 文件
  */
-async function processRootFiles(linksDir: string, categories: LinkCategory[]): Promise<void> {
+async function processRootFiles(
+  linksDir: string,
+  categories: LinkCategory[],
+): Promise<void> {
   try {
     const entries = await fs.readdir(linksDir, { withFileTypes: true });
     const jsonFiles = entries.filter(
-      entry => entry.isFile() && entry.name.endsWith(".json") && entry.name !== "friends.json"
+      (entry) =>
+        entry.isFile() &&
+        entry.name.endsWith(".json") &&
+        entry.name !== "friends.json",
     );
 
     for (const file of jsonFiles) {
@@ -121,10 +127,15 @@ async function processRootFiles(linksDir: string, categories: LinkCategory[]): P
 /**
  * 处理子文件夹
  */
-async function processSubdirectory(dir: Dirent, linksDir: string): Promise<LinkCategory | null> {
+async function processSubdirectory(
+  dir: Dirent,
+  linksDir: string,
+): Promise<LinkCategory | null> {
   const subDirPath = path.join(linksDir, dir.name);
   const subEntries = await fs.readdir(subDirPath, { withFileTypes: true });
-  const jsonFiles = subEntries.filter(entry => entry.isFile() && entry.name.endsWith(".json"));
+  const jsonFiles = subEntries.filter(
+    (entry) => entry.isFile() && entry.name.endsWith(".json"),
+  );
 
   const children: LinkCategory[] = [];
 
@@ -161,9 +172,12 @@ async function processSubdirectory(dir: Dirent, linksDir: string): Promise<LinkC
 /**
  * 处理子文件夹中的分类
  */
-async function processSubdirectories(linksDir: string, categories: LinkCategory[]): Promise<void> {
+async function processSubdirectories(
+  linksDir: string,
+  categories: LinkCategory[],
+): Promise<void> {
   const entries = await fs.readdir(linksDir, { withFileTypes: true });
-  const directories = entries.filter(entry => entry.isDirectory());
+  const directories = entries.filter((entry) => entry.isDirectory());
 
   for (const dir of directories) {
     const category = await processSubdirectory(dir, linksDir);

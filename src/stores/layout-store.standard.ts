@@ -28,7 +28,10 @@ export interface LayoutActions {
   setIsMobile: (isMobile: boolean) => void;
   setIsTablet: (isTablet: boolean) => void;
   setIsDesktop: (isDesktop: boolean) => void;
-  setContainerConfig: (config: { className: string; minHeight: string }) => void;
+  setContainerConfig: (config: {
+    className: string;
+    minHeight: string;
+  }) => void;
   updateResponsiveState: (width: number) => void;
   resetState: () => void;
 }
@@ -74,15 +77,16 @@ export const createLayoutStore = () => {
     },
 
     // Actions
-    setLayoutType: layoutType => set({ layoutType }),
-    setSidebars: sidebars => set({ sidebars }),
-    setIsMobile: isMobile => set({ isMobile }),
-    setIsTablet: isTablet => set({ isTablet }),
-    setIsDesktop: isDesktop => set({ isDesktop }),
-    setContainerConfig: containerConfig => set({ containerConfig }),
-    updateResponsiveState: width => {
+    setLayoutType: (layoutType) => set({ layoutType }),
+    setSidebars: (sidebars) => set({ sidebars }),
+    setIsMobile: (isMobile) => set({ isMobile }),
+    setIsTablet: (isTablet) => set({ isTablet }),
+    setIsDesktop: (isDesktop) => set({ isDesktop }),
+    setContainerConfig: (containerConfig) => set({ containerConfig }),
+    updateResponsiveState: (width) => {
       const isMobile = width < BREAKPOINTS.tablet;
-      const isTablet = width >= BREAKPOINTS.tablet && width < BREAKPOINTS.desktop;
+      const isTablet =
+        width >= BREAKPOINTS.tablet && width < BREAKPOINTS.desktop;
       const isDesktop = width >= BREAKPOINTS.desktop;
 
       set({

@@ -6,24 +6,21 @@
  * 服务端 API 函数请直接从 './lib/search-api' 导入
  */
 
-// 类型导出
-export type { SearchResult, SearchOptions, SearchResponse } from "./types";
-
-// 客户端搜索引擎导出
+// 组件导出
 export {
-  performSearch,
-  getSearchSuggestions,
-  highlightSearchTerm,
-} from "./lib/search-engine";
-
+  SearchBar,
+  SearchButton,
+  SearchDialog,
+  SearchResults,
+} from "./components";
 // Hooks 导出
 export { useSearch } from "./hooks/use-search";
 export { useSearchState } from "./hooks/use-search-state";
-
-// 组件导出
+// 客户端搜索引擎导出
 export {
-  SearchDialog,
-  SearchBar,
-  SearchResults,
-  SearchButton,
-} from "./components";
+  getSearchSuggestions,
+  highlightSearchTerm,
+  performSearch,
+} from "./lib/search-engine";
+// 类型导出
+export type { SearchOptions, SearchResponse, SearchResult } from "./types";

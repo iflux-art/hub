@@ -6,12 +6,13 @@
 
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/utils";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { forwardRef } from "react";
+import type React from "react";
+import { forwardRef } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/utils";
 
 // 内联链接卡片相关类型定义
 interface LinkCardProps {
@@ -34,7 +35,19 @@ interface LinkCardProps {
  * 2. 图片无效时显示标题首个汉字或字母
  */
 export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
-  ({ title, description, href, isExternal = false, icon, color, className, children }, ref) => {
+  (
+    {
+      title,
+      description,
+      href,
+      isExternal = false,
+      icon,
+      color,
+      className,
+      children,
+    },
+    ref,
+  ) => {
     // 内联图标渲染逻辑
     const renderIcon = () => {
       // 获取标题首个字符
@@ -44,7 +57,9 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       if (!icon) {
         return (
           <div className="flex h-full w-full items-center justify-center">
-            <span className="text-lg font-medium text-primary">{firstChar}</span>
+            <span className="text-lg font-medium text-primary">
+              {firstChar}
+            </span>
           </div>
         );
       }
@@ -65,7 +80,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
             className="object-cover"
             unoptimized
             loading="lazy"
-            onError={e => {
+            onError={(e) => {
               // 图片加载失败时显示标题首个字符
               const parent = e.currentTarget.parentElement;
               if (parent) {
@@ -88,7 +103,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       <Card
         className={cn(
           "group transition-all duration-300 hover:scale-[1.01] hover:border-primary/50",
-          className
+          className,
         )}
         style={cardStyle}
       >
@@ -99,9 +114,15 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
           <div className="flex min-w-0 flex-1 flex-col">
             <div className="mb-1 flex items-center gap-2">
               <h3 className="truncate text-lg font-semibold">{title}</h3>
-              {isExternal && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
+              {isExternal && (
+                <ExternalLink className="h-4 w-4 text-muted-foreground" />
+              )}
             </div>
-            {description && <p className="truncate text-sm text-muted-foreground">{description}</p>}
+            {description && (
+              <p className="truncate text-sm text-muted-foreground">
+                {description}
+              </p>
+            )}
             {children && <div className="mt-2">{children}</div>}
           </div>
         </CardContent>
@@ -123,7 +144,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
     }
 
     return <Link {...commonProps}>{cardContent}</Link>;
-  }
+  },
 );
 
 LinkCard.displayName = "LinkCard";

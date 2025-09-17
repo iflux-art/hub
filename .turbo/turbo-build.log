@@ -1,0 +1,45 @@
+ WARN  Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v23.10.0","pnpm":"9.11.0"})
+
+> hub@1.0.0 build C:\project\ifa\apps\hub
+> next build
+
+   ▲ Next.js 15.5.3
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 4.8s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/13) ...
+   Generating static pages (3/13) 
+   Generating static pages (6/13) 
+   Generating static pages (9/13) 
+ ✓ Generating static pages (13/13)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    39.8 kB         167 kB
+├ ○ /_not-found                            148 B         102 kB
+├ ○ /admin                               3.15 kB         113 kB
+├ ƒ /api/errors                            148 B         102 kB
+├ ƒ /api/links                             148 B         102 kB
+├ ƒ /api/links/categories                  148 B         102 kB
+├ ƒ /api/links/categories/[category]       148 B         102 kB
+├ ƒ /api/links/ws                          148 B         102 kB
+├ ƒ /api/parse-website                     148 B         102 kB
+├ ƒ /api/search                            148 B         102 kB
+├ ○ /auth/callback                         402 B         137 kB
+├ ƒ /sign-in/[[...sign-in]]                402 B         137 kB
+└ ƒ /sign-up/[[...sign-up]]                402 B         137 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/39-fc28f8048450ab1c.js        45.1 kB
+  ├ chunks/7d631cee-4b9f018d8c19d48f.js  54.2 kB
+  └ other shared chunks (total)          2.82 kB
+
+
+ƒ Middleware                             81.4 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,9 +1,14 @@
 "use client";
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { cn } from "@/utils";
 import { ChevronRight, Folder } from "lucide-react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/utils";
 
 import type { SidebarItem, SidebarProps } from "../types";
 
@@ -13,7 +18,9 @@ const isBrowser = typeof window !== "undefined";
 // 侧边栏状态管理hook
 function useSidebarState(items: SidebarItem[], storageKey: string) {
   const [isHovering, setIsHovering] = useState<string | null>(null);
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
+    {},
+  );
   const isInitialized = useRef(false);
 
   // 处理鼠标悬停
@@ -24,20 +31,23 @@ function useSidebarState(items: SidebarItem[], storageKey: string) {
   // 处理折叠状态切换
   const handleOpenChange = useCallback(
     (itemId: string, open: boolean) => {
-      setOpenCategories(prev => {
+      setOpenCategories((prev) => {
         const newState = { ...prev, [itemId]: open };
         // 保存到 localStorage（仅在客户端）
         if (isBrowser) {
           try {
             localStorage.setItem(storageKey, JSON.stringify(newState));
           } catch (error) {
-            console.warn("Failed to save sidebar state to localStorage:", error);
+            console.warn(
+              "Failed to save sidebar state to localStorage:",
+              error,
+            );
           }
         }
         return newState;
       });
     },
-    [storageKey]
+    [storageKey],
   );
 
   // 初始化折叠状态
@@ -48,10 +58,9 @@ function useSidebarState(items: SidebarItem[], storageKey: string) {
       const savedStateStr = localStorage.getItem(storageKey);
       if (savedStateStr) {
         try {
-          const savedState: Record<string, boolean> = JSON.parse(savedStateStr) as Record<
-            string,
-            boolean
-          >;
+          const savedState: Record<string, boolean> = JSON.parse(
+            savedStateStr,
+          ) as Record<string, boolean>;
           setOpenCategories(savedState);
           isInitialized.current = true;
           return;
@@ -63,7 +72,7 @@ function useSidebarState(items: SidebarItem[], storageKey: string) {
 
     // 如果没有保存的状态，初始化新状态 - 默认展开所有有子项的分类
     const initialState: Record<string, boolean> = {};
-    items.forEach(item => {
+    items.forEach((item) => {
       if (item.children && item.children.length > 0) {
         initialState[item.id] = true;
       }
@@ -148,7 +157,7 @@ const CollapsibleItem = ({
       className={cn(
         "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium",
         "transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-        isCurrentItem && "bg-accent text-accent-foreground"
+        isCurrentItem && "bg-accent text-accent-foreground",
       )}
       aria-expanded={isOpen}
     >
@@ -157,14 +166,17 @@ const CollapsibleItem = ({
         <span>{item.title}</span>
       </div>
       <ChevronRight
-        className={cn("h-4 w-4 shrink-0 transition-transform duration-200", isOpen && "rotate-90")}
+        className={cn(
+          "h-4 w-4 shrink-0 transition-transform duration-200",
+          isOpen && "rotate-90",
+        )}
         aria-hidden="true"
       />
     </CollapsibleTrigger>
     <CollapsibleContent className="data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:animate-in data-[state=open]:fade-in overflow-hidden transition-all">
       <div className="mt-1 ml-2 border-l border-border py-1 pl-4">
         <div className="space-y-1">
-          {item.children?.map(child => renderSidebarItem(child, level + 1))}
+          {item.children?.map((child) => renderSidebarItem(child, level + 1))}
         </div>
       </div>
     </CollapsibleContent>
@@ -197,8 +209,10 @@ const ButtonItem = ({
     className={cn(
       "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors",
       "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-      isCurrentItem ? "bg-accent font-medium text-accent-foreground" : "hover:bg-accent/50",
-      isHovering && "text-foreground"
+      isCurrentItem
+        ? "bg-accent font-medium text-accent-foreground"
+        : "hover:bg-accent/50",
+      isHovering && "text-foreground",
     )}
     title={item.description}
     aria-current={isCurrentItem ? "page" : undefined}
@@ -224,17 +238,15 @@ export const Sidebar = ({
   allOptionTitle = "全部",
 }: SidebarProps) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const { isHovering, openCategories, handleHover, handleOpenChange } = useSidebarState(
-    items,
-    storageKey
-  );
+  const { isHovering, openCategories, handleHover, handleOpenChange } =
+    useSidebarState(items, storageKey);
 
   // 处理项目点击
   const handleItemClick = useCallback(
     (itemId: string) => {
       onItemClick?.(itemId);
     },
-    [onItemClick]
+    [onItemClick],
   );
 
   // 渲染侧边栏项目
@@ -269,7 +281,14 @@ export const Sidebar = ({
         </div>
       );
     },
-    [openCategories, currentItem, handleOpenChange, isHovering, handleItemClick, handleHover]
+    [
+      openCategories,
+      currentItem,
+      handleOpenChange,
+      isHovering,
+      handleItemClick,
+      handleHover,
+    ],
   );
 
   return (
@@ -293,7 +312,7 @@ export const Sidebar = ({
                 !currentItem
                   ? "bg-accent font-medium text-accent-foreground"
                   : "hover:bg-accent/50",
-                isHovering === "all" && "text-foreground"
+                isHovering === "all" && "text-foreground",
               )}
               aria-current={!currentItem ? "page" : undefined}
             >
@@ -304,7 +323,9 @@ export const Sidebar = ({
         )}
 
         {/* 侧边栏项目列表 */}
-        <div className="space-y-1">{items.map(item => renderSidebarItem(item))}</div>
+        <div className="space-y-1">
+          {items.map((item) => renderSidebarItem(item))}
+        </div>
       </div>
     </div>
   );

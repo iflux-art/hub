@@ -1,10 +1,10 @@
 "use client";
 
-import { NAV_ITEMS, NAV_PATHS } from "@/features/navbar/types/nav-config";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/utils";
 import type { NavConfigItem } from "@/features/navbar/types/nav-config";
+import { NAV_ITEMS, NAV_PATHS } from "@/features/navbar/types/nav-config";
+import { cn } from "@/utils";
 
 interface NavListMenuProps {
   className?: string;
@@ -24,10 +24,14 @@ export const NavListMenu = ({ className = "" }: NavListMenuProps) => {
   }
 
   return (
-    <nav className={cn("flex items-center gap-6", className)} aria-label="主导航">
+    <nav
+      className={cn("flex items-center gap-6", className)}
+      aria-label="主导航"
+    >
       {NAV_ITEMS.map((item: NavConfigItem) => {
         const href = NAV_PATHS[item.key] || `/${item.key}`;
-        const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
+        const isActive =
+          pathname === href || (href !== "/" && pathname.startsWith(href));
 
         return (
           <Link
@@ -35,7 +39,7 @@ export const NavListMenu = ({ className = "" }: NavListMenuProps) => {
             href={href}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary",
-              isActive ? "text-primary" : "text-muted-foreground"
+              isActive ? "text-primary" : "text-muted-foreground",
             )}
             aria-current={isActive ? "page" : undefined}
           >

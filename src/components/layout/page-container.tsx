@@ -1,11 +1,11 @@
 "use client";
 
-import { useLayoutStore } from "@/stores";
+import { useEffect } from "react";
 import { getContainerClassName } from "@/lib/layout/layout-utils";
+import { useLayoutStore } from "@/stores";
 import type { PageContainerProps } from "@/types";
 import { cn } from "@/utils";
 import { ResponsiveGrid } from "./responsive-grid";
-import { useEffect } from "react";
 
 /**
  * 通用页面容器组件
@@ -43,7 +43,9 @@ export const PageContainer = ({
     // 比较 sidebars 数组是否相等
     const sidebarsEqual =
       storedSidebars.length === sidebars.length &&
-      storedSidebars.every((sb, index) => sb.position === sidebars[index]?.position);
+      storedSidebars.every(
+        (sb, index) => sb.position === sidebars[index]?.position,
+      );
 
     if (!sidebarsEqual) {
       setSidebars(sidebars);

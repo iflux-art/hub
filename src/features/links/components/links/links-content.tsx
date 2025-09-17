@@ -1,9 +1,9 @@
 "use client";
 
+import { useMemo } from "react";
 import { LinkCard } from "@/features/links/components/link-card";
 import type { LinksItem } from "@/features/links/types";
 import { cn } from "@/utils";
-import { useMemo } from "react";
 
 export interface LinksContentProps {
   items: LinksItem[];
@@ -17,18 +17,24 @@ export interface LinksContentProps {
  * 显示按标签分组的链接卡片
  * 为每个标签分组生成 h2 标题和锚点
  */
-export const LinksContent = ({ items, selectedCategory, className }: LinksContentProps) => {
+export const LinksContent = ({
+  items,
+  selectedCategory,
+  className,
+}: LinksContentProps) => {
   // 按标签对链接进行分组，并确保项目唯一性
   const groupedItems = useMemo(() => {
     // 创建标签到链接的映射
     const tagMap = new Map<string, LinksItem[]>();
 
     // 先去重，确保每个项目只处理一次
-    const uniqueItems = Array.from(new Map(items.map(item => [item.id, item])).values());
+    const uniqueItems = Array.from(
+      new Map(items.map((item) => [item.id, item])).values(),
+    );
 
-    uniqueItems.forEach(item => {
+    uniqueItems.forEach((item) => {
       if (item.tags && Array.isArray(item.tags)) {
-        item.tags.forEach(tag => {
+        item.tags.forEach((tag) => {
           if (tag && typeof tag === "string" && tag.trim()) {
             const trimmedTag = tag.trim();
             if (!tagMap.has(trimmedTag)) {
@@ -36,7 +42,7 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
             }
             // 确保不会添加重复的项目到同一个标签下
             const tagItems = tagMap.get(trimmedTag) || [];
-            if (!tagItems.some(existingItem => existingItem.id === item.id)) {
+            if (!tagItems.some((existingItem) => existingItem.id === item.id)) {
               tagMap.get(trimmedTag)?.push(item);
             }
           }
@@ -60,7 +66,9 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
     return (
       <div className={cn("flex items-center justify-center py-12", className)}>
         <div className="text-center">
-          <h3 className="mb-2 text-lg font-medium text-muted-foreground">暂无链接</h3>
+          <h3 className="mb-2 text-lg font-medium text-muted-foreground">
+            暂无链接
+          </h3>
           <p className="text-sm text-muted-foreground">
             {selectedCategory ? "当前分类下没有链接" : "没有找到任何链接"}
           </p>
@@ -78,13 +86,16 @@ export const LinksContent = ({ items, selectedCategory, className }: LinksConten
         return (
           <section key={tag} className="space-y-4">
             {/* 标签标题，用于锚点跳转 */}
-            <h2 id={anchorId} className="scroll-mt-24 pb-2 text-xl font-semibold text-foreground">
+            <h2
+              id={anchorId}
+              className="scroll-mt-24 pb-2 text-xl font-semibold text-foreground"
+            >
               {tag}
             </h2>
 
             {/* 链接卡片网格 */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-              {tagItems.map(item => (
+              {tagItems.map((item) => (
                 <LinkCard
                   key={item.id}
                   title={item.title}

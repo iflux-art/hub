@@ -1,15 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import {
-  linkDataSocket,
-  ConnectionState,
-  LinkDataMessageType,
-  type LinkDataMessage,
-} from "../lib/link-data-socket";
 // import { useLinksDataStore } from "@/stores"; // 已删除
 import { useLinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store实现
 import type { LinksItem } from "@/features/links/types";
+import {
+  type ConnectionState,
+  type LinkDataMessage,
+  LinkDataMessageType,
+  linkDataSocket,
+} from "../lib/link-data-socket";
 
 // 定义消息负载接口
 interface UpdatePayload {
@@ -30,7 +30,7 @@ interface SyncPayload {
 export function useLinksRealTimeUpdate() {
   // 连接状态
   const [connectionState, setConnectionState] = useState<ConnectionState>(
-    linkDataSocket.getConnectionState()
+    linkDataSocket.getConnectionState(),
   );
 
   // 最近更新的数据项
@@ -71,7 +71,7 @@ export function useLinksRealTimeUpdate() {
         }
       }
     },
-    [setItems]
+    [setItems],
   );
 
   // 连接WebSocket并设置事件处理器

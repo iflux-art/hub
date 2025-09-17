@@ -1,8 +1,8 @@
 "use client";
 
-import { PageContainer } from "@/components/layout";
 import dynamicImport from "next/dynamic";
 import { useEffect, useState } from "react";
+import { PageContainer } from "@/components/layout";
 
 // 进度条加载组件（内联实现）
 const ProgressBarLoading = () => {
@@ -16,7 +16,7 @@ const ProgressBarLoading = () => {
     }, 100);
 
     const progressInterval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 90) {
           clearInterval(progressInterval);
           return prev;
@@ -27,7 +27,7 @@ const ProgressBarLoading = () => {
     }, 300);
 
     const opacityInterval = setInterval(() => {
-      setOpacity(prev => (prev === 0.8 ? 1 : 0.8));
+      setOpacity((prev) => (prev === 0.8 ? 1 : 0.8));
     }, 800);
 
     return () => {
@@ -48,7 +48,8 @@ const ProgressBarLoading = () => {
             opacity,
             transition: "width 300ms ease-out",
             transform: "translateZ(0)",
-            boxShadow: "0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)",
+            boxShadow:
+              "0 0 12px color-mix(in srgb, var(--color-primary) 70%, transparent)",
           }}
         />
       </div>
@@ -58,7 +59,7 @@ const ProgressBarLoading = () => {
 
 // 使用动态导入来加载网址管理页面组件
 const LinksAdminComponent = dynamicImport(
-  () => import("@/features/admin/components").then(mod => mod.LinksAdminPage),
+  () => import("@/features/admin/components").then((mod) => mod.LinksAdminPage),
   {
     ssr: false, // 管理页面不需要服务端渲染
     loading: () => (
@@ -66,7 +67,7 @@ const LinksAdminComponent = dynamicImport(
         <ProgressBarLoading />
       </div>
     ),
-  }
+  },
 );
 
 /**

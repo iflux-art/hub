@@ -34,8 +34,8 @@ export const createSearchStore = () => {
     selectedCategory: "",
 
     // Actions
-    setSearchTerm: searchTerm => set({ searchTerm }),
-    setSelectedCategory: category => set({ selectedCategory: category }),
+    setSearchTerm: (searchTerm) => set({ searchTerm }),
+    setSelectedCategory: (category) => set({ selectedCategory: category }),
     resetState: () => set({ ...initialState }),
   }));
 };

@@ -39,7 +39,7 @@ async function scanLinkFiles(): Promise<SearchResult[]> {
         const fileContent = await fs.readFile(filePath, "utf8");
         const items: LinkItem[] = JSON.parse(fileContent);
 
-        items.forEach(item => {
+        items.forEach((item) => {
           results.push({
             type: "link",
             title: item.title,
@@ -56,7 +56,7 @@ async function scanLinkFiles(): Promise<SearchResult[]> {
     if (
       await fs
         .stat(categoryDir)
-        .then(stat => stat.isDirectory())
+        .then((stat) => stat.isDirectory())
         .catch(() => false)
     ) {
       const categoryFiles = await glob("**/*.json", { cwd: categoryDir });
@@ -65,7 +65,7 @@ async function scanLinkFiles(): Promise<SearchResult[]> {
         const fileContent = await fs.readFile(filePath, "utf8");
         const items: LinkItem[] = JSON.parse(fileContent);
 
-        items.forEach(item => {
+        items.forEach((item) => {
           results.push({
             type: "link",
             title: item.title,
@@ -104,7 +104,7 @@ export async function getCachedContent() {
 export async function performServerSearch(
   query: string,
   type = "all",
-  limit = 10
+  limit = 10,
 ): Promise<{ results: SearchResult[]; total: number }> {
   if (!query.trim()) {
     return { results: [], total: 0 };
@@ -117,7 +117,7 @@ export async function performServerSearch(
   // 搜索链接
   if (type === "all" || type === "links") {
     const linkResults = links
-      .filter(link => {
+      .filter((link) => {
         const searchText =
           `${link.title} ${link.description} ${link.tags?.join(" ")}`.toLowerCase();
         return searchText.includes(queryLower);

@@ -5,8 +5,8 @@
 
 "use client";
 
-import { useLinksData } from "@/features/links/hooks";
 import { useMemo } from "react";
+import { useLinksData } from "@/features/links/hooks";
 
 /**
  * 仪表盘统计数据接口
@@ -34,7 +34,11 @@ export interface DashboardStats {
  */
 export function useDashboardStats(): DashboardStats {
   // 获取链接数据
-  const { allItems: linkItems, loading: linkLoading, error: linkError } = useLinksData();
+  const {
+    allItems: linkItems,
+    loading: linkLoading,
+    error: linkError,
+  } = useLinksData();
 
   // 计算统计数据
   const stats = useMemo(() => {
@@ -43,10 +47,14 @@ export function useDashboardStats(): DashboardStats {
 
     // 本月新增网址数 (示例计算 - 实际需要根据创建日期计算)
     const currentDate = new Date();
-    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const firstDayOfMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1,
+    );
 
     const newLinkCount =
-      linkItems?.filter(item => {
+      linkItems?.filter((item) => {
         // 如果item有创建日期字段，则判断是否为本月创建
         // 这里假设有createdAt字段，实际项目中可能需要调整
         if (item.createdAt) {

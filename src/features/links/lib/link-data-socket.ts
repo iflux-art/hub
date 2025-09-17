@@ -49,7 +49,8 @@ class LinkDataSocketClient {
   private reconnectTimer: NodeJS.Timeout | null = null;
   private messageHandlers: ((message: LinkDataMessage) => void)[] = [];
   private connectionStateHandlers: ((state: ConnectionState) => void)[] = [];
-  private clientVersion: string = localStorage.getItem("links_data_version") || "0";
+  private clientVersion: string =
+    localStorage.getItem("links_data_version") || "0";
 
   /**
    * 初始化WebSocket连接
@@ -127,7 +128,7 @@ class LinkDataSocketClient {
    * @param handler 要移除的消息处理函数
    */
   removeMessageHandler(handler: (message: LinkDataMessage) => void) {
-    this.messageHandlers = this.messageHandlers.filter(h => h !== handler);
+    this.messageHandlers = this.messageHandlers.filter((h) => h !== handler);
   }
 
   /**
@@ -145,7 +146,9 @@ class LinkDataSocketClient {
    * @param handler 要移除的连接状态处理函数
    */
   removeConnectionStateHandler(handler: (state: ConnectionState) => void) {
-    this.connectionStateHandlers = this.connectionStateHandlers.filter(h => h !== handler);
+    this.connectionStateHandlers = this.connectionStateHandlers.filter(
+      (h) => h !== handler,
+    );
   }
 
   /**
@@ -244,7 +247,9 @@ class LinkDataSocketClient {
    */
   private scheduleReconnect() {
     if (this.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
-      console.warn(`Maximum reconnect attempts (${MAX_RECONNECT_ATTEMPTS}) reached.`);
+      console.warn(
+        `Maximum reconnect attempts (${MAX_RECONNECT_ATTEMPTS}) reached.`,
+      );
       return;
     }
 
@@ -255,7 +260,7 @@ class LinkDataSocketClient {
     this.reconnectAttempts++;
     this.reconnectTimer = setTimeout(() => {
       console.log(
-        `Attempting to reconnect (${this.reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})...`
+        `Attempting to reconnect (${this.reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})...`,
       );
       this.connect();
     }, RECONNECT_INTERVAL);

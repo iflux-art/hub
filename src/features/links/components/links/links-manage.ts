@@ -21,8 +21,20 @@ import type { LinksCategory, LinksItem } from "@/features/links/types";
 type Category = LinksCategory;
 type Item = LinksItem;
 
-const CATEGORIES_FILE_PATH = path.join(process.cwd(), "src", "config", "links", "categories.json");
-const CATEGORIES_DIR = path.join(process.cwd(), "src", "config", "links", "categories");
+const CATEGORIES_FILE_PATH = path.join(
+  process.cwd(),
+  "src",
+  "config",
+  "links",
+  "categories.json",
+);
+const CATEGORIES_DIR = path.join(
+  process.cwd(),
+  "src",
+  "config",
+  "links",
+  "categories",
+);
 
 function ensureDataDirectory() {
   if (!fs.existsSync(CATEGORIES_DIR)) {
@@ -32,7 +44,11 @@ function ensureDataDirectory() {
 
 function readCategories(): Category[] {
   if (!fs.existsSync(CATEGORIES_FILE_PATH)) {
-    fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify([], null, 2), "utf-8");
+    fs.writeFileSync(
+      CATEGORIES_FILE_PATH,
+      JSON.stringify([], null, 2),
+      "utf-8",
+    );
     return [];
   }
 
@@ -98,12 +114,12 @@ function writeItems(items: Item[]): void {
   const categorizedItems: { [key: string]: Item[] } = {};
 
   // 初始化所有分类
-  availableCategories.forEach(category => {
+  availableCategories.forEach((category) => {
     categorizedItems[category] = [];
   });
 
   // 分组项目
-  items.forEach(item => {
+  items.forEach((item) => {
     // 添加更严格的空值检查
     if (item.category && Object.hasOwn(categorizedItems, item.category)) {
       // 确保 categorizedItems[item.category] 存在且不为 undefined
@@ -126,7 +142,7 @@ function writeItems(items: Item[]): void {
  * @returns 包含分类和链接项目的完整数据结构
  */
 export function readLinksData(): { categories: Category[]; items: Item[] } {
-  const categories = readCategories().map(cat => ({
+  const categories = readCategories().map((cat) => ({
     ...cat,
     title: cat.name,
   }));
@@ -137,10 +153,17 @@ export function readLinksData(): { categories: Category[]; items: Item[] } {
   };
 }
 
-export function writeLinksData(data: { categories: Category[]; items: Item[] }): void {
+export function writeLinksData(data: {
+  categories: Category[];
+  items: Item[];
+}): void {
   ensureDataDirectory();
   try {
-    fs.writeFileSync(CATEGORIES_FILE_PATH, JSON.stringify(data.categories, null, 2), "utf-8");
+    fs.writeFileSync(
+      CATEGORIES_FILE_PATH,
+      JSON.stringify(data.categories, null, 2),
+      "utf-8",
+    );
     writeItems(data.items);
   } catch (error) {
     console.error("Error writing links data:", error);
@@ -155,9 +178,11 @@ export function writeLinksData(data: { categories: Category[]; items: Item[] }):
  * @returns 创建的完整链接项目
  * @throws {Error} 当 URL 已存在时抛出错误
  */
-export function addLinksItem(item: Omit<Item, "id" | "createdAt" | "updatedAt">): Item {
+export function addLinksItem(
+  item: Omit<Item, "id" | "createdAt" | "updatedAt">,
+): Item {
   const items = readItems();
-  const existingItem = items.find(existing => existing.url === item.url);
+  const existingItem = items.find((existing) => existing.url === item.url);
   if (existingItem) {
     throw new Error("URL already exists");
   }
@@ -186,7 +211,7 @@ export function addLinksItem(item: Omit<Item, "id" | "createdAt" | "updatedAt">)
  */
 export function updateLinksItem(id: string, updates: Partial<Item>): Item {
   const items = readItems();
-  const itemIndex = items.findIndex(item => item.id === id);
+  const itemIndex = items.findIndex((item) => item.id === id);
   if (itemIndex === -1) {
     throw new Error("Links item not found");
   }
@@ -194,8 +219,14 @@ export function updateLinksItem(id: string, updates: Partial<Item>): Item {
   // 添加边界检查
   if (itemIndex >= 0 && itemIndex < items.length && items[itemIndex]) {
     // 添加空值检查
-    if (updates.url && items[itemIndex] && updates.url !== items[itemIndex].url) {
-      const existingItem = items.find(item => item.url === updates.url && item.id !== id);
+    if (
+      updates.url &&
+      items[itemIndex] &&
+      updates.url !== items[itemIndex].url
+    ) {
+      const existingItem = items.find(
+        (item) => item.url === updates.url && item.id !== id,
+      );
       if (existingItem) {
         throw new Error("URL already exists");
       }
@@ -236,7 +267,7 @@ export function updateLinksItem(id: string, updates: Partial<Item>): Item {
  */
 export function deleteLinksItem(id: string): void {
   const items = readItems();
-  const itemIndex = items.findIndex(item => item.id === id);
+  const itemIndex = items.findIndex((item) => item.id === id);
   if (itemIndex === -1) {
     throw new Error("Links item not found");
   }
@@ -248,19 +279,20 @@ export function deleteLinksItem(id: string): void {
 export function getCategories(): Category[] {
   const categories = readCategories();
   const items = readItems();
-  return categories.map(cat => ({
+  return categories.map((cat) => ({
     ...cat,
-    count: items.filter(item => item.category && item.category === cat.id).length,
+    count: items.filter((item) => item.category && item.category === cat.id)
+      .length,
   }));
 }
 
 export function getAllTags(): string[] {
   const items = readItems();
   const tags = new Set<string>();
-  items.forEach(item => {
+  items.forEach((item) => {
     // 添加空值检查
     if (item.tags) {
-      item.tags.forEach(tag => {
+      item.tags.forEach((tag) => {
         tags.add(tag);
       });
     }

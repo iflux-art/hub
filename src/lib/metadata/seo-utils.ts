@@ -1,7 +1,7 @@
-import type { SEOPageOptions, SiteConfig } from "@/types";
 import type { Metadata } from "next";
-import { filterUndefinedValues } from "@/utils/helpers";
 import { SITE_METADATA } from "@/config";
+import type { SEOPageOptions, SiteConfig } from "@/types";
+import { filterUndefinedValues } from "@/utils/helpers";
 
 /**
  * 默认站点配置
@@ -44,7 +44,7 @@ function generateBasicMetadata(options: {
     title: fullTitle,
     description: fullDescription,
     keywords: allKeywords.join(","),
-    authors: authors.length > 0 ? authors.map(name => ({ name })) : undefined,
+    authors: authors.length > 0 ? authors.map((name) => ({ name })) : undefined,
     category,
     robots: {
       index: !noIndex,
@@ -151,7 +151,7 @@ function generateOtherMetadata(options: { category?: string; tags: string[] }) {
  */
 export function generateSEOMetadata(
   options: SEOPageOptions,
-  siteConfig: SiteConfig = DEFAULT_SITE_CONFIG
+  siteConfig: SiteConfig = DEFAULT_SITE_CONFIG,
 ): Metadata {
   const processedOptions = processSEOMetadataOptions(options, siteConfig);
 
@@ -159,7 +159,9 @@ export function generateSEOMetadata(
   const baseMetadata = generateBasicMetadata(processedOptions.basic);
 
   // 构建 Open Graph 元数据
-  const openGraphMetadata = generateOpenGraphMetadata(processedOptions.openGraph);
+  const openGraphMetadata = generateOpenGraphMetadata(
+    processedOptions.openGraph,
+  );
 
   // 构建 Twitter 元数据
   const twitterMetadata = generateTwitterMetadata(processedOptions.twitter);
@@ -187,7 +189,10 @@ export function generateSEOMetadata(
 /**
  * 处理SEO元数据选项
  */
-function processSEOMetadataOptions(options: SEOPageOptions, siteConfig: SiteConfig) {
+function processSEOMetadataOptions(
+  options: SEOPageOptions,
+  siteConfig: SiteConfig,
+) {
   const {
     title,
     description,

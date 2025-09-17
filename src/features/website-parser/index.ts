@@ -2,21 +2,20 @@
  * Website Parser 功能模块统一导出
  */
 
-// ==================== 类型定义导出 ====================
-export type {
-  WebsiteMetadata,
-  CacheItem,
-  ParseOptions,
-  ParseResult,
-} from "./types";
+// ==================== Hooks 导出 ====================
+export { useWebsiteParser } from "./hooks";
 
 // ==================== 工具函数导出 ====================
 export {
-  parseWebsite,
-  parseWebsites,
   clearCache,
   getCacheSize,
+  parseWebsite,
+  parseWebsites,
 } from "./lib/parser";
-
-// ==================== Hooks 导出 ====================
-export { useWebsiteParser } from "./hooks";
+// ==================== 类型定义导出 ====================
+export type {
+  CacheItem,
+  ParseOptions,
+  ParseResult,
+  WebsiteMetadata,
+} from "./types";

@@ -1,9 +1,9 @@
-import { Server as HttpServer } from "node:http";
-import { WebSocketServer } from "ws";
 import { randomUUID } from "node:crypto";
+import type { Server as HttpServer } from "node:http";
+import type { WebSocket } from "ws";
+import { WebSocketServer } from "ws";
 import { loadAllLinksData } from "@/features/links/lib";
 import type { LinksItem } from "@/features/links/types";
-import type { WebSocket } from "ws";
 
 // 消息类型接口
 interface WebSocketMessage {
@@ -38,7 +38,7 @@ export class LinkDataWebSocketServer {
     });
 
     // 初始化数据和版本信息
-    this.initializeData().catch(err => {
+    this.initializeData().catch((err) => {
       console.error("Failed to initialize link data:", err);
     });
 
@@ -59,7 +59,9 @@ export class LinkDataWebSocketServer {
       // 使用时间戳作为版本号
       this.dataVersion = new Date().toISOString();
 
-      console.log(`LinkDataWebSocketServer initialized with version ${this.dataVersion}`);
+      console.log(
+        `LinkDataWebSocketServer initialized with version ${this.dataVersion}`,
+      );
     } catch (error) {
       console.error("Failed to initialize data:", error);
       throw error;
@@ -74,7 +76,9 @@ export class LinkDataWebSocketServer {
     const clientId = randomUUID();
     this.clients.set(clientId, ws);
 
-    console.log(`New client connected: ${clientId}, total clients: ${this.clients.size}`);
+    console.log(
+      `New client connected: ${clientId}, total clients: ${this.clients.size}`,
+    );
 
     // 设置消息处理程序
     ws.on("message", (message: string) => {
@@ -113,7 +117,11 @@ export class LinkDataWebSocketServer {
   /**
    * 处理来自客户端的消息
    */
-  private handleClientMessage(clientId: string, ws: WebSocket, message: ClientMessage) {
+  private handleClientMessage(
+    clientId: string,
+    ws: WebSocket,
+    message: ClientMessage,
+  ) {
     // 确保消息有有效的类型
     if (!message.type) {
       this.sendError(ws, "Missing message type");
@@ -126,7 +134,10 @@ export class LinkDataWebSocketServer {
         break;
 
       default:
-        console.warn(`Unknown message type from client ${clientId}:`, message.type);
+        console.warn(
+          `Unknown message type from client ${clientId}:`,
+          message.type,
+        );
         this.sendError(ws, `Unknown message type: ${message.type}`);
     }
   }
@@ -140,7 +151,7 @@ export class LinkDataWebSocketServer {
     // 检查客户端版本是否需要更新
     if (clientVersion !== this.dataVersion) {
       console.log(
-        `Client version (${clientVersion}) differs from server version (${this.dataVersion})`
+        `Client version (${clientVersion}) differs from server version (${this.dataVersion})`,
       );
 
       // 始终发送全量更新
@@ -183,7 +194,7 @@ export class LinkDataWebSocketServer {
    * 向所有连接的客户端广播消息
    */
   public broadcastMessage(message: WebSocketMessage) {
-    this.clients.forEach(client => {
+    this.clients.forEach((client) => {
       this.sendMessage(client, message);
     });
   }
@@ -210,8 +221,8 @@ export class LinkDataWebSocketServer {
 
     // 更新内存中的数据
     // 更新指定项
-    items.forEach(updatedItem => {
-      const index = this.data.findIndex(item => item.id === updatedItem.id);
+    items.forEach((updatedItem) => {
+      const index = this.data.findIndex((item) => item.id === updatedItem.id);
       if (index !== -1) {
         this.data[index] = updatedItem;
       } else {

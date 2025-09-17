@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** 文档标题结构 */
 interface Heading {
@@ -14,7 +14,7 @@ export function useHeadingObserver(
   options = {
     rootMargin: "-100px 0px -80% 0px",
     threshold: 0.1,
-  }
+  },
 ) {
   const [activeId, setActiveId] = useState<string>("");
   const clickedHeadingRef = useRef<string | null>(null);
@@ -24,7 +24,7 @@ export function useHeadingObserver(
     // 监听URL哈希变化，以检测标题点击
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
-      if (hash && headings.some(h => h.id === hash)) {
+      if (hash && headings.some((h) => h.id === hash)) {
         clickedHeadingRef.current = hash;
         setActiveId(hash);
 
@@ -57,14 +57,14 @@ export function useHeadingObserver(
     if (headings.length === 0) return;
 
     // 创建一个共享的 IntersectionObserver 实例
-    const observer = new IntersectionObserver(entries => {
+    const observer = new IntersectionObserver((entries) => {
       // 如果有明确点击的标题，优先使用它
       if (clickedHeadingRef.current) return;
 
       // 收集所有当前可见的标题
       const visibleHeadings = entries
-        .filter(entry => entry.isIntersecting)
-        .map(entry => ({
+        .filter((entry) => entry.isIntersecting)
+        .map((entry) => ({
           id: entry.target.id,
           top: entry.boundingClientRect.top,
         }));
@@ -84,12 +84,14 @@ export function useHeadingObserver(
 
     // 确保所有标题都有ID
     const ensureHeadingIds = () => {
-      headings.forEach(heading => {
+      headings.forEach((heading) => {
         const element = document.getElementById(heading.id);
         if (!element) {
           // 查找匹配文本内容的标题元素
-          const headingElements = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
-          headingElements.forEach(el => {
+          const headingElements = document.querySelectorAll(
+            "h1, h2, h3, h4, h5, h6",
+          );
+          headingElements.forEach((el) => {
             if (el.textContent?.trim() === heading.text) {
               if (!el.id) {
                 el.id = heading.id;
@@ -106,7 +108,7 @@ export function useHeadingObserver(
 
     // 观察所有标题
     const observeHeadings = () => {
-      headings.forEach(heading => {
+      headings.forEach((heading) => {
         const element = document.getElementById(heading.id);
         if (element) {
           observer.observe(element);

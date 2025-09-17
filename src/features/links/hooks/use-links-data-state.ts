@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-// import { useLinksDataStore } from "@/stores"; // 已删除
-import { useLinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store实现
 import { useCategories } from "@/features/links/hooks/use-categories";
-import { loadAllLinksData } from "@/features/links/lib";
 import { useFilterState } from "@/features/links/hooks/use-filter-state";
+import { loadAllLinksData } from "@/features/links/lib";
 // import type { LinksItem } from "@/features/links/types";  // 移除未使用的导入
 // import type { LinksDataStore } from "@/stores/links-data-store.standard"; // 已删除
 import type { LinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store类型
+// import { useLinksDataStore } from "@/stores"; // 已删除
+import { useLinksDataStore } from "@/features/links/stores/links-data-store"; // 使用新的store实现
 
 // 定义selector函数，避免每次创建新对象
 const useLinksDataStateSelector = (state: LinksDataStore) => state;
@@ -19,7 +19,8 @@ export function useLinksDataState() {
     useLinksDataStore(useLinksDataStateSelector);
 
   // 使用共享的分类数据 hook
-  const { getCategoryName: getCategoryNameFromHook, getFilteredCategories } = useCategories();
+  const { getCategoryName: getCategoryNameFromHook, getFilteredCategories } =
+    useCategories();
 
   // 初始化数据获取
   useEffect(() => {
@@ -49,7 +50,10 @@ export function useLinksDataState() {
   const filteredItems = useMemo(() => items, [items]);
 
   // 使用共享的分类过滤函数
-  const filteredCategories = useMemo(() => getFilteredCategories(), [getFilteredCategories]);
+  const filteredCategories = useMemo(
+    () => getFilteredCategories(),
+    [getFilteredCategories],
+  );
 
   // 使用过滤后的数据进行状态管理
   const {
@@ -70,7 +74,10 @@ export function useLinksDataState() {
   const getCategoryName = getCategoryNameFromHook;
 
   // 计算总数 - 使用 useMemo 缓存计算结果
-  const totalFilteredCount = useMemo(() => filteredItems.length, [filteredItems]);
+  const totalFilteredCount = useMemo(
+    () => filteredItems.length,
+    [filteredItems],
+  );
 
   return {
     items: filteredItems, // 返回过滤后的数据（用于链接导航页面）

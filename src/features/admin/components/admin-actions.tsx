@@ -1,8 +1,8 @@
 "use client";
 
+import type React from "react";
 import { Button } from "@/components/ui/button";
 import type { AdminAction } from "@/features/admin/types";
-import React from "react";
 
 export interface AdminActionsProps {
   actions: (Omit<AdminAction, "icon"> & {
@@ -12,7 +12,10 @@ export interface AdminActionsProps {
   className?: string;
 }
 
-export const AdminActions = ({ actions, className = "" }: AdminActionsProps) => (
+export const AdminActions = ({
+  actions,
+  className = "",
+}: AdminActionsProps) => (
   <div className={`flex flex-wrap gap-2 ${className}`}>
     {actions.map((action, index) => {
       const IconComponent = action.icon;

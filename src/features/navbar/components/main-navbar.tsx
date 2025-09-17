@@ -1,19 +1,28 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { ThemeToggle } from "@/features/theme";
 import { useNavbarScroll } from "@/features/navbar/hooks/use-navbar-scroll";
+import { ThemeToggle } from "@/features/theme";
 import { Logo } from "./logo";
 import { NavListMenu } from "./nav-menu";
 
 // 动态导入搜索按钮组件
 const SearchButton = dynamic(
-  () => import("@/features/search/components/search-button").then(mod => mod.SearchButton),
-  { ssr: false }
+  () =>
+    import("@/features/search/components/search-button").then(
+      (mod) => mod.SearchButton,
+    ),
+  { ssr: false },
 );
 
 export const MainNavbar = ({ className = "" }: { className?: string }) => {
-  const { pageTitle, showTitle, scrollToTop, shouldShowPageTitle, showNavMenu } = useNavbarScroll();
+  const {
+    pageTitle,
+    showTitle,
+    scrollToTop,
+    shouldShowPageTitle,
+    showNavMenu,
+  } = useNavbarScroll();
 
   return (
     <nav
@@ -32,7 +41,7 @@ export const MainNavbar = ({ className = "" }: { className?: string }) => {
             <button
               className="max-w-md cursor-pointer truncate text-lg font-medium tracking-tight hover:text-primary"
               onClick={scrollToTop}
-              onKeyDown={e => e.key === "Enter" && scrollToTop()}
+              onKeyDown={(e) => e.key === "Enter" && scrollToTop()}
               title="点击返回顶部"
               tabIndex={0}
               type="button"

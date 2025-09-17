@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ThreeColumnLayout } from "@/components/layout";
 import { LinksContent, LinksSidebarCard } from "@/features/links/components";
 import { useLinksData } from "@/features/links/hooks";
-import { useEffect, useState } from "react";
 import { loadAllLinksData } from "@/features/links/lib";
 import type { LinksItem } from "@/features/links/types";
 
@@ -43,12 +43,12 @@ export const LinksPageContainer = () => {
 
     // 检查是否有重复的ID
     if (allItems && allItems.length > 0) {
-      const ids = allItems.map(item => item.id);
+      const ids = allItems.map((item) => item.id);
       const uniqueIds = new Set(ids);
       if (ids.length !== uniqueIds.size) {
         console.warn(
           "发现重复的ID:",
-          ids.filter((id, index) => ids.indexOf(id) !== index)
+          ids.filter((id, index) => ids.indexOf(id) !== index),
         );
       }
     }
@@ -68,12 +68,12 @@ export const LinksPageContainer = () => {
         }
 
         // 检查直接加载的数据是否有重复ID
-        const ids = data.map(item => item.id);
+        const ids = data.map((item) => item.id);
         const uniqueIds = new Set(ids);
         if (ids.length !== uniqueIds.size) {
           console.warn(
             "直接加载发现重复的ID:",
-            ids.filter((id, index) => ids.indexOf(id) !== index)
+            ids.filter((id, index) => ids.indexOf(id) !== index),
           );
         }
       } catch (err) {
@@ -84,9 +84,13 @@ export const LinksPageContainer = () => {
     }
 
     // 如果filteredItems为空且未超过最大尝试次数，尝试刷新数据
-    if ((filteredItems?.length === 0 || !filteredItems) && !loading && loadAttempts < 3) {
+    if (
+      (filteredItems?.length === 0 || !filteredItems) &&
+      !loading &&
+      loadAttempts < 3
+    ) {
       console.log("没有数据，尝试刷新... (尝试次数:", loadAttempts + 1, ")");
-      setLoadAttempts(prev => prev + 1);
+      setLoadAttempts((prev) => prev + 1);
       refreshData();
       // 同时尝试直接加载
       testDirectLoad();
@@ -118,7 +122,9 @@ export const LinksPageContainer = () => {
         <div className="flex items-center justify-center py-24">
           <div className="text-center">
             <p className="text-lg text-muted-foreground">加载中...</p>
-            <p className="text-sm text-muted-foreground mt-2">正在加载链接数据</p>
+            <p className="text-sm text-muted-foreground mt-2">
+              正在加载链接数据
+            </p>
           </div>
         </div>
       </div>
@@ -131,7 +137,9 @@ export const LinksPageContainer = () => {
       <div className="min-h-screen bg-background">
         <div className="flex items-center justify-center py-24">
           <div className="text-center max-w-md">
-            <h3 className="mb-2 text-lg font-medium text-destructive">加载失败</h3>
+            <h3 className="mb-2 text-lg font-medium text-destructive">
+              加载失败
+            </h3>
             <p className="text-sm text-muted-foreground mb-4">{error}</p>
             <div className="mb-4 text-left bg-muted p-3 rounded text-xs">
               <p className="font-medium">调试信息:</p>
@@ -139,7 +147,10 @@ export const LinksPageContainer = () => {
               <p>过滤项数量: {filteredItems?.length || 0}</p>
               <p>所有项数量: {allItems?.length || 0}</p>
               <p>
-                直接加载: {directLoadResult.success ? "成功" : directLoadResult.error || "未尝试"}
+                直接加载:{" "}
+                {directLoadResult.success
+                  ? "成功"
+                  : directLoadResult.error || "未尝试"}
               </p>
             </div>
             <button
@@ -164,7 +175,9 @@ export const LinksPageContainer = () => {
       <div className="min-h-screen bg-background">
         <div className="flex items-center justify-center py-24">
           <div className="text-center max-w-md">
-            <h3 className="mb-2 text-lg font-medium text-muted-foreground">暂无链接数据</h3>
+            <h3 className="mb-2 text-lg font-medium text-muted-foreground">
+              暂无链接数据
+            </h3>
             <p className="text-sm text-muted-foreground mb-4">
               {selectedCategory
                 ? `没有找到关于 "${selectedCategory}" 的链接`
@@ -201,7 +214,10 @@ export const LinksPageContainer = () => {
   return (
     <div className="min-h-screen bg-background">
       <ThreeColumnLayout leftSidebar={leftSidebar} layout="single-sidebar">
-        <LinksContent items={filteredItems} selectedCategory={selectedCategory} />
+        <LinksContent
+          items={filteredItems}
+          selectedCategory={selectedCategory}
+        />
       </ThreeColumnLayout>
     </div>
   );

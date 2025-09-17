@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import type { ThemeProviderProps } from "next-themes";
+import { create } from "zustand";
 
 // 状态接口
 export interface ThemeState {
@@ -73,12 +73,12 @@ export const createThemeStore = () => {
     mounted: false,
 
     // Actions
-    setTheme: theme => set({ theme }),
-    setResolvedTheme: resolvedTheme => set({ resolvedTheme }),
-    setConfig: config => set({ config }),
-    setMounted: mounted => set({ mounted }),
+    setTheme: (theme) => set({ theme }),
+    setResolvedTheme: (resolvedTheme) => set({ resolvedTheme }),
+    setConfig: (config) => set({ config }),
+    setMounted: (mounted) => set({ mounted }),
     toggleTheme: () =>
-      set(state => ({
+      set((state) => ({
         theme: state.theme === "dark" ? "light" : "dark",
       })),
     resetState: () =>

@@ -1,6 +1,6 @@
+import { type NextRequest, NextResponse } from "next/server";
 import { linkService } from "@/features/links/services/link-service";
 import type { LinksItem } from "@/features/links/types";
-import { type NextRequest, NextResponse } from "next/server";
 import { setCacheHeaders } from "@/lib/api/cache-utils";
 
 // 添加缓存变量
@@ -34,7 +34,7 @@ export async function GET() {
         error: "Failed to read links data",
         details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
         error: "Failed to create item",
         details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -107,7 +107,7 @@ export async function PUT(request: NextRequest) {
         error: "Failed to update item",
         details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -136,7 +136,7 @@ export async function DELETE(request: NextRequest) {
         error: "Failed to delete item",
         details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

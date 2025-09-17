@@ -112,7 +112,9 @@ describe("useSearchState", () => {
 
   it("应该在获取建议失败时处理错误", async () => {
     // Mock 建议获取失败
-    mockGetSearchSuggestions.mockRejectedValue(new Error("Failed to get suggestions"));
+    mockGetSearchSuggestions.mockRejectedValue(
+      new Error("Failed to get suggestions"),
+    );
 
     const { result } = renderHook(() => useSearchState());
 

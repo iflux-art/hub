@@ -2,7 +2,12 @@
  * 页面容器和网格布局相关工具函数
  */
 
-import type { GridColsMap, GridGapMap, PageContainerConfig, PageLayoutType } from "@/types";
+import type {
+  GridColsMap,
+  GridGapMap,
+  PageContainerConfig,
+  PageLayoutType,
+} from "@/types";
 import {
   getResponsiveClasses as baseGetResponsiveClasses,
   gridColsMap as baseGridColsMap,
@@ -31,8 +36,14 @@ export function getLayoutClassName(layout: PageLayoutType): string {
 /**
  * 获取容器CSS类名
  */
-export function getContainerClassName(config: PageContainerConfig = {}): string {
-  const { layout = "full-width", className = "", minHeight = "min-h-screen" } = config;
+export function getContainerClassName(
+  config: PageContainerConfig = {},
+): string {
+  const {
+    layout = "full-width",
+    className = "",
+    minHeight = "min-h-screen",
+  } = config;
 
   const baseClasses = minHeight;
   const layoutClasses = getLayoutClassName(layout);
@@ -63,7 +74,10 @@ export function getMainContentClasses(layout: PageLayoutType): string {
  * 获取侧边栏的响应式类名
  * 根据布局类型和侧边栏位置返回相应的类名
  */
-export function getSidebarClasses(position: "left" | "right", layout: PageLayoutType): string {
+export function getSidebarClasses(
+  position: "left" | "right",
+  layout: PageLayoutType,
+): string {
   switch (layout) {
     case "single-sidebar":
       // 单侧栏布局：侧边栏占2列

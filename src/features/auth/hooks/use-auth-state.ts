@@ -29,14 +29,18 @@ export interface UseAuthStateReturn {
   lastActiveAt: number | null;
 
   // Actions (来自 Zustand)
-  setUser: (user: UserResource | null, isLoaded: boolean, isSignedIn: boolean) => void;
+  setUser: (
+    user: UserResource | null,
+    isLoaded: boolean,
+    isSignedIn: boolean,
+  ) => void;
   setPreferences: (
     preferences: Partial<{
       theme: "light" | "dark" | "system";
       language: string;
       notifications: { email: boolean; push: boolean };
       privacy: { profileVisible: boolean; showEmail: boolean };
-    }>
+    }>,
   ) => void;
   setTheme: (theme: "light" | "dark" | "system") => void;
   setLanguage: (language: string) => void;
@@ -45,14 +49,18 @@ export interface UseAuthStateReturn {
   resetState: () => void;
 
   // 自定义方法
-  initializeAuth: (user: UserResource | null, isLoaded: boolean, isSignedIn: boolean) => void;
+  initializeAuth: (
+    user: UserResource | null,
+    isLoaded: boolean,
+    isSignedIn: boolean,
+  ) => void;
   updatePreferences: (
     preferences: Partial<{
       theme: "light" | "dark" | "system";
       language: string;
       notifications: { email: boolean; push: boolean };
       privacy: { profileVisible: boolean; showEmail: boolean };
-    }>
+    }>,
   ) => void;
   toggleAdminMode: () => void;
 }
@@ -84,7 +92,7 @@ export function useAuthState(): UseAuthStateReturn {
     (user: UserResource | null, isLoaded: boolean, isSignedIn: boolean) => {
       setUser(user, isLoaded, isSignedIn);
     },
-    [setUser]
+    [setUser],
   );
 
   // 更新用户偏好设置
@@ -92,7 +100,7 @@ export function useAuthState(): UseAuthStateReturn {
     (newPreferences: Partial<typeof preferences>) => {
       setPreferences(newPreferences);
     },
-    [setPreferences]
+    [setPreferences],
   );
 
   // 切换管理员模式

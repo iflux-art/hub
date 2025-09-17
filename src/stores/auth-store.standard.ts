@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import type { UserResource } from "@clerk/types";
+import { create } from "zustand";
 
 // 用户偏好设置类型
 export interface UserPreferences {
@@ -32,7 +32,11 @@ export interface AuthState {
 
 // 动作接口
 export interface AuthActions {
-  setUser: (user: UserResource | null, isLoaded: boolean, isSignedIn: boolean) => void;
+  setUser: (
+    user: UserResource | null,
+    isLoaded: boolean,
+    isSignedIn: boolean,
+  ) => void;
   setPreferences: (preferences: Partial<UserPreferences>) => void;
   setTheme: (theme: "light" | "dark" | "system") => void;
   setLanguage: (language: string) => void;
@@ -99,28 +103,28 @@ export const createAuthStore = () => {
         // 当用户登录时更新最后活跃时间
         lastActiveAt: isSignedIn ? Date.now() : null,
       }),
-    setPreferences: preferences =>
-      set(state => ({
+    setPreferences: (preferences) =>
+      set((state) => ({
         preferences: {
           ...state.preferences,
           ...preferences,
         },
       })),
-    setTheme: theme =>
-      set(state => ({
+    setTheme: (theme) =>
+      set((state) => ({
         preferences: {
           ...state.preferences,
           theme,
         },
       })),
-    setLanguage: language =>
-      set(state => ({
+    setLanguage: (language) =>
+      set((state) => ({
         preferences: {
           ...state.preferences,
           language,
         },
       })),
-    setAdminMode: isAdminMode => set({ isAdminMode }),
+    setAdminMode: (isAdminMode) => set({ isAdminMode }),
     updateLastActive: () => set({ lastActiveAt: Date.now() }),
     resetState: () =>
       set({

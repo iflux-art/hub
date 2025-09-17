@@ -1,5 +1,7 @@
 "use client";
 
+import { Search } from "lucide-react";
+import { useCallback, useEffect, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,7 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AddDialog, AdminActions, DeleteDialog, EditDialog } from "@/features/admin/components";
+import {
+  AddDialog,
+  AdminActions,
+  DeleteDialog,
+  EditDialog,
+} from "@/features/admin/components";
 import { useDebouncedValue } from "@/features/admin/hooks/use-debounced-value";
 import { fetchLinksData } from "@/features/admin/lib";
 import {
@@ -19,10 +26,12 @@ import {
   getTableColumns,
 } from "@/features/links/components";
 import { useCategories } from "@/features/links/hooks/use-categories";
-import type { LinksCategory, LinksItem, LinksSubCategory } from "@/features/links/types";
+import type {
+  LinksCategory,
+  LinksItem,
+  LinksSubCategory,
+} from "@/features/links/types";
 import type { SearchFilterProps } from "@/features/search/types";
-import { Search } from "lucide-react";
-import { useCallback, useEffect, useMemo } from "react";
 import { useAdminStore } from "@/stores";
 
 /**
@@ -54,7 +63,7 @@ const SearchFilter = (
     selectedCategory,
     onCategoryChange,
     categories,
-  }: SearchFilterProps<LinksCategory> // 使用通用类型
+  }: SearchFilterProps<LinksCategory>, // 使用通用类型
 ) => (
   <Card className="mb-6">
     <CardContent className="py-6">
@@ -65,7 +74,7 @@ const SearchFilter = (
             <Input
               placeholder="搜索网址、标题、描述或标签..."
               value={searchTerm}
-              onChange={e => onSearchChange(e.target.value)}
+              onChange={(e) => onSearchChange(e.target.value)}
               className="pl-10"
             />
           </div>
@@ -73,7 +82,9 @@ const SearchFilter = (
         <div className="w-48">
           <Select
             value={selectedCategory || "all"}
-            onValueChange={value => onCategoryChange(value === "all" ? "" : value)}
+            onValueChange={(value) =>
+              onCategoryChange(value === "all" ? "" : value)
+            }
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="所有分类" />
@@ -117,7 +128,11 @@ const SearchFilter = (
  * @param selectedCategory 选中的分类
  * @returns 过滤后的链接项数组
  */
-const useFilteredItems = (items: LinksItem[], searchTerm: string, selectedCategory: string) => {
+const useFilteredItems = (
+  items: LinksItem[],
+  searchTerm: string,
+  selectedCategory: string,
+) => {
   /** 防抖后的搜索词 */
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
 
@@ -131,17 +146,20 @@ const useFilteredItems = (items: LinksItem[], searchTerm: string, selectedCatego
     /** 小写搜索词，用于不区分大小写的匹配 */
     const searchLower = debouncedSearchTerm.toLowerCase();
 
-    return items.filter(item => {
+    return items.filter((item) => {
       /** 检查是否匹配搜索词 */
       const matchesSearch =
         !debouncedSearchTerm ||
         item.title.toLowerCase().includes(searchLower) ||
         item.description.toLowerCase().includes(searchLower) ||
         item.url.toLowerCase().includes(searchLower) ||
-        item.tags.some((tag: string) => tag.toLowerCase().includes(searchLower));
+        item.tags.some((tag: string) =>
+          tag.toLowerCase().includes(searchLower),
+        );
 
       /** 检查是否匹配分类 */
-      const matchesCategory = !selectedCategory || item.category === selectedCategory;
+      const matchesCategory =
+        !selectedCategory || item.category === selectedCategory;
 
       return matchesSearch && matchesCategory;
     });
@@ -157,14 +175,14 @@ const useEventHandlers = (
   loadData: () => Promise<void>,
   setShowAddDialog: (show: boolean) => void,
   setEditingItem: (item: LinksItem | null) => void,
-  setDeletingItem: (item: LinksItem | null) => void
+  setDeletingItem: (item: LinksItem | null) => void,
 ) => {
   const handleAddSuccess = useCallback(
     (_item: LinksItem) => {
       void loadData();
       setShowAddDialog(false);
     },
-    [loadData, setShowAddDialog]
+    [loadData, setShowAddDialog],
   );
 
   const handleEditSuccess = useCallback(() => {
@@ -253,7 +271,12 @@ export const LinksAdminPage = () => {
     handleAddError,
     handleEditError,
     handleDeleteError,
-  } = useEventHandlers(loadData, setShowAddDialog, setEditingItem, setDeletingItem);
+  } = useEventHandlers(
+    loadData,
+    setShowAddDialog,
+    setEditingItem,
+    setDeletingItem,
+  );
 
   return (
     <>
@@ -277,10 +300,12 @@ export const LinksAdminPage = () => {
       {/* 网址表格 */}
       <DataTable
         data={filteredItems}
-        columns={getTableColumns((categoryId: string) => getCategoryName(categoryId) ?? "")}
+        columns={getTableColumns(
+          (categoryId: string) => getCategoryName(categoryId) ?? "",
+        )}
         actions={getTableActions(
           (record: LinksItem) => setEditingItem(record),
-          (record: LinksItem) => setDeletingItem(record)
+          (record: LinksItem) => setDeletingItem(record),
         )}
       />
 

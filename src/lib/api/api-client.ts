@@ -32,9 +32,15 @@ interface RequestOptions {
  */
 export async function apiRequest<T>(
   url: string,
-  options: RequestOptions = {}
+  options: RequestOptions = {},
 ): Promise<ApiResponse<T>> {
-  const { method = "GET", headers = {}, body, cache = "force-cache", next } = options;
+  const {
+    method = "GET",
+    headers = {},
+    body,
+    cache = "force-cache",
+    next,
+  } = options;
 
   try {
     const response = await fetch(url, {
@@ -65,27 +71,41 @@ export async function apiRequest<T>(
 /**
  * GET请求
  */
-export function get<T>(url: string, options: Omit<RequestOptions, "method" | "body"> = {}) {
+export function get<T>(
+  url: string,
+  options: Omit<RequestOptions, "method" | "body"> = {},
+) {
   return apiRequest<T>(url, { ...options, method: "GET" });
 }
 
 /**
  * POST请求
  */
-export function post<T>(url: string, body?: unknown, options: Omit<RequestOptions, "method"> = {}) {
+export function post<T>(
+  url: string,
+  body?: unknown,
+  options: Omit<RequestOptions, "method"> = {},
+) {
   return apiRequest<T>(url, { ...options, method: "POST", body });
 }
 
 /**
  * PUT请求
  */
-export function put<T>(url: string, body?: unknown, options: Omit<RequestOptions, "method"> = {}) {
+export function put<T>(
+  url: string,
+  body?: unknown,
+  options: Omit<RequestOptions, "method"> = {},
+) {
   return apiRequest<T>(url, { ...options, method: "PUT", body });
 }
 
 /**
  * DELETE请求
  */
-export function del<T>(url: string, options: Omit<RequestOptions, "method" | "body"> = {}) {
+export function del<T>(
+  url: string,
+  options: Omit<RequestOptions, "method" | "body"> = {},
+) {
   return apiRequest<T>(url, { ...options, method: "DELETE" });
 }

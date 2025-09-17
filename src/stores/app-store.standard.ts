@@ -39,7 +39,10 @@ export interface AppActions {
   setLanguage: (language: string) => void;
 
   // 通知 Actions
-  setNotifications: (notifications: { hasUnread: boolean; count: number }) => void;
+  setNotifications: (notifications: {
+    hasUnread: boolean;
+    count: number;
+  }) => void;
   showNotificationBadge: () => void;
   hideNotificationBadge: () => void;
   incrementNotificationCount: () => void;
@@ -94,20 +97,21 @@ export const createAppStore = () => {
     error: null,
 
     // UI Actions
-    setIsSidebarOpen: isOpen => set({ isSidebarOpen: isOpen }),
-    setIsSearchOpen: isOpen => set({ isSearchOpen: isOpen }),
-    setIsMobile: isMobile => set({ isMobile }),
-    toggleSidebar: () => set(state => ({ isSidebarOpen: !state.isSidebarOpen })),
-    toggleSearch: () => set(state => ({ isSearchOpen: !state.isSearchOpen })),
+    setIsSidebarOpen: (isOpen) => set({ isSidebarOpen: isOpen }),
+    setIsSearchOpen: (isOpen) => set({ isSearchOpen: isOpen }),
+    setIsMobile: (isMobile) => set({ isMobile }),
+    toggleSidebar: () =>
+      set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
+    toggleSearch: () => set((state) => ({ isSearchOpen: !state.isSearchOpen })),
 
     // 配置 Actions
-    setTheme: theme => set({ theme }),
-    setLanguage: language => set({ language }),
+    setTheme: (theme) => set({ theme }),
+    setLanguage: (language) => set({ language }),
 
     // 通知 Actions
-    setNotifications: notifications => set({ notifications }),
+    setNotifications: (notifications) => set({ notifications }),
     showNotificationBadge: () =>
-      set(state => ({
+      set((state) => ({
         notifications: {
           ...state.notifications,
           hasUnread: true,
@@ -122,7 +126,7 @@ export const createAppStore = () => {
         },
       }),
     incrementNotificationCount: () =>
-      set(state => ({
+      set((state) => ({
         notifications: {
           ...state.notifications,
           count: state.notifications.count + 1,
@@ -131,8 +135,9 @@ export const createAppStore = () => {
       })),
 
     // 加载 Actions
-    setLoading: (isLoading, message = "") => set({ isLoading, loadingMessage: message }),
-    showError: error => set({ error, isLoading: false }),
+    setLoading: (isLoading, message = "") =>
+      set({ isLoading, loadingMessage: message }),
+    showError: (error) => set({ error, isLoading: false }),
     clearError: () => set({ error: null }),
 
     // 重置 Actions

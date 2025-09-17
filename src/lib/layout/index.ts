@@ -4,11 +4,11 @@
 
 // 从 layout-utils 导出
 export {
-  getLayoutClassName,
+  DEFAULT_SIDEBAR_CONFIG,
   getContainerClassName,
+  getLayoutClassName,
   getMainContentClasses,
   getSidebarClasses,
-  DEFAULT_SIDEBAR_CONFIG,
 } from "./layout-utils";
 
 // 从 responsive-utils 导出

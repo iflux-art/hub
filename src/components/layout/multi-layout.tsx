@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import type { PageLayoutType, SidebarConfig } from "@/types";
 import { DEFAULT_SIDEBAR_CONFIG } from "@/lib/layout/layout-utils";
+import type { PageLayoutType, SidebarConfig } from "@/types";
 import { PageContainer } from "./page-container";
 
 interface MultiLayoutProps {
@@ -54,7 +54,11 @@ export const MultiLayout = ({
   // 右侧边栏配置 - 不再支持右侧边栏
 
   return (
-    <PageContainer config={{ layout }} sidebars={sidebars} className={className}>
+    <PageContainer
+      config={{ layout }}
+      sidebars={sidebars}
+      className={className}
+    >
       {children}
     </PageContainer>
   );

@@ -4,8 +4,8 @@
 
 "use client";
 
-import { debounceSync } from "@/utils/helpers";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { debounceSync } from "@/utils/helpers";
 
 /**
  * LRU 缓存类
@@ -113,7 +113,7 @@ function getFromLocalStorage<T>(
   fullKey: string,
   expiry: number,
   validator: (data: unknown) => boolean,
-  useMemoryCache: boolean
+  useMemoryCache: boolean,
 ): T | null {
   const stored = localStorage.getItem(fullKey);
   if (!stored) {
@@ -153,7 +153,8 @@ interface CacheGetterConfig {
  * 创建缓存获取函数
  */
 function createCacheGetter<T>(config: CacheGetterConfig) {
-  const { fullKey, expiry, useMemoryCache, useLocalStorage, validator } = config;
+  const { fullKey, expiry, useMemoryCache, useLocalStorage, validator } =
+    config;
 
   return (): T | null => {
     // 检查内存缓存
@@ -281,7 +282,11 @@ function createDataFetcher<T>(config: DataFetcherConfig<T>) {
  * @param options 缓存选项
  * @returns 缓存的数据和控制函数
  */
-export function useCache<T>(key: string, fetchFn: () => Promise<T>, options: CacheOptions = {}) {
+export function useCache<T>(
+  key: string,
+  fetchFn: () => Promise<T>,
+  options: CacheOptions = {},
+) {
   const {
     prefix = "app-cache:",
     expiry = 30 * 60 * 1000, // 默认30分钟

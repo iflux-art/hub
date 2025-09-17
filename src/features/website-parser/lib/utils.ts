@@ -43,4 +43,5 @@ export function generatePreviewImageUrl(url: string): string {
 /**
  * 延时函数
  */
-export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+export const delay = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));

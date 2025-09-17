@@ -45,11 +45,12 @@ export const createLinkFilterStore = () => {
     ...initialState,
 
     // Actions
-    setSelectedCategory: category => set({ selectedCategory: category }),
-    setSelectedTag: tag => set({ selectedTag: tag }),
-    setFilteredItems: items => set({ filteredItems: items }),
-    setAvailableTags: tags => set({ availableTags: tags }),
-    resetFilters: () => set({ selectedCategory: "", selectedTag: "", filteredItems: [] }),
+    setSelectedCategory: (category) => set({ selectedCategory: category }),
+    setSelectedTag: (tag) => set({ selectedTag: tag }),
+    setFilteredItems: (items) => set({ filteredItems: items }),
+    setAvailableTags: (tags) => set({ availableTags: tags }),
+    resetFilters: () =>
+      set({ selectedCategory: "", selectedTag: "", filteredItems: [] }),
     resetState: () => set({ ...initialState }),
   }));
 };

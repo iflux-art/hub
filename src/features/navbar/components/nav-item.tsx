@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@/utils";
 import Link from "next/link";
+import { cn } from "@/utils";
 
 /**
  * 基础导航项属性
@@ -82,11 +82,13 @@ export const NavItem = ({
     isActive ? "text-primary" : "text-muted-foreground hover:text-primary",
     underline && "hover:underline",
     animated && "transition-all duration-300",
-    className
+    className,
   );
 
   // 添加动画延迟样式
-  const style = animated ? { transitionDelay: `${animationDelay}s` } : undefined;
+  const style = animated
+    ? { transitionDelay: `${animationDelay}s` }
+    : undefined;
 
   return (
     <Link href={href} className={linkClasses} onClick={onClick} style={style}>
@@ -174,7 +176,13 @@ export const NavItemList = ({
   };
 
   return (
-    <ul className={cn("flex gap-2", horizontal ? "flex-row items-center" : "flex-col", className)}>
+    <ul
+      className={cn(
+        "flex gap-2",
+        horizontal ? "flex-row items-center" : "flex-col",
+        className,
+      )}
+    >
       {items.map((item, index) => (
         <li key={item.key ?? item.href}>
           <NavItem

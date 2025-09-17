@@ -28,7 +28,10 @@ export type CacheStrategy = keyof typeof CACHE_CONFIG;
  * @param isPublic - 是否允许CDN缓存
  * @returns Headers对象
  */
-export function setCacheHeaders(strategy: CacheStrategy, isPublic = true): Headers {
+export function setCacheHeaders(
+  strategy: CacheStrategy,
+  isPublic = true,
+): Headers {
   const headers = new Headers();
 
   const maxAge = CACHE_CONFIG[strategy] / 1000; // 转换为秒

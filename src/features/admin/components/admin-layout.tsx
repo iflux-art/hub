@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import { LogOut, User } from "lucide-react";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 
 interface AdminLayoutProps {
   children: ReactNode;

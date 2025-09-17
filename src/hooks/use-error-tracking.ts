@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 // 错误报告数据类型
 export interface ErrorReport {
@@ -34,7 +34,10 @@ const defaultOnError = (error: Error) => {
 
 const defaultOnUnhandledRejection = (event: PromiseRejectionEvent) => {
   if (process.env.NODE_ENV === "development") {
-    console.error("[Error Tracking] Unhandled promise rejection:", event.reason);
+    console.error(
+      "[Error Tracking] Unhandled promise rejection:",
+      event.reason,
+    );
   }
 };
 
@@ -71,7 +74,7 @@ export function useErrorTracking(options: ErrorTrackingOptions = {}) {
         console.error("[Error Tracking] Failed to send error report:", error);
       }
     },
-    [shouldReport]
+    [shouldReport],
   );
 
   // 错误事件处理函数
@@ -88,7 +91,7 @@ export function useErrorTracking(options: ErrorTrackingOptions = {}) {
       onError(event.error, { componentStack: event.error?.stack });
       reportError(errorReport);
     },
-    [onError, reportError]
+    [onError, reportError],
   );
 
   // 未处理的Promise拒绝事件处理函数
@@ -108,7 +111,7 @@ export function useErrorTracking(options: ErrorTrackingOptions = {}) {
       onUnhandledRejection(event);
       reportError(errorReport);
     },
-    [onUnhandledRejection, reportError]
+    [onUnhandledRejection, reportError],
   );
 
   // 设置全局错误处理
@@ -123,13 +126,20 @@ export function useErrorTracking(options: ErrorTrackingOptions = {}) {
     // 清理函数
     return () => {
       window.removeEventListener("error", handleError);
-      window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+      window.removeEventListener(
+        "unhandledrejection",
+        handleUnhandledRejection,
+      );
     };
   }, [handleError, handleUnhandledRejection]);
 
   // 手动报告错误的函数
   const trackError = useCallback(
-    (error: Error, componentStack?: string, errorInfo?: { componentStack?: string }) => {
+    (
+      error: Error,
+      componentStack?: string,
+      errorInfo?: { componentStack?: string },
+    ) => {
       const errorReport: ErrorReport = {
         message: error.message,
         stack: error.stack,
@@ -143,7 +153,7 @@ export function useErrorTracking(options: ErrorTrackingOptions = {}) {
       onError(error, errorInfo);
       reportError(errorReport);
     },
-    [onError, reportError]
+    [onError, reportError],
   );
 
   return { trackError };
@@ -158,10 +168,14 @@ export function useErrorBoundaryTracking(options: ErrorTrackingOptions = {}) {
 
   // 记录错误边界错误
   const recordErrorBoundaryError = useCallback(
-    (error: Error, componentStack?: string, errorInfo?: { componentStack?: string }) => {
+    (
+      error: Error,
+      componentStack?: string,
+      errorInfo?: { componentStack?: string },
+    ) => {
       trackError(error, componentStack, errorInfo);
     },
-    [trackError]
+    [trackError],
   );
 
   return { recordErrorBoundaryError };

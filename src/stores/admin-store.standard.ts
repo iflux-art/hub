@@ -82,43 +82,45 @@ export const createAdminStore = () => {
     itemCount: 0,
 
     // 数据操作
-    setItems: items => set({ items, itemCount: items.length }),
+    setItems: (items) => set({ items, itemCount: items.length }),
 
-    setLoading: loading => set({ loading }),
+    setLoading: (loading) => set({ loading }),
 
-    setError: error => set({ error }),
+    setError: (error) => set({ error }),
 
-    addItem: item =>
-      set(state => ({
+    addItem: (item) =>
+      set((state) => ({
         items: [...state.items, item],
         itemCount: state.items.length + 1,
       })),
 
-    updateItem: updatedItem =>
-      set(state => ({
-        items: state.items.map(item => (item.id === updatedItem.id ? updatedItem : item)),
+    updateItem: (updatedItem) =>
+      set((state) => ({
+        items: state.items.map((item) =>
+          item.id === updatedItem.id ? updatedItem : item,
+        ),
       })),
 
-    deleteItem: id =>
-      set(state => ({
-        items: state.items.filter(item => item.id !== id),
+    deleteItem: (id) =>
+      set((state) => ({
+        items: state.items.filter((item) => item.id !== id),
         itemCount: state.items.length - 1,
       })),
 
     // 搜索和过滤操作
-    setSearchTerm: term => set({ searchTerm: term }),
+    setSearchTerm: (term) => set({ searchTerm: term }),
 
-    setSelectedCategory: category => set({ selectedCategory: category }),
+    setSelectedCategory: (category) => set({ selectedCategory: category }),
 
     // 对话框操作
-    setShowAddDialog: show => set({ showAddDialog: show }),
+    setShowAddDialog: (show) => set({ showAddDialog: show }),
 
-    setEditingItem: item => set({ editingItem: item }),
+    setEditingItem: (item) => set({ editingItem: item }),
 
-    setDeletingItem: item => set({ deletingItem: item }),
+    setDeletingItem: (item) => set({ deletingItem: item }),
 
     // 统计操作
-    updateItemCount: count => set({ itemCount: count }),
+    updateItemCount: (count) => set({ itemCount: count }),
 
     // 重置操作
     resetState: () => set({ ...initialState }),

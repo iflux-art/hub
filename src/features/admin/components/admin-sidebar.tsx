@@ -1,13 +1,13 @@
 "use client";
 
-import { cn } from "@/utils";
-import { Button } from "@/components/ui/button";
-import { ADMIN_MENU_ITEMS } from "@/features/navbar/types/nav-config";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { NavConfigItem } from "@/features/navbar/types/nav-config";
+import { ADMIN_MENU_ITEMS } from "@/features/navbar/types/nav-config";
+import { cn } from "@/utils";
 
 interface AdminSidebarProps {
   className?: string;
@@ -33,7 +33,9 @@ export const AdminSidebar = ({ className }: AdminSidebarProps) => {
     <Card className={cn("h-full", className)}>
       <CardContent className="p-4">
         <div className="space-y-1">
-          <h3 className="mb-2 px-4 text-sm font-medium text-muted-foreground">管理菜单</h3>
+          <h3 className="mb-2 px-4 text-sm font-medium text-muted-foreground">
+            管理菜单
+          </h3>
           <nav className="space-y-1">
             {ADMIN_MENU_ITEMS.map((item: NavConfigItem) => (
               <Button
@@ -41,7 +43,7 @@ export const AdminSidebar = ({ className }: AdminSidebarProps) => {
                 variant={isActive(`/${item.key}`) ? "secondary" : "ghost"}
                 className={cn(
                   "w-full justify-start",
-                  isActive(`/${item.key}`) ? "bg-secondary" : ""
+                  isActive(`/${item.key}`) ? "bg-secondary" : "",
                 )}
                 asChild
               >

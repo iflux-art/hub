@@ -1,6 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { SignOutButton, useUser } from "@clerk/nextjs";
+import { LogOut, User } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,10 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { SignOutButton, useUser } from "@clerk/nextjs";
-import { LogOut, User } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export function AuthButtons() {
   const { isSignedIn, isLoaded } = useUser();

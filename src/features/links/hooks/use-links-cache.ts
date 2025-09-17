@@ -5,9 +5,9 @@
 
 import { useCallback } from "react";
 import {
+  clearAllCaches,
   clearCategoryCache,
   preloadCriticalCategories,
-  clearAllCaches,
 } from "@/features/links/lib";
 import type { CategoryId } from "@/features/links/types";
 

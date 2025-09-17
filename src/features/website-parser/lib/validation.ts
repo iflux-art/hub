@@ -2,7 +2,10 @@
  * URL 验证相关工具函数
  */
 
-import { isValidUrl as isValidUrlUtil, normalizeUrl as normalizeUrlUtil } from "@/utils/validation";
+import {
+  isValidUrl as isValidUrlUtil,
+  normalizeUrl as normalizeUrlUtil,
+} from "@/utils/validation";
 
 /**
  * 验证 URL 格式

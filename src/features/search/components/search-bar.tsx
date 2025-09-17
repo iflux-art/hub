@@ -1,6 +1,7 @@
-import { Input } from "@/components/ui/input";
 import { Loader2, Search, X } from "lucide-react";
-import React, { forwardRef } from "react";
+import type React from "react";
+import { forwardRef } from "react";
+import { Input } from "@/components/ui/input";
 
 type SearchBarProps = React.ComponentPropsWithoutRef<typeof Input> & {
   isLoading?: boolean;
@@ -40,7 +41,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
         )}
       </div>
     </div>
-  )
+  ),
 );
 
 SearchBar.displayName = "SearchBar";

@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { generateCategoriesData } from "@/features/links/lib";
 import type { CategoryId, LinksCategory } from "@/features/links/types";
-import { useEffect, useMemo, useState } from "react";
 
 /**
  * 获取链接分类数据的 Hook
@@ -38,7 +38,7 @@ export function useCategories() {
    */
   const getCategoryName = (categoryId: string) => {
     // 先查找主分类
-    const category = categories.find(cat => cat.id === categoryId);
+    const category = categories.find((cat) => cat.id === categoryId);
     if (category) {
       return category.name;
     }
@@ -46,7 +46,7 @@ export function useCategories() {
     // 查找子分类
     for (const cat of categories) {
       if (cat.children) {
-        const subCategory = cat.children.find(sub => sub.id === categoryId);
+        const subCategory = cat.children.find((sub) => sub.id === categoryId);
         if (subCategory) {
           return `${cat.name} > ${subCategory.name}`;
         }
@@ -62,7 +62,7 @@ export function useCategories() {
    */
   const getFilteredCategories = useMemo(
     () => () => categories, // 直接返回所有分类，不再过滤
-    [categories] // 修复：使用完整依赖而不是categories.length
+    [categories], // 修复：使用完整依赖而不是categories.length
   );
 
   /**
@@ -76,7 +76,7 @@ export function useCategories() {
       parentName?: string;
     }[] = [];
 
-    categories.forEach(category => {
+    categories.forEach((category) => {
       // 添加主分类
       flatCategories.push({
         id: category.id,
@@ -86,7 +86,7 @@ export function useCategories() {
 
       // 添加子分类
       if (category.children) {
-        category.children.forEach(subCategory => {
+        category.children.forEach((subCategory) => {
           flatCategories.push({
             id: subCategory.id,
             name: subCategory.name,

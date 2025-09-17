@@ -12,7 +12,7 @@ export async function GET() {
         error: "Failed to read categories",
         details: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

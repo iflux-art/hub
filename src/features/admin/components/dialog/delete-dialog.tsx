@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,9 +12,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import type { DeleteDialogProps } from "@/features/admin/types";
-import { useState } from "react";
 
-export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteDialogProps) => {
+export const DeleteDialog = ({
+  item,
+  onOpenChange,
+  onSuccess,
+  onError,
+}: DeleteDialogProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -55,7 +60,10 @@ export const DeleteDialog = ({ item, onOpenChange, onSuccess, onError }: DeleteD
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading}>取消</AlertDialogCancel>
-          <AlertDialogAction onClick={() => void handleDelete()} disabled={isLoading}>
+          <AlertDialogAction
+            onClick={() => void handleDelete()}
+            disabled={isLoading}
+          >
             {isLoading ? "删除中..." : "删除"}
           </AlertDialogAction>
         </AlertDialogFooter>

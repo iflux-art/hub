@@ -52,7 +52,7 @@ export function useNavbarScroll() {
     (_: Event) => {
       setScrollPosition(window.scrollY);
     },
-    [setScrollPosition]
+    [setScrollPosition],
   );
 
   const throttledHandleScroll = useMemo(() => {

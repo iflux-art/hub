@@ -42,7 +42,8 @@ function createOpenGraphConfig(options: {
   publishedTime: string | undefined;
   modifiedTime: string | undefined;
 }) {
-  const { title, description, type, url, image, publishedTime, modifiedTime } = options;
+  const { title, description, type, url, image, publishedTime, modifiedTime } =
+    options;
 
   return {
     title: title ?? SITE_METADATA.title,
@@ -78,7 +79,10 @@ function createTwitterConfig(options: {
 /**
  * 添加 JSON-LD 结构化数据到元数据
  */
-function addJsonLdToMetadata(metadata: Metadata, jsonLd: Record<string, string | undefined>) {
+function addJsonLdToMetadata(
+  metadata: Metadata,
+  jsonLd: Record<string, string | undefined>,
+) {
   if (!jsonLd) return;
 
   const jsonLdData = {
@@ -112,7 +116,10 @@ function addJsonLdToMetadata(metadata: Metadata, jsonLd: Record<string, string |
 /**
  * 更新社交媒体元数据
  */
-function updateSocialMetadata(metadata: Metadata, social: GenerateMetadataOptions["social"]) {
+function updateSocialMetadata(
+  metadata: Metadata,
+  social: GenerateMetadataOptions["social"],
+) {
   if (!social) return;
 
   if (social.twitter && metadata.twitter) {
@@ -133,7 +140,9 @@ function updateSocialMetadata(metadata: Metadata, social: GenerateMetadataOption
 /**
  * 生成基础元数据
  */
-export function generateMetadata(options: GenerateMetadataOptions = {}): Metadata {
+export function generateMetadata(
+  options: GenerateMetadataOptions = {},
+): Metadata {
   const {
     title,
     description = SITE_METADATA.description,
@@ -205,14 +214,18 @@ export function generateMetadata(options: GenerateMetadataOptions = {}): Metadat
 /**
  * 生成文章类型的元数据
  */
-export function generateArticleMetadata(options: Omit<GenerateMetadataOptions, "type">): Metadata {
+export function generateArticleMetadata(
+  options: Omit<GenerateMetadataOptions, "type">,
+): Metadata {
   return generateMetadata({ ...options, type: "article" });
 }
 
 /**
  * 过滤掉 undefined 值的辅助函数
  */
-function filterUndefinedValues(obj: Record<string, unknown>): Record<string, unknown> {
+function filterUndefinedValues(
+  obj: Record<string, unknown>,
+): Record<string, unknown> {
   const filtered: Record<string, unknown> = {};
   for (const key in obj) {
     if (Object.hasOwn(obj, key) && obj[key] !== undefined) {

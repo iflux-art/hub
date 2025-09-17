@@ -1,16 +1,16 @@
 "use client";
 
+import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
+import { useActiveSection } from "@/features/navbar/hooks/use-active-section";
+import type { NavConfigItem } from "@/features/navbar/types/nav-config";
 import {
   ADMIN_MENU_ITEMS,
   NAV_DESCRIPTIONS,
   NAV_ITEMS,
   NAV_PATHS,
 } from "@/features/navbar/types/nav-config";
-import { useActiveSection } from "@/features/navbar/hooks/use-active-section";
 import { cn } from "@/utils";
-import { useUser } from "@clerk/nextjs";
-import Link from "next/link";
-import type { NavConfigItem } from "@/features/navbar/types/nav-config";
 
 interface NavProps {
   /**
@@ -26,7 +26,9 @@ interface NavProps {
 
 const NavCards = ({ onClose, className }: NavProps) => {
   // Always call hooks at the top level, even if we might not use the result
-  const isActiveSection = useActiveSection(NAV_ITEMS.map((item: NavConfigItem) => item.key));
+  const isActiveSection = useActiveSection(
+    NAV_ITEMS.map((item: NavConfigItem) => item.key),
+  );
 
   // 如果没有导航项，则不渲染导航卡片
   if (NAV_ITEMS.length === 0) {
@@ -48,7 +50,7 @@ const NavCards = ({ onClose, className }: NavProps) => {
                 "group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground",
                 isActiveSection === item.key
                   ? "border-primary bg-accent text-accent-foreground"
-                  : "border-border"
+                  : "border-border",
               )}
             >
               <div className="space-y-2">
@@ -56,7 +58,9 @@ const NavCards = ({ onClose, className }: NavProps) => {
                   {Icon && <Icon className="h-5 w-5" />} {/* 添加条件渲染 */}
                   <h3 className="text-base font-medium">{item.label}</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">{NAV_DESCRIPTIONS[item.key]}</p>
+                <p className="text-sm text-muted-foreground">
+                  {NAV_DESCRIPTIONS[item.key]}
+                </p>
               </div>
             </Link>
           );
@@ -67,7 +71,9 @@ const NavCards = ({ onClose, className }: NavProps) => {
 };
 
 const AdminMenu = ({ onClose }: NavProps) => {
-  const isActiveSection = useActiveSection(ADMIN_MENU_ITEMS.map((item: NavConfigItem) => item.key));
+  const isActiveSection = useActiveSection(
+    ADMIN_MENU_ITEMS.map((item: NavConfigItem) => item.key),
+  );
 
   return (
     <div className="space-y-6">
@@ -86,7 +92,7 @@ const AdminMenu = ({ onClose }: NavProps) => {
                 "group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors duration-300 hover:bg-accent hover:text-accent-foreground",
                 isActiveSection === item.key
                   ? "border-primary bg-accent text-accent-foreground"
-                  : "border-border"
+                  : "border-border",
               )}
             >
               <div className="space-y-2">
@@ -94,7 +100,9 @@ const AdminMenu = ({ onClose }: NavProps) => {
                   {Icon && <Icon className="h-5 w-5" />} {/* 添加条件渲染 */}
                   <h3 className="text-base font-medium">{item.label}</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
+                <p className="text-sm text-muted-foreground">
+                  {item.description}
+                </p>
               </div>
             </Link>
           );

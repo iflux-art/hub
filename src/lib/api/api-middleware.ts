@@ -54,14 +54,14 @@ class MemoryRateLimiter {
   check(
     key: string,
     maxRequests: number,
-    windowMs: number
+    windowMs: number,
   ): { allowed: boolean; resetTime?: number } {
     const now = Date.now();
     const windowStart = now - windowMs;
 
     // 清理过期的请求记录
     let requests = this.requests.get(key) || [];
-    requests = requests.filter(timestamp => timestamp > windowStart);
+    requests = requests.filter((timestamp) => timestamp > windowStart);
 
     if (requests.length >= maxRequests) {
       const oldestRequest = requests[0];
@@ -84,9 +84,13 @@ const rateLimiter = new MemoryRateLimiter();
  */
 export function withRateLimit(
   request: NextRequest,
-  options: RateLimitOptions = {}
+  options: RateLimitOptions = {},
 ): MiddlewareResult {
-  const { maxRequests = 100, windowMs = 15 * 60 * 1000, keyGenerator } = options; // 默认15分钟100次请求
+  const {
+    maxRequests = 100,
+    windowMs = 15 * 60 * 1000,
+    keyGenerator,
+  } = options; // 默认15分钟100次请求
 
   const key = keyGenerator
     ? keyGenerator(request)
@@ -100,7 +104,7 @@ export function withRateLimit(
       error: createApiError(
         "RATE_LIMIT",
         "Too many requests",
-        `Rate limit exceeded. Try again after ${new Date(resetTime).toISOString()}`
+        `Rate limit exceeded. Try again after ${new Date(resetTime).toISOString()}`,
       ),
     };
   } else if (!allowed) {
@@ -109,7 +113,7 @@ export function withRateLimit(
       error: createApiError(
         "RATE_LIMIT",
         "Too many requests",
-        "Rate limit exceeded. Try again later."
+        "Rate limit exceeded. Try again later.",
       ),
     };
   }
@@ -124,7 +128,7 @@ export function withRateLimit(
  * 用于包装不需要认证的公共API路由
  */
 export function withPublicApi<T>(
-  handler: (request: NextRequest) => Promise<T>
+  handler: (request: NextRequest) => Promise<T>,
 ): (request: NextRequest) => Promise<T | NextResponse<ApiErrorResponse>> {
   return async (request: NextRequest) => {
     // 应用CORS中间件
@@ -142,8 +146,14 @@ export function withPublicApi<T>(
     // 如果响应是NextResponse实例，添加CORS头
     if (response instanceof Response) {
       response.headers.set("Access-Control-Allow-Origin", "*");
-      response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-      response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+      response.headers.set(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS",
+      );
+      response.headers.set(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization",
+      );
     }
 
     return response;

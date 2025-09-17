@@ -1,12 +1,22 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import type { EditDialogProps } from "@/features/admin/types";
 import { LinksForm } from "@/features/links/components";
 import type { LinksFormData } from "@/features/links/types";
-import { useState } from "react";
 
-export const EditDialog = ({ item, onOpenChange, onSuccess, onError }: EditDialogProps) => {
+export const EditDialog = ({
+  item,
+  onOpenChange,
+  onSuccess,
+  onError,
+}: EditDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (formData: LinksFormData) => {
     if (!item) return;

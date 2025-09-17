@@ -1,7 +1,7 @@
 "use client";
 
-import type { LinksItem } from "@/features/links/types";
 import { useMemo } from "react";
+import type { LinksItem } from "@/features/links/types";
 
 export interface TagAnchor {
   id: string;
@@ -19,9 +19,9 @@ export function useTagAnchors(items: LinksItem[]): TagAnchor[] {
     // 提取所有标签并去重
     const uniqueTags = new Set<string>();
 
-    items.forEach(item => {
+    items.forEach((item) => {
       if (item.tags && Array.isArray(item.tags)) {
-        item.tags.forEach(tag => {
+        item.tags.forEach((tag) => {
           if (tag && typeof tag === "string" && tag.trim()) {
             uniqueTags.add(tag.trim());
           }
@@ -32,7 +32,7 @@ export function useTagAnchors(items: LinksItem[]): TagAnchor[] {
     // 转换为标签锚点数组并排序
     const tagAnchors: TagAnchor[] = Array.from(uniqueTags)
       .sort((a, b) => a.localeCompare(b, "zh-CN", { numeric: true }))
-      .map(tag => ({
+      .map((tag) => ({
         id: `tag-${tag.replace(/\s+/g, "-").toLowerCase()}`,
         text: tag,
         level: 2,

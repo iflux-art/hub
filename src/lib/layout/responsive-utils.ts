@@ -41,8 +41,13 @@ const RESPONSIVE_CLASS_MAP: Record<number, string> = {
  * 响应式类名生成函数
  * 根据不同设备尺寸生成对应的显示/隐藏类名
  */
-export function getResponsiveClasses(mobile: boolean, tablet: boolean, desktop: boolean): string {
+export function getResponsiveClasses(
+  mobile: boolean,
+  tablet: boolean,
+  desktop: boolean,
+): string {
   // 使用位运算生成索引：移动端(bit 2) + 平板(bit 1) + PC(bit 0)
-  const index = (mobile ? 0b100 : 0) | (tablet ? 0b010 : 0) | (desktop ? 0b001 : 0);
+  const index =
+    (mobile ? 0b100 : 0) | (tablet ? 0b010 : 0) | (desktop ? 0b001 : 0);
   return RESPONSIVE_CLASS_MAP[index] || "block";
 }
