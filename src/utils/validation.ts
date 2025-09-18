@@ -21,25 +21,6 @@ export function isValidUrl(urlString: string): boolean {
 }
 
 /**
- * 标准化URL
- * @param url URL字符串
- * @returns 标准化后的URL
- */
-export function normalizeUrl(url: string): string {
-  // 如果没有协议，添加 https://
-  if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-    url = `https://${url}`;
-  }
-
-  try {
-    const urlObj = new URL(url);
-    return urlObj.href;
-  } catch {
-    throw new Error("Invalid URL format");
-  }
-}
-
-/**
  * 验证必填字段
  * @param data 数据对象
  * @param requiredFields 必填字段数组
@@ -62,6 +43,25 @@ export function validateRequiredFields(
   }
 
   return missingFields;
+}
+
+/**
+ * 标准化URL
+ * @param url URL字符串
+ * @returns 标准化后的URL
+ */
+export function normalizeUrl(url: string): string {
+  // 如果没有协议，添加 https://
+  if (!(url.startsWith("http://") || url.startsWith("https://"))) {
+    url = `https://${url}`;
+  }
+
+  try {
+    const urlObj = new URL(url);
+    return urlObj.href;
+  } catch {
+    throw new Error("Invalid URL format");
+  }
 }
 
 /**

@@ -25,10 +25,6 @@ export {
   type ThreeColumnLayoutProps,
 } from "./three-column-layout";
 
-// 状态和错误处理
-// ProgressBarLoading 组件已合并到全局loading页面，不再导出
-// NotFound 组件已合并到全局404页面，不再导出
-
 // 导航相关组件
 export { Footer } from "@/components/footer";
 // 配置信息
@@ -39,6 +35,3 @@ export {
   NAV_PATHS,
 } from "@/features/navbar/types/nav-config";
 export { Sidebar, SidebarWrapper } from "@/features/sidebar/components";
-
-// // 客户端初始化组件  // 删除这行
-// export { InitClient } from "./init-client";  // 删除这行

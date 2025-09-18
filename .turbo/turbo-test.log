@@ -1,8 +1,0 @@
- WARN  Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v23.10.0","pnpm":"9.11.0"})
-
-> hub@1.0.0 test C:\project\ifa\apps\hub
-> vitest
-
-
-[1m[46m RUN [49m[22m [36mv3.2.4 [39m[90mC:/project/ifa/apps/hub[39m
-

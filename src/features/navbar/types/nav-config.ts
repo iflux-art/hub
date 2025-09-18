@@ -1,4 +1,4 @@
-import { BookOpen, FileText, Home, Link, type LucideIcon } from "lucide-react";
+import { FileText, Home, Link, type LucideIcon, PenTool } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 
 /** 基础导航项 */
@@ -43,16 +43,14 @@ export const NAV_ITEMS: readonly NavConfigItem[] = [
     label: "博客",
     href: "https://blog.iflux.art/",
     description: "访问我们的技术博客",
-    icon: FileText,
-    external: true,
+    icon: PenTool,
   },
   {
     key: "docs",
     label: "文档",
     href: "https://docs.iflux.art/",
     description: "查看详细技术文档",
-    icon: BookOpen,
-    external: true,
+    icon: FileText,
   },
   {
     key: "hub",
@@ -66,7 +64,6 @@ export const NAV_ITEMS: readonly NavConfigItem[] = [
     href: "https://blog.iflux.art/friends/",
     description: "查看我们的友情链接",
     icon: Link,
-    external: true,
   },
 ] as const;
 

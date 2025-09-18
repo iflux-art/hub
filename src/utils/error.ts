@@ -74,6 +74,11 @@ function buildLogMessage(errorInfo: ErrorInfo) {
  * 输出开发环境的基础错误信息
  */
 function logDevelopmentError(errorInfo: ErrorInfo): void {
+  // 在生产环境中不输出详细错误信息
+  if (process.env.NODE_ENV === "production") {
+    return;
+  }
+
   // 为 ContentNotFound 提供更友好的输出格式
   if (errorInfo.type === "ContentNotFound") {
     console.warn(`📝 ${errorInfo.type}: ${errorInfo.message}`);
@@ -105,6 +110,11 @@ function logContextInfo(errorInfo: ErrorInfo): void {
  * 输出ContentNotFound错误的堆栈信息
  */
 function logContentNotFoundStack(errorInfo: ErrorInfo): void {
+  // 在生产环境中不输出堆栈信息
+  if (process.env.NODE_ENV === "production") {
+    return;
+  }
+
   if (!(errorInfo.originalError instanceof Error)) {
     return;
   }
@@ -126,6 +136,11 @@ function logContentNotFoundStack(errorInfo: ErrorInfo): void {
  * 输出其他错误类型的堆栈信息
  */
 function logOtherErrorStack(errorInfo: ErrorInfo): void {
+  // 在生产环境中不输出堆栈信息
+  if (process.env.NODE_ENV === "production") {
+    return;
+  }
+
   if (errorInfo.originalError instanceof Error) {
     console.error("📚 Stack Trace:", errorInfo.originalError.stack);
   }
@@ -168,6 +183,7 @@ function logProductionOutput(
   errorInfo: ErrorInfo,
   logMessage: ReturnType<typeof buildLogMessage>,
 ): void {
+  // 生产环境中只记录简化的错误信息，避免暴露敏感信息
   console.error(`[${errorInfo.type}] ${errorInfo.message}`, {
     code: errorInfo.code,
     timestamp: logMessage.timestamp,

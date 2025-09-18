@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { GitHubButton, TravelButton } from "@/components/button";
+import { AuthButtons } from "@/features/auth/components/auth-buttons";
 import { useNavbarScroll } from "@/features/navbar/hooks/use-navbar-scroll";
 import { ThemeToggle } from "@/features/theme";
 import { Logo } from "./logo";
@@ -55,7 +57,9 @@ export const MainNavbar = ({ className = "" }: { className?: string }) => {
         <div className="flex items-center gap-2">
           <SearchButton />
           <ThemeToggle />
-          {/* <HamburgerMenu /> */} {/* 删除这行 */}
+          <AuthButtons />
+          <GitHubButton />
+          <TravelButton />
         </div>
       </div>
     </nav>
