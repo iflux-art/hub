@@ -20,7 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/features/links/hooks/use-categories";
 import type { LinksCategory, LinksFormData } from "@/features/links/types";
 import { useWebsiteParser } from "@/features/website-parser/hooks/use-website-parser";
-import { isValidUrl } from "@/utils/validation";
+import { isValidUrl } from "@/lib/utils/validation";
 
 // 表单状态管理hook
 function useLinksFormState(initialData?: Partial<LinksFormData>) {

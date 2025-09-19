@@ -1,7 +1,6 @@
 // Zustand stores 入口文件
 // 标准化store实现（重构完成）
 
-export { useThemeStore } from "@/features/theme/theme-store.standard";
 export { useAdminStore } from "./admin-store.standard";
 export { useAppStore } from "./app-store.standard";
 export { useAuthStore } from "./auth-store.standard";

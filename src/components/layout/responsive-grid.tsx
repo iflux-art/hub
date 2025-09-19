@@ -6,7 +6,7 @@ import {
 } from "@/lib/layout/layout-utils";
 import { useLayoutStore } from "@/stores";
 import type { PageLayoutType, SidebarConfig } from "@/types";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 interface ResponsiveGridProps {
   /**

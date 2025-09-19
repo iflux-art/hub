@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { isValidUrl as isValidUrlUtil } from "@/utils/validation";
+import { isValidUrl as isValidUrlUtil } from "@/lib/utils/validation";
 
 /**
  * API 错误类型

@@ -8,7 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 import type { SidebarItem, SidebarProps } from "../types";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 /**
  * 基础导航项属性

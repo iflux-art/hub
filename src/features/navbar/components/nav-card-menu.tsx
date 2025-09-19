@@ -10,7 +10,7 @@ import {
   NAV_ITEMS,
   NAV_PATHS,
 } from "@/features/navbar/types/nav-config";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 interface NavProps {
   /**

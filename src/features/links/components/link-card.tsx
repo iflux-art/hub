@@ -12,7 +12,7 @@ import Link from "next/link";
 import type React from "react";
 import { forwardRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 // 内联链接卡片相关类型定义
 interface LinkCardProps {

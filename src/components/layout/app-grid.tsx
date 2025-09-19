@@ -2,7 +2,7 @@
 
 import { gridColsMap, gridGapMap } from "@/lib/layout/responsive-utils";
 import type { AppGridProps } from "@/types";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 /**
  * 通用网格布局组件

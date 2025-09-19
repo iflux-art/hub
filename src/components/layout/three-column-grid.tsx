@@ -1,5 +1,5 @@
 import type { ThreeColumnGridProps } from "@/types";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 export type { ThreeColumnGridProps } from "@/types";
 

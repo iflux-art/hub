@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SITE_METADATA } from "@/config";
 import type { SEOPageOptions, SiteConfig } from "@/types";
-import { filterUndefinedValues } from "@/utils/helpers";
+import { filterUndefinedValues } from "@/lib/utils/helpers";
 
 /**
  * 默认站点配置

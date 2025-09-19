@@ -5,7 +5,7 @@ import type {
   ParseResult,
   WebsiteMetadata,
 } from "@/features/website-parser/types";
-import { isValidUrl as isValidUrlUtil } from "@/utils/validation";
+import { isValidUrl as isValidUrlUtil } from "@/lib/utils/validation";
 
 /**
  * 缓存配置

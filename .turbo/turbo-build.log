@@ -6,7 +6,7 @@
    - Environments: .env.local
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 6.6s
+ ✓ Compiled successfully in 3.8s
    Linting and checking validity of types ...
    Collecting page data ...
    Generating static pages (0/13) ...
@@ -28,13 +28,13 @@ Route (app)                                 Size  First Load JS
 ├ ƒ /api/links/ws                          148 B         102 kB
 ├ ƒ /api/parse-website                     148 B         102 kB
 ├ ƒ /api/search                            148 B         102 kB
-├ ○ /auth/callback                         404 B         137 kB
-├ ƒ /sign-in/[[...sign-in]]                404 B         137 kB
-└ ƒ /sign-up/[[...sign-up]]                404 B         137 kB
+├ ○ /auth/callback                         402 B         137 kB
+├ ƒ /sign-in/[[...sign-in]]                402 B         137 kB
+└ ƒ /sign-up/[[...sign-up]]                402 B         137 kB
 + First Load JS shared by all             102 kB
   ├ chunks/39-fc28f8048450ab1c.js        45.1 kB
   ├ chunks/7d631cee-4b9f018d8c19d48f.js  54.2 kB
-  └ other shared chunks (total)          2.83 kB
+  └ other shared chunks (total)          2.84 kB
 
 
 ƒ Middleware                             81.3 kB

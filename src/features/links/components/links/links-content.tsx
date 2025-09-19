@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { LinkCard } from "@/features/links/components/link-card";
 import type { LinksItem } from "@/features/links/types";
-import { cn } from "@/utils";
+import { cn } from "@/lib/utils";
 
 export interface LinksContentProps {
   items: LinksItem[];

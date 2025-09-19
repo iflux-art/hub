@@ -13,7 +13,7 @@ export {
   validatePageParams,
   validateRequiredFields,
   validateStringLength,
-} from "@/utils/validation";
+} from "@/lib/utils/validation";
 // 从 api-middleware 导出
 export type { MiddlewareResult } from "./api/api-middleware";
 export { withCORS } from "./api/api-middleware";

@@ -5,7 +5,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { debounceSync } from "@/utils/helpers";
+import { debounceSync } from "@/lib/utils/helpers";
 
 /**
  * LRU 缓存类

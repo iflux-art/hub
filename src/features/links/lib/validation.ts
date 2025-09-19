@@ -3,7 +3,10 @@
  */
 
 import type { LinksFormData, LinksItem } from "@/features/links/types";
-import { isValidCategory, validateRequiredFields } from "@/utils/validation";
+import {
+  isValidCategory,
+  validateRequiredFields,
+} from "@/lib/utils/validation";
 
 const validCategories = [
   "ai",
